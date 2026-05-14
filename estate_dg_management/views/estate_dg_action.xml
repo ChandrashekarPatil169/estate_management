@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Action: DG Master -->
+    <record id="action_estate_dg" model="ir.actions.act_window">
+        <field name="name">Diesel Generators</field>
+        <field name="res_model">estate.dg</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Action: Fuel Purchases -->
+    <record id="action_estate_dg_purchase" model="ir.actions.act_window">
+        <field name="name">Fuel Purchases</field>
+        <field name="res_model">estate.dg.purchase</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Action: DG Refills -->
+    <record id="action_estate_dg_refill" model="ir.actions.act_window">
+        <field name="name">DG Refills</field>
+        <field name="res_model">estate.dg.refill</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Action: DG Daily Logs -->
+    <record id="action_estate_dg_log" model="ir.actions.act_window">
+        <field name="name">DG Daily Logs</field>
+        <field name="res_model">estate.dg.log</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+</odoo>

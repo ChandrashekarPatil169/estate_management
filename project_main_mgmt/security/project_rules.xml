@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- View: Add Program Manager in Project Form -->
+    <!-- ========================= -->
+
+    <record id="view_project_form_add_program_manager" model="ir.ui.view">
+        <field name="name">project.project.form.add.program.manager</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="program_manager_id"
+                       string="Program Manager"
+                       widget="many2one_avatar_user"
+                       domain="[('share', '=', False)]"
+                       groups="project.group_project_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- Disable Default Conflicting Rules -->
+    <!-- ========================= -->
+
+    <record id="project.project_project_manager_rule" model="ir.rule">
+        <field name="active">0</field>
+    </record>
+
+    <!--        <record id="project.project_public_members_rule" model="ir.rule">-->
+    <!--            <field name="active">0</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="project.task_visibility_rule" model="ir.rule">-->
+    <!--            <field name="active">0</field>-->
+    <!--        </record>-->
+
+    <!--        <record id="project.task_visibility_rule_project_user" model="ir.rule">-->
+    <!--            <field name="active">0</field>-->
+    <!--        </record>-->
+
+    <record id="project.project_manager_all_project_tasks_rule" model="ir.rule">
+        <field name="active">0</field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- Custom Groups -->
+    <!-- ========================= -->
+
+    <record id="group_program_manager" model="res.groups">
+        <field name="name">Program Manager</field>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <record id="group_custom_project_manager" model="res.groups">
+        <field name="name">Project Manager</field>
+        <field name="implied_ids" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="group_timesheet_user_custom" model="res.groups">
+        <field name="name">Timesheet User</field>
+    </record>
+    <!-- ========================= -->
+    <!-- PROJECT ACCESS -->
+    <!-- ONLY custom groups, NOT project.group_project_user -->
+    <!-- ========================= -->
+    <record id="project_project_hierarchy_rule" model="ir.rule">
+        <field name="name">Project: Manager / Creator Access</field>
+        <field name="model_id" ref="project.model_project_project"/>
+        <field name="domain_force">
+            [
+            '|', '|',
+            ('program_manager_id', '=', user.id),
+            ('user_id', '=', user.id),
+            ('create_uid', '=', user.id)
+            ]
+        </field>
+
+        <field name="groups" eval="[
+            (4, ref('project_main_mgmt.group_program_manager')),
+            (4, ref('project_main_mgmt.group_custom_project_manager'))
+        ]"/>
+    </record>
+
+    <!-- ========================= -->
+    <!-- TASK ACCESS -->
+    <!-- ========================= -->
+
+
+    <!--    <record id="project_task_hierarchy_rule" model="ir.rule">-->
+    <!--        <field name="name">Task: Assignee / Follower / Creator</field>-->
+    <!--        <field name="model_id" ref="project.model_project_task"/>-->
+    <!--        <field name="domain_force">-->
+    <!--            [-->
+    <!--            '|', '|',-->
+    <!--            ('user_ids', 'in', [user.id]),-->
+    <!--            ('create_uid', '=', user.id),-->
+    <!--            ('message_partner_ids', 'in', [user.partner_id.id])-->
+    <!--            ]-->
+    <!--        </field>-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+    <!--    </record>-->
+
+    <record id="project_task_hierarchy_rule" model="ir.rule">
+        <field name="name">Task: Assignee / Follower / Creator</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">
+            [
+            '|','|','|',
+            ('user_ids', 'in', [user.id]),
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            ('allow_timesheet_user_ids', 'in', [user.id])
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+
+    <!--    <record id="project_task_based_read_rule" model="ir.rule">-->
+    <!--        <field name="name">Project: Task-Based Read Access</field>-->
+    <!--        <field name="model_id" ref="project.model_project_project"/>-->
+    <!--        <field name="domain_force">-->
+    <!--            [-->
+    <!--            '|',-->
+    <!--            ('task_ids.user_ids', 'in', [user.id]),-->
+    <!--            ('task_ids.subtask_ids.assignee_id', '=', user.id)-->
+    <!--            ]-->
+    <!--        </field>-->
+
+    <!--        &lt;!&ndash; IMPORTANT: ONLY project users &ndash;&gt;-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+
+    <!--        <field name="perm_read" eval="1"/>-->
+    <!--        <field name="perm_write" eval="1"/>-->
+    <!--        <field name="perm_create" eval="0"/>-->
+    <!--        <field name="perm_unlink" eval="0"/>-->
+    <!--    </record>-->
+
+
+    <!-- ========================= -->
+    <!-- BACKLOG ACCESS -->
+    <!-- ========================= -->
+
+    <record id="backlog_hierarchy_rule" model="ir.rule">
+        <field name="name">Backlog: Assigned Access</field>
+        <field name="model_id" ref="model_product_backlog"/>
+        <field name="domain_force">
+            [
+            '|',
+            ('project_id.program_manager_id', '=', user.id),
+            ('project_id.user_id', '=', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[
+            (4, ref('project_main_mgmt.group_program_manager')),
+            (4, ref('project_main_mgmt.group_custom_project_manager'))
+        ]"/>
+    </record>
+
+    <!-- ========================= -->
+    <!-- EPIC ACCESS -->
+    <!-- ========================= -->
+
+    <record id="epic_hierarchy_rule" model="ir.rule">
+        <field name="name">Epic: Assigned Access</field>
+        <field name="model_id" ref="model_project_epic"/>
+        <field name="domain_force">
+            [
+            '|',
+            ('project_id.program_manager_id', '=', user.id),
+            ('project_id.user_id', '=', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[
+            (4, ref('project_main_mgmt.group_program_manager')),
+            (4, ref('project_main_mgmt.group_custom_project_manager'))
+        ]"/>
+    </record>
+
+    <!-- ========================= -->
+    <!-- STORY ACCESS -->
+    <!-- ========================= -->
+
+    <record id="story_hierarchy_rule" model="ir.rule">
+        <field name="name">Story: Assigned Access</field>
+        <field name="model_id" ref="model_project_user_story"/>
+        <field name="domain_force">
+            [
+            '|',
+            ('project_id.program_manager_id', '=', user.id),
+            ('project_id.user_id', '=', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[
+            (4, ref('project_main_mgmt.group_program_manager')),
+            (4, ref('project_main_mgmt.group_custom_project_manager'))
+        ]"/>
+    </record>
+
+    <!-- ========================= -->
+    <!-- SUBTASK ACCESS -->
+    <!-- ========================= -->
+
+
+    <!--    <record id="subtask_hierarchy_rule" model="ir.rule">-->
+    <!--        <field name="name">Subtask: Assigned Access</field>-->
+    <!--        <field name="model_id" ref="model_project_subtask"/>-->
+    <!--        <field name="domain_force">-->
+    <!--            [-->
+    <!--            '|', '|', '|',-->
+    <!--            ('project_id.program_manager_id', '=', user.id),-->
+    <!--            ('project_id.user_id', '=', user.id),-->
+    <!--            ('assignee_id', '=', user.id),-->
+    <!--            ('create_uid', '=', user.id)-->
+    <!--            ]-->
+    <!--        </field>-->
+    <!--        <field name="groups" eval="[-->
+    <!--            (4, ref('project_main_mgmt.group_program_manager')),-->
+    <!--            (4, ref('project_main_mgmt.group_custom_project_manager')),-->
+    <!--            (4, ref('project.group_project_user'))-->
+    <!--        ]"/>-->
+    <!--    </record>-->
+
+    <record id="subtask_hierarchy_rule" model="ir.rule">
+        <field name="name">Subtask: Assigned Access</field>
+        <field name="model_id" ref="model_project_subtask"/>
+        <field name="domain_force">
+            [
+            '|', '|', '|', '|', '|',
+            ('project_id.program_manager_id', '=', user.id),
+            ('project_id.user_id', '=', user.id),
+            ('assignee_id', '=', user.id),
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            ('allow_timesheet_user_ids', 'in', [user.id])
+            ]
+        </field>
+        <field name="groups" eval="[
+        (4, ref('project_main_mgmt.group_program_manager')),
+        (4, ref('project_main_mgmt.group_custom_project_manager')),
+        (4, ref('project.group_project_user'))
+    ]"/>
+    </record>
+
+
+    <record id="project_admin_full_access_rule" model="ir.rule">
+        <field name="name">Project: Admin Full Access</field>
+        <field name="model_id" ref="project.model_project_project"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+    <record id="task_admin_full_access_rule" model="ir.rule">
+        <field name="name">Task: Admin Full Access</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+    <record id="backlog_admin_full_access_rule" model="ir.rule">
+        <field name="name">Backlog: Admin Full Access</field>
+        <field name="model_id" ref="model_product_backlog"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+    <record id="story_admin_full_access_rule" model="ir.rule">
+        <field name="name">Story: Admin Full Access</field>
+        <field name="model_id" ref="model_project_user_story"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+    <record id="epic_admin_full_access_rule" model="ir.rule">
+        <field name="name">Epic: Admin Full Access</field>
+        <field name="model_id" ref="model_project_epic"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+    <record id="subtask_admin_full_access_rule" model="ir.rule">
+        <field name="name">Subtask: Admin Full Access</field>
+        <field name="model_id" ref="model_project_subtask"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+
+    <!--    <record id="project_project_user_visibility_rule" model="ir.rule">-->
+    <!--        <field name="name">Project User: Related Projects Only</field>-->
+    <!--        <field name="model_id" ref="project.model_project_project"/>-->
+    <!--        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+    <!--    </record>-->
+    <record id="project_backlog_user_visibility_rule" model="ir.rule">
+        <field name="name">Project User: Related Backlogs Only</field>
+        <field name="model_id" ref="model_product_backlog"/>
+        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="project_epic_user_visibility_rule" model="ir.rule">
+        <field name="name">Project User: Related Epics Only</field>
+        <field name="model_id" ref="model_project_epic"/>
+        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="project_story_user_visibility_rule" model="ir.rule">
+        <field name="name">Project User: Related Stories Only</field>
+        <field name="model_id" ref="model_project_user_story"/>
+        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <record id="project_task_user_visibility_rule" model="ir.rule">
+        <field name="name">Project User: Related Tasks Only</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+    <!--    <record id="project_subtask_user_visibility_rule" model="ir.rule">-->
+    <!--        <field name="name">Project User: Related Subtasks Only</field>-->
+    <!--        <field name="model_id" ref="model_project_subtask"/>-->
+    <!--        <field name="domain_force">[('access_user_ids', 'in', [user.id])]</field>-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+    <!--    </record>-->
+
+
+    <record id="task_assignee_follower_rule" model="ir.rule">
+        <field name="name">Task access for assignee/follower</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">
+            ['|',
+            ('user_ids', 'in', [user.id]),
+            ('message_partner_ids', 'in', [user.partner_id.id])
+            ]
+        </field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+    <record id="timesheet_rule_internal" model="ir.rule">
+        <field name="name">Timesheet access for assignee</field>
+        <field name="model_id" ref="analytic.model_account_analytic_line"/>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="domain_force">
+            ['|',
+            ('task_id.user_ids', 'in', [user.id]),
+            ('task_id.message_partner_ids', 'in', [user.partner_id.id])
+            ]
+        </field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+    <record id="task_timesheet_user_rule" model="ir.rule">
+        <field name="name">Task: Allowed Timesheet Users</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">
+            ['|',
+            ('allow_timesheet_user_ids', 'in', [user.id]),
+            ('user_ids', 'in', [user.id])
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+    </record>
+
+
+    <!--    <record id="project_force_access_rule" model="ir.rule">-->
+    <!--        <field name="name">Project Force Access</field>-->
+    <!--        <field name="model_id" ref="project.model_project_project"/>-->
+    <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+    <!--    </record>-->
+    <!--    <record id="project_timesheet_access_rule" model="ir.rule">-->
+    <!--        <field name="name">Project: Timesheet Access</field>-->
+    <!--        <field name="model_id" ref="project.model_project_project"/>-->
+    <!--        <field name="domain_force">-->
+    <!--            ['|','|','|',-->
+    <!--            ('program_manager_id', '=', user.id),-->
+    <!--            ('user_id', '=', user.id),-->
+    <!--            ('create_uid', '=', user.id),-->
+    <!--            ('timesheet_user_ids', 'in', [user.id])-->
+    <!--            ]-->
+    <!--        </field>-->
+    <!--        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>-->
+    <!--    </record>-->
+</odoo>
+
+
+
+
+

@@ -1,0 +1,58 @@
+<odoo>
+
+    <record id="project_form_risk_tab" model="ir.ui.view">
+        <field name="name">project.project.form.risk.tab</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert page after the last page -->
+            <xpath expr="//notebook/page[last()]" position="after">
+
+                <page name="risk_management_tab" string="Risk Identification">
+
+                    <field name="risk_ids" context="{'default_project_id': id}">
+
+                        <form>
+                            <sheet>
+
+                                <group string="Risk Identification" col="2">
+
+                                    <field name="risk_title"/>
+                                    <field name="risk_category"/>
+
+                                    <field name="risk_description" colspan="2"/>
+
+                                    <field name="risk_scope"/>
+                                    <field name="linked_item_ref"/>
+
+                                    <field name="probability"/>
+                                    <field name="impact"/>
+
+                                    <field name="risk_score" readonly="1"/>
+                                    <field name="risk_severity" readonly="1"/>
+
+                                    <field name="risk_status"/>
+                                    <field name="risk_identified_date"/>
+
+                                    <field name="risk_expected_window"/>
+                                    <field name="review_frequency"/>
+
+                                    <field name="next_review_date"/>
+
+                                </group>
+
+                            </sheet>
+                        </form>
+
+                    </field>
+
+                </page>
+
+            </xpath>
+
+
+        </field>
+    </record>
+
+</odoo>

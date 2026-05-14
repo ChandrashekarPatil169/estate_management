@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mt_project_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+
+    </record>
+    <record id="mt_project_product_backlog_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="description">Allows this follower to manage governance fields</field>
+        <field name="res_model">product.backlog</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1012</field>
+    </record>
+
+    <record id="mt_project_epic_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="description">Allows this follower to manage governance fields</field>
+        <field name="res_model">project.epic</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1022</field>
+    </record>
+
+    <record id="mt_project_user_story_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="description">Allows this follower to manage governance fields</field>
+        <field name="res_model">project.user.story</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1032</field>
+    </record>
+
+    <record id="mt_project_task_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="description">Allows this follower to manage governance fields</field>
+        <field name="res_model">project.task</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1042</field>
+    </record>
+    <record id="mt_project_subtask_governance_access" model="mail.message.subtype">
+        <field name="name">Governance Access</field>
+        <field name="description">Allows this follower to manage governance fields</field>
+        <field name="res_model">project.subtask</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1052</field>
+    </record>
+
+
+</odoo>

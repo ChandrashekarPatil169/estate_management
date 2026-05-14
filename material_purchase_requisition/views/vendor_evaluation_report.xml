@@ -1,0 +1,9 @@
+<odoo>
+    <record id="action_product_vendor_evaluation_report" model="ir.actions.report">
+        <field name="name">Product Vendor Evaluation</field>
+        <field name="model">purchase.order.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">material_purchase_requisition.product_vendor_evaluation_report</field>
+        <field name="report_file">material_purchase_requisition.product_vendor_evaluation_report</field>
+    </record>
+</odoo>

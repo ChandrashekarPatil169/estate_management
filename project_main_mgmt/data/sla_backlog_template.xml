@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Backlog SLA Amber Alert -->
+    <record id="email_template_backlog_sla_amber" model="mail.template">
+        <field name="name">Backlog SLA Amber Alert</field>
+        <field name="model_id" ref="project_main_mgmt.model_product_backlog"/>
+        <field name="subject">⚠️ Backlog SLA Warning - {{ object.name }}</field>
+        <field name="body_html">
+            <![CDATA[
+            <html>
+                <body>
+                    <p>Hello,</p>
+                    <p>Backlog Item <b><t t-esc="object.name"/></b> is nearing its SLA deadline.</p>
+                    <p>Remaining Days: <b><t t-esc="object.sla_days_remaining"/></b></p>
+                    <p>
+                        <a t-att-href="object.get_base_url() + '/web#id=%s&model=product.backlog&view_type=form' % object.id">
+                            Open Backlog Item
+                        </a>
+                    </p>
+                </body>
+            </html>
+            ]]>
+        </field>
+    </record>
+
+    <!-- Backlog SLA Red Alert -->
+    <record id="email_template_backlog_sla_red" model="mail.template">
+        <field name="name">Backlog SLA Red Alert</field>
+        <field name="model_id" ref="project_main_mgmt.model_product_backlog"/>
+        <field name="subject">🚨 Backlog SLA Breach - {{ object.name }}</field>
+        <field name="body_html">
+            <![CDATA[
+            <html>
+                <body>
+                    <p>Backlog Item <b><t t-esc="object.name"/></b> has breached its SLA.</p>
+                    <p>Days Remaining: <b><t t-esc="object.sla_days_remaining"/></b></p>
+                </body>
+            </html>
+            ]]>
+        </field>
+    </record>
+
+    <!-- Backlog SLA Overdue +3 -->
+    <record id="email_template_backlog_sla_red_3" model="mail.template">
+        <field name="name">Backlog SLA Overdue +3</field>
+        <field name="model_id" ref="project_main_mgmt.model_product_backlog"/>
+        <field name="subject">🔥 Backlog SLA Escalation (+3 Days) - {{ object.name }}</field>
+        <field name="body_html">
+            <![CDATA[
+            <html>
+                <body>
+                    <p>Backlog Item <b><t t-esc="object.name"/></b> is overdue by 3+ days.</p>
+                    <p>Overdue Days: <b><t t-esc="abs(object.sla_days_remaining)"/></b></p>
+                </body>
+            </html>
+            ]]>
+        </field>
+    </record>
+
+    <!-- Backlog SLA Overdue +6 -->
+    <record id="email_template_backlog_sla_red_6" model="mail.template">
+        <field name="name">Backlog SLA Overdue +6</field>
+        <field name="model_id" ref="project_main_mgmt.model_product_backlog"/>
+        <field name="subject">🚨🔥 Critical Backlog SLA (+6 Days) - {{ object.name }}</field>
+        <field name="body_html">
+            <![CDATA[
+            <html>
+                <body>
+                    <p>Backlog Item <b><t t-esc="object.name"/></b> is critically overdue (6+ days).</p>
+                    <p>Overdue Days: <b><t t-esc="abs(object.sla_days_remaining)"/></b></p>
+                </body>
+            </html>
+            ]]>
+        </field>
+    </record>
+</odoo>

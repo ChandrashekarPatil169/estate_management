@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_daily_work_summary" model="mail.template">
+        <field name="name">Daily Work Summary</field>
+        <field name="model_id" ref="base.model_res_users"/>
+        <field name="subject">Your Daily Work Summary - {{ object.name }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="description">Sent daily to users with a summary of their tasks and subtasks</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Hi <t t-out="object.name"/>,</p>
+
+                <p>Here is your daily work summary:</p>
+
+                <!-- Overdue Tasks -->
+                <t t-if="ctx.get('overdue_tasks')">
+                    <h3 style="color: #FF0000;">🔥 Overdue Tasks</h3>
+                    <ul>
+                        <t t-foreach="ctx.get('overdue_tasks')" t-as="task">
+                            <li>
+                                <strong t-out="task.name"/>
+                                <t t-if="task.date_deadline">(Deadline: <t t-out="task.date_deadline"/>)</t>
+                            </li>
+                        </t>
+                    </ul>
+                </t>
+
+                <!-- Upcoming/Pending Tasks -->
+                <t t-if="ctx.get('upcoming_tasks')">
+                    <h3 style="color: #EEB422;">🟡 Pending Tasks</h3>
+                    <ul>
+                        <t t-foreach="ctx.get('upcoming_tasks')" t-as="task">
+                            <li><t t-out="task.name"/></li>
+                        </t>
+                    </ul>
+                </t>
+
+                <!-- Overdue Subtasks -->
+                <t t-if="ctx.get('overdue_subtasks')">
+                    <h3 style="color: #FF0000;">🔥 Overdue Subtasks</h3>
+                    <ul>
+                        <t t-foreach="ctx.get('overdue_subtasks')" t-as="subtask">
+                            <li><strong t-out="subtask.name"/></li>
+                        </t>
+                    </ul>
+                </t>
+
+                <!-- Upcoming/Pending Subtasks -->
+                <t t-if="ctx.get('upcoming_subtasks')">
+                    <h3 style="color: #EEB422;">🟡 Pending Subtasks</h3>
+                    <ul>
+                        <t t-foreach="ctx.get('upcoming_subtasks')" t-as="subtask">
+                            <li><t t-out="subtask.name"/></li>
+                        </t>
+                    </ul>
+                </t>
+
+                <p style="margin-top: 24px;">Please take the necessary actions to update your progress.</p>
+                <p>Best regards,<br/>Project Management Team</p>
+            </div>
+        </field>
+    </record>
+</odoo>

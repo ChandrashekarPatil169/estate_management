@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_qc_user,qc.user,model_material_quality_check,base.group_user,1,1,1,0
+access_qc_wiz,qc.wiz,model_qc_status_wizard,base.group_user,1,1,1,1
+access_material_quality_config,material.quality.config,model_material_quality_config,base.group_user,1,0,0,0
+access_qc_rejection_wiz,qc.rejection.wiz,model_qc_rejection_wizard,base.group_user,1,1,1,1
+access_material_quality_config_admin,material.quality.config.admin,model_material_quality_config,base.group_erp_manager,1,1,1,1
+access_qc_line_user,access_qc_line_user,model_material_quality_check_line,base.group_user,1,1,1,1

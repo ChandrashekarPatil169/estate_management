@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_hr_employee_previous_employment_user,hr.employee.previous.employment user,model_hr_employee_previous_employment,hr.group_hr_user,1,1,1,1
+access_hr_employee_previous_employment_manager,hr.employee.previous.employment manager,model_hr_employee_previous_employment,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_education_user,hr.employee.education user,model_hr_employee_education,hr.group_hr_user,1,1,1,1
+access_hr_employee_education_manager,hr.employee.education manager,model_hr_employee_education,hr.group_hr_manager,1,1,1,1
+
+access_employee_report_user,employee.report user,model_employee_report,hr.group_hr_user,1,1,1,1
+access_employee_report_manager,employee.report manager,model_employee_report,hr.group_hr_manager,1,1,1,1
+
+access_hr_employee_hr_user,hr.employee hr user,hr.model_hr_employee,hr.group_hr_user,1,1,1,0
+access_hr_employee_hr_manager,hr.employee hr manager,hr.model_hr_employee,hr.group_hr_manager,1,1,1,1
+
+access_employee_training,employee.training,model_employee_training,base.group_user,1,1,1,1
+access_employee_language,employee.language,model_employee_language,base.group_user,1,1,1,1
+access_employee_licence,employee.licence,model_employee_licence,base.group_user,1,1,1,1
+access_employee_promotion,employee.promotion,model_employee_promotion,base.group_user,1,1,1,1
+
+access_employee_challenge_line_user,employee.challenge.line user,model_employee_challenge_line,base.group_user,1,1,1,1
+

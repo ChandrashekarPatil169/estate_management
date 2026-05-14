@@ -1,0 +1,139 @@
+<odoo>
+
+    <record id="view_project_subtask_form_timer_inherit"
+            model="ir.ui.view">
+
+        <field name="name">
+            project.subtask.form.timer.inherit
+        </field>
+
+        <field name="model">project.subtask</field>
+
+        <field name="inherit_id"
+               ref="project_main_mgmt.view_project_subtask_form"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet" position="before">
+
+                <div class="d-flex align-items-center gap-4">
+
+                    <field name="task_accumulated_time" invisible="1"/>
+                    <field name="timer_running" invisible="1"/>
+                    <field name="task_start_date" invisible="1"/>
+
+                    <!-- Timer Widget -->
+                    <field name="task_timer" widget="task_timer"/>
+
+                    <!-- Start -->
+                    <button name="action_start_timer"
+                            type="object"
+                            class="btn btn-outline-success rounded-circle"
+                            invisible="timer_state == 'running'"
+                            title="Start">
+                        <i class="fa fa-play" title="Start"/>
+                    </button>
+
+                    <!-- Pause -->
+                    <button name="action_pause_timer"
+                            type="object"
+                            class="btn btn-outline-warning rounded-circle"
+                            invisible="timer_state != 'running'"
+                            title="Pause">
+                        <i class="fa fa-pause" title="Pause"/>
+                    </button>
+
+                    <!-- Stop -->
+                    <button name="action_stop_timer"
+                            type="object"
+                            class="btn btn-outline-danger rounded-circle"
+                            invisible="timer_state == 'stopped'"
+                            title="Stop">
+                        <i class="fa fa-stop" title="Stop"/>
+                    </button>
+
+<!--                    &lt;!&ndash; Start &ndash;&gt;-->
+<!--                    <button name="action_start_timer"-->
+<!--                            type="object"-->
+<!--                            class="btn btn-outline-success rounded-circle"-->
+<!--                            invisible="timer_running"-->
+<!--                            title="Start Timer">-->
+<!--                        <i class="fa fa-play" title="Start Timer"/>-->
+<!--                    </button>-->
+
+<!--                    &lt;!&ndash; Stop &ndash;&gt;-->
+<!--                    <button name="action_stop_timer"-->
+<!--                            type="object"-->
+<!--                            class="btn btn-outline-danger rounded-circle"-->
+<!--                            invisible="not timer_running"-->
+<!--                            title="Stop Timer">-->
+<!--                        <i class="fa fa-pause" title="Stop Timer"/>-->
+<!--                    </button>-->
+
+                </div>
+
+            </xpath>
+
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Timesheets"  context="{
+               'default_subtask_id': id,
+               'default_task_id': task_id,
+               'default_project_id': project_id
+           }"
+           options="{'no_open': False}">
+                    <field name="timesheet_ids">
+                        <list editable="bottom">
+                            <field name="date"/>
+                            <field name="employee_id"/>
+                            <field name="name"/>
+                            <field name="unit_amount" widget="timesheet_uom"/>
+                        </list>
+                    </field>
+                </page>
+
+<!--                <page string="Timesheets">-->
+
+<!--                    <field name="task_id"-->
+<!--                           context="{'default_task_id': task_id}"-->
+<!--                           invisible="1"/>-->
+
+<!--                    <field name="task_id"-->
+<!--                           context="{'search_default_task_id': task_id}"-->
+<!--                           domain="[('task_id','=',task_id)]"/>-->
+
+<!--                </page>-->
+
+            </xpath>
+
+<!--            <xpath expr="//sheet" position="inside">-->
+
+<!--                <div class="d-flex align-items-center gap-3 mb-3">-->
+
+<!--                    <field name="timer_running" invisible="1"/>-->
+<!--                    <field name="timer_start" invisible="1"/>-->
+
+<!--                    <button name="action_start_timer"-->
+<!--                            type="object"-->
+<!--                            class="btn btn-outline-success rounded-circle"-->
+<!--                            invisible="timer_running"-->
+<!--                            title="Start Timer">-->
+<!--                        <i class="fa fa-play" title="Start Timer"/>-->
+<!--                    </button>-->
+
+<!--                    <button name="action_stop_timer"-->
+<!--                            type="object"-->
+<!--                            class="btn btn-outline-danger rounded-circle"-->
+<!--                            invisible="not timer_running"-->
+<!--                            title="Stop Timer">-->
+<!--                        <i class="fa fa-pause" title="Stop Timer"/>-->
+<!--                    </button>-->
+
+<!--                </div>-->
+
+<!--            </xpath>-->
+
+        </field>
+    </record>
+
+</odoo>

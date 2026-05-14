@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ADD THIS HERE -->
+    <record id="view_subtask_tree_nested" model="ir.ui.view">
+        <field name="name">project.subtask.tree.nested</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="task_start_date"/>
+                <field name="task_end_date"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_task_form_inherit_timer" model="ir.ui.view">
+        <field name="name">project.task.form.inherit.timer</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="d-flex align-items-center gap-4" invisible="is_concluded">
+
+                    <field name="task_accumulated_time" invisible="1"/>
+                    <field name="task_accumulated_time_realtime" invisible="1"/>
+                    <field name="timer_running" invisible="1"/>
+                    <field name="task_timer_color" invisible="1"/>
+                    <field name="task_start_date" invisible="1"/>
+
+                    <!-- Timer -->
+                    <field name="task_timer" widget="task_timer"/>
+
+                    <button name="action_start_timer"
+                            type="object"
+                            title="Start"
+                            icon="fa-play"
+                            class="btn btn-outline-success rounded-circle"
+                            invisible="timer_state == 'running'"/>
+
+
+                    <button name="action_pause_timer"
+                            type="object"
+                            title="Pause"
+                            icon="fa-pause"
+                            class="btn btn-outline-warning rounded-circle"
+                            invisible="timer_state != 'running'"/>
+
+
+                    <button name="action_stop_timer"
+                            type="object"
+                            title="Stop"
+                            icon="fa-stop"
+                            class="btn btn-outline-danger rounded-circle"
+                            invisible="timer_state == 'stopped'"/>
+
+
+                    <!-- Start Button -->
+                    <!--                    <button name="action_start_timer"-->
+                    <!--                            type="object"-->
+                    <!--                            class="btn btn-outline-success rounded-circle"-->
+                    <!--                            invisible="timer_running"-->
+                    <!--                            title="Start Timer">-->
+                    <!--                        <i class="fa fa-play"/>-->
+                    <!--                    </button>-->
+
+                    <!--                    &lt;!&ndash; Stop Button &ndash;&gt;-->
+                    <!--                    <button name="action_stop_timer"-->
+                    <!--                            type="object"-->
+                    <!--                            class="btn btn-outline-danger rounded-circle"-->
+                    <!--                            invisible="not timer_running"-->
+                    <!--                            title="Stop Timer">-->
+                    <!--                        <i class="fa fa-pause"/>-->
+                    <!--                    </button>-->
+
+                </div>
+
+            </xpath>
+
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="task_order"/>
+                <field name="is_concluded" invisible="1"/>
+            </xpath>
+
+<!--            <xpath expr="//notebook" position="inside">-->
+<!--                <page string="Timer" name="timer_info">-->
+<!--                    <group>-->
+<!--                        <group string="Dates">-->
+<!--                            <field name="task_start_date" readonly="1"/>-->
+<!--                            <field name="task_end_date" readonly="1"/>-->
+<!--                        </group>-->
+<!--                        <group string="Timer Information">-->
+<!--                            <field name="task_accumulated_time" string="Accumulated Time (seconds)" invisible="1"/>-->
+<!--                            <field name="task_timer_color" widget="badge"-->
+<!--                                   decoration-success="task_timer_color == 'green'"-->
+<!--                                   decoration-warning="task_timer_color == 'yellow'"-->
+<!--                                   decoration-danger="task_timer_color == 'red'"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                </page>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+
+    <record id="view_task_kanban_inherit_timer" model="ir.ui.view">
+        <field name="name">project.task.kanban.inherit.timer</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="class" add="o_task_timer_kanban"/>
+            </xpath>
+
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="task_accumulated_time_realtime"/>
+                <field name="task_timer_color"/>
+                <field name="task_order"/>
+                <field name="is_concluded"/>
+                <field name="timer_running"/>
+            </xpath>
+
+            <xpath expr="//templates/t[@t-name='card']/main" position="attributes">
+                <attribute name="t-attf-class"
+                           add="border-start border-5 border-{{record.task_timer_color.raw_value == 'green' ? 'success' : record.task_timer_color.raw_value == 'yellow' ? 'warning' : 'danger'}}"
+                           separator=" "/>
+            </xpath>
+
+            <xpath expr="//templates/t[@t-name='card']//footer" position="inside">
+                <div class="d-flex align-items-center gap-2">
+                    <!-- (Timer logic unchanged) -->
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_tree_inherit_timer" model="ir.ui.view">
+        <field name="name">project.task.tree.inherit.timer</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="task_order" optional="show"/>
+            </xpath>
+
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="task_timer_color" string="Time Status" optional="show"
+                       widget="badge"
+                       decoration-success="task_timer_color == 'green'"
+                       decoration-warning="task_timer_color == 'yellow'"
+                       decoration-danger="task_timer_color == 'red'"/>
+                <field name="task_accumulated_time" string="Time (sec)" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_search_inherit_timer" model="ir.ui.view">
+        <field name="name">project.task.search.inherit.timer</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_search_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='templates']" position="after">
+                <separator/>
+                <filter string="Completed Tasks" name="filter_concluded"
+                        domain="[('is_concluded', '=', True)]"/>
+                <filter string="Active Tasks" name="filter_active"
+                        domain="[('is_concluded', '=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_task_form_weightage" model="ir.ui.view">
+        <field name="name">project.task.form.weightage</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert below Assignees -->
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <!--                <field name="weightage"/>-->
+                <!--                <field name="planned_date"/>-->
+                <!--                <field name="completed_date"/>-->
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_employee_form_weightage" model="ir.ui.view">
+        <field name="name">hr.employee.form.weightage</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert after Settings tab using string -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Weightage">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="status_filter"/>
+                        </group>
+                    </group>
+
+                    <!--                    <field name="task_ids" nolabel="1">-->
+                    <!--                        <list editable="bottom">-->
+                    <!--                            <field name="project_id"/>-->
+                    <!--                            <field name="name" string="Task"/>-->
+                    <!--                            <field name="planned_start_date"/>-->
+                    <!--                            <field name="planned_end_date"/>-->
+                    <!--&lt;!&ndash;                            <field name="planned_date"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                            <field name="completed_date"/>&ndash;&gt;-->
+                    <!--                            <field name="weightage"/>-->
+
+                    <!--                        </list>-->
+                    <!--                    </field>-->
+                    <!-- TASKS -->
+                    <field name="task_ids" nolabel="1">
+                        <list>
+                            <field name="project_id"/>
+                            <field name="name" string="Tasks"/>
+                            <field name="subtask_ids" widget="many2many_tags"/>
+<!--                                <list>-->
+<!--                                    <field name="name" string="Subtask"/>-->
+<!--                                </list>-->
+
+                            <field name="planned_start_date"/>
+                            <field name="planned_end_date"/>
+                            <field name="weightage"/>
+                            <field name="status_display"
+                                   widget="badge"
+                                   decoration-success="status_display == 'active'"
+                                   decoration-danger="status_display == 'completed'"/>
+                        </list>
+
+
+                    </field>
+
+
+                    <!-- SUBTASKS -->
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="task_timesheet_unit_amount_readonly" model="ir.ui.view">
+        <field name="name">project.task.timesheet.unit.amount.readonly</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='timesheet_ids']//field[@name='unit_amount']"
+                   position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

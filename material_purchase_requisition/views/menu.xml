@@ -1,0 +1,20 @@
+<odoo>
+
+    <!-- ACTION FIRST -->
+    <record id="action_pr" model="ir.actions.act_window">
+        <field name="name">Purchase Requisitions</field>
+        <field name="res_model">material.purchase.requisition</field>
+        <field name="view_mode">kanban,list,form,calendar,pivot,graph</field>
+    </record>
+
+    <!-- ROOT MENU -->
+    <menuitem id="menu_pr_root" name="Purchase Requisitions"/>
+
+    <!-- CHILD MENU -->
+    <menuitem
+        id="menu_pr"
+        parent="menu_pr_root"
+        action="action_pr"
+    />
+
+</odoo>

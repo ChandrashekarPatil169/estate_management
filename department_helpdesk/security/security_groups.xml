@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ========================= -->
+    <!-- GROUPS -->
+    <!-- ========================= -->
+
+    <!-- Helpdesk User -->
+    <record id="group_helpdesk_user_custom" model="res.groups">
+        <field name="name">Helpdesk User</field>
+    </record>
+
+    <!-- Department Manager -->
+    <record id="group_helpdesk_department_manager" model="res.groups">
+        <field name="name">Helpdesk Department Manager</field>
+        <!--        <field name="category_id" ref="base.module_category_services_management"/>-->
+        <field name="implied_ids" eval="[(4, ref('department_helpdesk.group_helpdesk_user_custom'))]"/>
+    </record>
+
+    <!-- Admin -->
+    <record id="group_helpdesk_admin_custom" model="res.groups">
+        <field name="name">Helpdesk Admin</field>
+        <!--        <field name="category_id" ref="base.module_category_services_management"/>-->
+        <field name="implied_ids" eval="[(4, ref('department_helpdesk.group_helpdesk_department_manager'))]"/>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- RECORD RULES -->
+    <!-- ========================= -->
+
+    <!-- 1️⃣ USER: only created tickets -->
+    <record id="ticket_user_rule" model="ir.rule">
+        <field name="name">User sees own tickets</field>
+        <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+        <field name="groups" eval="[(4, ref('department_helpdesk.group_helpdesk_user_custom'))]"/>
+        <field name="domain_force">
+            [('create_uid', '=', user.id)]
+        </field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+
+    <!-- 2️⃣ DEPARTMENT MANAGER -->
+    <!-- Sees tickets where:
+         - He is department manager
+         - OR he created the ticket
+    -->
+    <record id="ticket_department_manager_rule" model="ir.rule">
+        <field name="name">Department Manager sees his tickets</field>
+        <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+        <field name="groups" eval="[(4, ref('department_helpdesk.group_helpdesk_department_manager'))]"/>
+        <field name="domain_force">
+            ['|',
+            ('manager_id_main', '=', user.id),
+            ('create_uid', '=', user.id)
+            ]
+        </field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+        <field name="active" eval="True"/>
+    </record>
+
+
+    <!-- 3️⃣ ADMIN: full access -->
+    <record id="ticket_admin_rule" model="ir.rule">
+        <field name="name">Admin sees all tickets</field>
+        <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+        <field name="groups" eval="[(4, ref('department_helpdesk.group_helpdesk_admin_custom'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="active" eval="True"/>
+    </record>
+
+
+</odoo>

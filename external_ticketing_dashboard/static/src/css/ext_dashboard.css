@@ -1,0 +1,263 @@
+/* =======================================================================
+   External Ticketing Dashboard — CSS
+   Mirrors and extends odoo_website_helpdesk_dashboard/static/src/css/dashboard.css
+   ======================================================================= */
+
+/* -----------------------------------------------------------------------
+   Layout
+   ----------------------------------------------------------------------- */
+.ext_ticketing_dashboard,
+.ext-main-section {
+    padding: 6px 10px;
+    background-color: #f5f7ff !important;
+}
+
+.ext-section-header {
+    font-size: 1.7em;
+    color: #4a5c9a;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+/* -----------------------------------------------------------------------
+   Stat Cards
+   ----------------------------------------------------------------------- */
+.ext-dashboard-card {
+    border-radius: 14px;
+    box-shadow: 0 6px 28px 0 rgba(62, 57, 107, 0.09),
+                0 2px 8px 0 rgba(62, 57, 107, 0.06);
+    background: #ffffff;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.ext-dashboard-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px 0 rgba(62, 57, 107, 0.15);
+}
+
+.ext-stat-widget {
+    display: flex;
+    align-items: stretch;
+    min-height: 90px;
+}
+
+.ext-stat-icon {
+    width: 36%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+    border-radius: 14px 0 0 14px;
+}
+
+/* Card accent colours */
+.ext-icon-new       { background: #706F8E; }
+.ext-icon-progress  { background: #f6a623; }
+.ext-icon-resolved  { background: #5b9bd5; }
+.ext-icon-done      { background: #2ecc71; }
+.ext-icon-project   { background: #4a5c9a; }
+.ext-icon-subproject{ background: #9b59b6; }
+
+.ext-stat-content {
+    padding: 12px 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ext-stat-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a5c9a;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+}
+
+.ext-stat-digit {
+    font-size: 26px;
+    font-weight: 900;
+    color: #2d3748;
+    line-height: 1;
+}
+
+/* -----------------------------------------------------------------------
+   Chart containers
+   ----------------------------------------------------------------------- */
+.ext-chart-container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+}
+
+.ext-card-shadow {
+    box-shadow: 0 4px 20px 0 rgba(62, 57, 107, 0.08);
+}
+
+.ext-tickets-head {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #4a5c9a;
+    margin-bottom: 0;
+}
+
+.ext-graph-canvas {
+    position: relative;
+    padding: 8px 0;
+}
+
+/* -----------------------------------------------------------------------
+   Priority Bars
+   ----------------------------------------------------------------------- */
+.ext-priority-row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 8px;
+}
+
+.ext-priority-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    width: 64px;
+    flex-shrink: 0;
+    text-align: right;
+}
+
+.ext-priority-bar-wrap {
+    flex: 1;
+    background: #e9ecef;
+    border-radius: 20px;
+    height: 14px;
+    overflow: hidden;
+}
+
+.ext-priority-bar {
+    height: 100%;
+    border-radius: 20px;
+    min-width: 4px;
+    transition: width 0.7s ease;
+}
+
+.ext-bar-verylow  { background: #b0bec5; width: 0%; }
+.ext-bar-low      { background: #64b5f6; width: 0%; }
+.ext-bar-normal   { background: #66bb6a; width: 0%; }
+.ext-bar-high     { background: #ffa726; width: 0%; }
+.ext-bar-veryhigh { background: #ef5350; width: 0%; }
+
+.ext-priority-pct {
+    font-size: 11px;
+    font-weight: 700;
+    color: #4a5c9a;
+    width: 34px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------------
+   Ticket Table
+   ----------------------------------------------------------------------- */
+.ext-ticket-table-wrap {
+    overflow-x: auto;
+}
+
+.ext-ticket-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.ext-ticket-table thead tr {
+    background: linear-gradient(90deg, #4a5c9a, #6366f1);
+    color: #fff;
+}
+
+.ext-ticket-table th,
+.ext-ticket-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.ext-ticket-table tbody tr:hover {
+    background: #f0f4ff;
+    transition: background 0.2s;
+}
+
+.ext-ticket-link {
+    color: #4a5c9a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.ext-ticket-link:hover {
+    text-decoration: underline;
+}
+
+/* Priority badge */
+.ext-priority-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.ext-p-0 { background: #90a4ae; }
+.ext-p-1 { background: #42a5f5; }
+.ext-p-2 { background: #66bb6a; }
+.ext-p-3 { background: #ffa726; color: #333; }
+.ext-p-4 { background: #ef5350; }
+
+/* Stage badge */
+.ext-stage-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #e3e8ff;
+    color: #4a5c9a;
+}
+
+/* Assigned cell */
+.ext-assigned-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ext-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+.ext-no-avatar {
+    background: #c5cae9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #5c6bc0;
+    font-size: 13px;
+}
+
+/* -----------------------------------------------------------------------
+   Responsive tweaks
+   ----------------------------------------------------------------------- */
+@media (max-width: 768px) {
+    .ext-stat-icon { width: 28%; }
+    .ext-stat-digit { font-size: 20px; }
+    .ext-section-header { font-size: 1.3em; }
+}

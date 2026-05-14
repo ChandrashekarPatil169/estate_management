@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_technical_team_list" model="ir.ui.view">
+        <field name="name">technical.team.list</field>
+        <field name="model">technical.approval.status</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_technical_team_form" model="ir.ui.view">
+        <field name="name">technical.team.form</field>
+        <field name="model">technical.approval.status</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_technical_team" model="ir.actions.act_window">
+        <field name="name">Technical Team Approval</field>
+        <field name="res_model">technical.approval.status</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_technical_team"
+              name="Technical Team Approval"
+              parent="menu_purchase_approval_root"
+              action="action_technical_team"
+              groups="base.group_system"
+              sequence="70"/>
+</odoo>

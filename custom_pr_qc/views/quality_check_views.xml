@@ -1,0 +1,103 @@
+<odoo>
+    <record id="view_qc_tree" model="ir.ui.view">
+        <field name="model">material.quality.check</field>
+        <field name="arch" type="xml">
+            <list >
+
+                <field name="picking_id"/>
+                <field name="pr_id"/>
+                <field name="product_names"/>
+
+
+            </list>
+
+        </field>
+    </record>
+
+    <record id="view_qc_form" model="ir.ui.view">
+        <field name="model">material.quality.check</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <group>
+                        <field name="picking_id"/>
+                        <field name="pr_id"/>
+                    </group>
+
+                    <notebook>
+
+                        <page string="Checkers Status">
+
+                            <group col="2">
+
+                                <group string="Requester">
+                                    <field name="requester_id"/>
+
+                                </group>
+
+                                <group string="Inventory">
+                                    <field name="admin_1_id"/>
+
+                                </group>
+
+                                <group string="Accounts">
+                                    <field name="admin_2_id"/>
+
+                                </group>
+
+                            </group>
+
+                        </page>
+
+
+                        <!-- PRODUCT QC TAB -->
+                        <page string="Product Quality Lines">
+
+                            <field name="line_ids">
+                                <list>
+
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+
+                                    <field name="req_result"/>
+                                    <field name="inv_result"/>
+                                    <field name="acc_result"/>
+
+
+                                    <button name="action_pass"
+                                            string="Pass"
+                                            type="object"
+                                            class="btn-success"/>
+
+                                    <button name="action_reject"
+                                            string="Reject"
+                                            type="object"
+                                            class="btn-danger"/>
+
+                                </list>
+                            </field>
+
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+            </form>
+
+        </field>
+    </record>
+    <record id="view_qc_search" model="ir.ui.view">
+        <field name="name">material.quality.check.search</field>
+        <field name="model">material.quality.check</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="picking_id"/>
+                <field name="pr_id"/>
+
+            </search>
+        </field>
+    </record>
+
+</odoo>

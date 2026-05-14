@@ -1,0 +1,21 @@
+<odoo>
+
+    <record id="view_users_form_dashboard_access" model="ir.ui.view">
+        <field name="name">res.users.dashboard.access</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+
+        <field name="arch" type="xml">
+
+            <!-- Insert after login field -->
+            <xpath expr="//field[@name='login']" position="after">
+
+                <field name="show_helpdesk_dashboard"/>
+
+            </xpath>
+
+        </field>
+
+    </record>
+
+</odoo>

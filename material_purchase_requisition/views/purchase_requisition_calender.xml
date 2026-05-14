@@ -1,0 +1,15 @@
+<odoo>
+    <record id="view_material_purchase_requisition_calendar" model="ir.ui.view">
+        <field name="name">material.purchase.requisition.calendar</field>
+        <field name="model">material.purchase.requisition</field>
+        <field name="arch" type="xml">
+            <calendar string="PR Calendar"
+                      date_start="required_date"
+                      color="state">
+                <field name="name"/>
+                <field name="employee_id"/>
+            </calendar>
+        </field>
+    </record>
+</odoo>
+

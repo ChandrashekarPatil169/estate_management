@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list View -->
+    <record id="view_estate_dg_purchase_list" model="ir.ui.view">
+        <field name="name">estate.dg.purchase.list</field>
+        <field name="model">estate.dg.purchase</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="fuel_type_id"/>
+                <field name="date"/>
+                <field name="invoice_no"/>
+                <field name="supplier"/>
+                <field name="liters"/>
+                <field name="total_amount"/>
+<!--                <field name="state"/>-->
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_estate_dg_purchase_form" model="ir.ui.view">
+        <field name="name">estate.dg.purchase.form</field>
+        <field name="model">estate.dg.purchase</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <field name="State"
+                           widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="fuel_type_id"/>
+                        <field name="date"/>
+                        <field name="invoice_no"/>
+                        <field name="supplier"/>
+                        <field name="unit_cost"/>
+                        <field name="liters"/>
+
+                        <field name="total_amount"/>
+
+<!--                        <field name="state"/>-->
+                    </group>
+
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_dg_purchase_pivot" model="ir.ui.view">
+        <field name="name">estate.dg.purchase.pivot</field>
+        <field name="model">estate.dg.purchase</field>
+        <field name="arch" type="xml">
+            <pivot string="Fuel Purchase Analysis">
+                <field name="fuel_type_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="liters" type="measure" operator="sum"/>
+                <field name="total_amount" type="measure" operator="sum"/>
+            </pivot>
+
+        </field>
+    </record>
+
+
+</odoo>

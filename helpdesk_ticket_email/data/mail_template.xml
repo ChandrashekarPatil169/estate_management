@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ticket_submit_email_template" model="mail.template">
+            <field name="name">Helpdesk Ticket Submit</field>
+
+            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+
+            <field name="email_from">${user.email}</field>
+            <field name="email_to">${object.user_id.email}</field>
+
+            <!--            <field name="subject">Ticket Submitted - {object.display_name}</field>-->
+            <field name="subject">{{ object.display_name }} Ticket Submitted)</field>
+
+            <field name="auto_delete" eval="False"/>
+
+            <field name="body_html" type="html">
+                <div style="padding:16px;background-color:#F1F1F1;font-family:Verdana,Arial,sans-serif;">
+
+                    <div style="background-color:white;padding:24px;max-width:600px;margin:auto;">
+
+                        <h2>Ticket Submitted</h2>
+                        <hr/>
+
+                        <p>Dear
+                            <span t-out="object.user_id.name"/>
+                        </p>
+
+                        <p>A new ticket has been submitted.</p>
+
+                        <p>
+                            <b>Ticket:</b>
+                            <span t-out="object.display_name"/>
+                        </p>
+
+                        <p>Regards<br/>Helpdesk System
+                        </p>
+
+                        <hr/>
+
+                        <small>
+                            <span t-out="object.company_id.name"/>
+                        </small>
+
+                    </div>
+
+                </div>
+            </field>
+        </record>
+
+        <record id="ticket_assign_email_template" model="mail.template">
+            <field name="name">Helpdesk Ticket Assigned</field>
+
+            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+
+            <!-- Sender -->
+            <field name="email_from">${user.email}</field>
+
+            <!-- Receiver -->
+            <field name="email_to">${object.user_id.email}</field>
+
+            <!-- Subject -->
+            <field name="subject">{{ object.display_name }} Ticket Assigned</field>
+            <!-- ✅ BODY (QWeb like your working template) -->
+            <field name="body_html" type="html">
+                <div style="padding:16px;background-color:#F1F1F1;font-family:Verdana,Arial,sans-serif;">
+
+                    <div style="background-color:white;padding:24px;max-width:600px;margin:auto;">
+
+                        <h2>Ticket Assigned</h2>
+                        <hr/>
+
+                        <p>Dear
+                            <span t-out="object.user_id.name"/>
+                        </p>
+
+                        <p>A ticket has been assigned to you.</p>
+
+                        <p>
+                            <b>Ticket:</b>
+                            <span t-out="object.display_name"/>
+                        </p>
+
+                        <p>
+                            <b>Assigned By:</b>
+                            <span t-out="user.name"/>
+                        </p>
+
+                        <p>Regards<br/>Helpdesk System
+                        </p>
+
+                        <hr/>
+
+                        <small>
+                            <span t-out="object.company_id.name"/>
+                        </small>
+
+                    </div>
+
+                </div>
+            </field>
+        </record>
+
+        <!--        <record id="ticket_resolve_email_template" model="mail.template">-->
+        <!--            <field name="name">Helpdesk Ticket Resolved</field>-->
+
+        <!--            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>-->
+
+        <!--            &lt;!&ndash; Sender &ndash;&gt;-->
+        <!--            <field name="email_from">${user.email}</field>-->
+
+        <!--            &lt;!&ndash; Multiple recipients &ndash;&gt;-->
+        <!--            <field name="email_to">-->
+        <!--                ${object.manager_id_main.email},${object.partner_id.email}-->
+        <!--            </field>-->
+
+        <!--            <field name="subject">Ticket Resolved - ${object.display_name}</field>-->
+
+        <!--            <field name="body_html" type="html">-->
+        <!--                <p>Dear Sir/Madam,</p>-->
+
+        <!--                <p>The following ticket has been resolved:</p>-->
+
+        <!--                <p>-->
+        <!--                    <b>Ticket:</b>-->
+        <!--                    ${object.display_name}-->
+        <!--                </p>-->
+
+        <!--                <p>-->
+        <!--                    <b>Resolved By:</b>-->
+        <!--                    ${object.assign_to.name}-->
+        <!--                </p>-->
+
+        <!--                <p>Regards,<br/>Helpdesk System-->
+        <!--                </p>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="ticket_resolve_email_template" model="mail.template">-->
+        <!--            <field name="name">Helpdesk Ticket Resolved</field>-->
+
+        <!--            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>-->
+
+        <!--            &lt;!&ndash; Sender &ndash;&gt;-->
+        <!--            <field name="email_from">${user.email}</field>-->
+
+        <!--            &lt;!&ndash; Receivers &ndash;&gt;-->
+        <!--            <field name="email_to">-->
+        <!--                ${object.manager_id_main.email},${object.requested_person_id.partner_id.email}-->
+        <!--            </field>-->
+
+        <!--            &lt;!&ndash; Subject (Mako allowed) &ndash;&gt;-->
+        <!--            <field name="subject">Ticket Resolved - ${object.display_name}</field>-->
+
+        <!--            &lt;!&ndash; ✅ Body (QWeb ONLY) &ndash;&gt;-->
+        <!--            <field name="body_html" type="html">-->
+        <!--                <div>-->
+        <!--                    <p>Dear Sir/Madam,</p>-->
+
+        <!--                    <p>The following ticket has been resolved:</p>-->
+
+        <!--                    <p>-->
+        <!--                        <b>Ticket:</b>-->
+        <!--                        <span t-field="object.display_name"/>-->
+        <!--                    </p>-->
+
+        <!--                    <p>-->
+        <!--                        <b>Resolved By:</b>-->
+        <!--                        <span t-field="object.assign_to.name"/>-->
+        <!--                    </p>-->
+
+        <!--                    <p>-->
+        <!--                        Regards,-->
+        <!--                        <br/>-->
+        <!--                        Helpdesk System-->
+        <!--                    </p>-->
+        <!--                </div>-->
+        <!--            </field>-->
+
+        <!--            <field name="auto_delete" eval="False"/>-->
+        <!--        </record>-->
+
+        <record id="ticket_resolve_email_template" model="mail.template">
+            <field name="name">Helpdesk Ticket Resolved</field>
+
+            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+
+            <field name="email_from">${user.email}</field>
+
+            <field name="email_to">
+                ${object.manager_id_main.email},${object.requested_person_id.partner_id.email}
+            </field>
+
+            <field name="subject">{{ object.display_name }} Ticket Resolved</field>
+            <field name="body_html" type="html">
+                <div style="padding:16px;background-color:#F1F1F1;font-family:Verdana,Arial,sans-serif;">
+
+                    <div style="background-color:white;padding:24px;max-width:600px;margin:auto;">
+
+                        <h2>Ticket Resolved</h2>
+                        <hr/>
+
+                        <p>Dear
+                            <span t-out="object.user_id.name"/>
+                        </p>
+
+                        <p>The following ticket has been resolved:</p>
+
+                        <p>
+                            <b>Ticket:</b>
+                            <span t-out="object.display_name"/>
+                        </p>
+
+                        <p>
+                            <b>Resolved By:</b>
+                            <span t-out="object.user_id.name"/>
+                        </p>
+
+                        <p>Regards<br/>Helpdesk System
+                        </p>
+
+                        <hr/>
+
+                        <small>
+                            <span t-out="object.company_id.name"/>
+                        </small>
+
+                    </div>
+
+                </div>
+            </field>
+        </record>
+
+
+        <record id="ticket_done_email_template" model="mail.template">
+            <field name="name">Helpdesk Ticket Closed</field>
+
+            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+
+            <!-- Sender -->
+            <field name="email_from">${user.email}</field>
+
+            <!-- Multiple recipients -->
+            <field name="email_to">
+                ${object.user_id.email},
+                ${object.partner_id.email},
+                ${','.join(object.message_partner_ids.mapped('email'))}
+            </field>
+
+            <!-- Subject -->
+            <field name="subject">{{ object.display_name }} Ticket Closed</field>
+            <!-- ✅ BODY (QWeb format) -->
+            <field name="body_html" type="html">
+                <div style="padding:16px;background-color:#F1F1F1;font-family:Verdana,Arial,sans-serif;">
+
+                    <div style="background-color:white;padding:24px;max-width:600px;margin:auto;">
+
+                        <h2>Ticket Closed</h2>
+                        <hr/>
+
+                        <p>Dear
+                            <span t-out="object.partner_id.name"/>
+                        </p>
+
+                        <p>The following ticket has been <b>closed</b>.
+                        </p>
+
+                        <p>
+                            <b>Ticket:</b>
+                            <span t-out="object.display_name"/>
+                        </p>
+
+                        <p>
+                            <b>Closed By:</b>
+                            <span t-out="user.name"/>
+                        </p>
+
+                        <p>Regards<br/>Helpdesk System
+                        </p>
+
+                        <hr/>
+
+                        <small>
+                            <span t-out="object.company_id.name"/>
+                        </small>
+
+                    </div>
+
+                </div>
+            </field>
+        </record>
+
+        <record id="ir_cron_pending_ticket_reminder" model="ir.cron">
+            <field name="name">Pending Ticket Approval Reminder</field>
+            <field name="model_id" ref="helpdesk_mgmt.model_helpdesk_ticket"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_send_pending_approval_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="nextcall">2026-04-01 11:28:00</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+        </record>
+
+    </data>
+</odoo>

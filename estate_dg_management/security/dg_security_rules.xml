@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="dg_rule" model="ir.rule">
+        <field name="name">DG Access</field>
+        <field name="model_id" ref="model_estate_dg"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_purchase_rule" model="ir.rule">
+        <field name="name">DG Purchase Access</field>
+        <field name="model_id" ref="model_estate_dg_purchase"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_refill_rule" model="ir.rule">
+        <field name="name">DG Refill Access</field>
+        <field name="model_id" ref="model_estate_dg_refill"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_log_rule" model="ir.rule">
+        <field name="name">DG Log Access</field>
+        <field name="model_id" ref="model_estate_dg_log"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_stock_rule" model="ir.rule">
+        <field name="name">Stock Main Access</field>
+        <field name="model_id" ref="model_estate_stock_main"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_generator_rule" model="ir.rule">
+        <field name="name">Generator Access</field>
+        <field name="model_id" ref="model_estate_generator_master"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_tank_rule" model="ir.rule">
+        <field name="name">Tank Capacity Access</field>
+        <field name="model_id" ref="model_estate_tank_capacity_master"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="dg_fuel_rule" model="ir.rule">
+        <field name="name">Fuel Type Access</field>
+        <field name="model_id" ref="model_estate_fuel_type"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_dg_management.group_dg_user')),
+                                   (4, ref('estate_dg_management.group_dg_employee')),
+                                   (4, ref('estate_dg_management.group_dg_manager')),
+                                   (4, ref('estate_dg_management.group_dg_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

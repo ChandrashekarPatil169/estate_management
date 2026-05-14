@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Module Category -->
+    <record id="module_category_project_dashboard" model="ir.module.category">
+        <field name="name">Project Dashboard</field>
+        <field name="sequence">25</field>
+    </record>
+
+    <!-- Access Group -->
+    <record id="group_project_dashboard_access" model="res.groups">
+        <field name="name">Project Dashboard Access</field>
+        <!-- <field name="category" ref="project_dashboard_odoo.module_category_project_dashboard"/>-->
+    </record>
+
+</odoo>

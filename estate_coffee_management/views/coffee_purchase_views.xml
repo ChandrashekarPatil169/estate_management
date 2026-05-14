@@ -1,0 +1,83 @@
+<odoo>
+    <!-- list view -->
+    <record id="view_coffee_purchase_list" model="ir.ui.view">
+        <field name="name">coffee.purchase.list</field>
+        <field name="model">coffee.purchase</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="ingredient_master_id"/>
+                <field name="quantity"/>
+                <field name="uom_id" />
+                <field name="purchased_by_id"/>
+                <field name="purchase_date"/>
+                <field name="purchase_cost" />
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view -->
+    <record id="view_coffee_purchase_form" model="ir.ui.view">
+        <field name="name">coffee.purchase.form</field>
+        <field name="model">coffee.purchase</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                            invisible="state == 'purchased'"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="ingredient_master_id"/>
+                        <field name="quantity" class="oe_inline"/>
+                        <field name="uom_id" class="oe_inline"/>
+                        <field name="purchased_by_id"/>
+                        <field name="purchase_date"/>
+                        <field name="purchase_cost" class="oe_inline"/>
+                        <field name="currency_id" class="oe_inline"/>
+                    </group>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+  <record id="view_coffee_purchase_pivot" model="ir.ui.view">
+    <field name="name">coffee.purchase.pivot</field>
+    <field name="model">coffee.purchase</field>
+    <field name="arch" type="xml">
+        <pivot string="Purchase Analysis">
+
+            <!-- Rows -->
+            <field name="ingredient_master_id" type="row"/>
+            <field name="purchased_by_id" type="row"/>
+            <field name="state" type="row"/>
+
+            <!-- Columns -->
+            <field name="purchase_date" type="col"/>
+            <field name="uom_id" type="col"/>
+            <field name="currency_id" type="col"/>
+
+            <!-- Measures -->
+            <field name="quantity" type="measure"/>
+            <field name="purchase_cost" type="measure"/>
+
+        </pivot>
+    </field>
+</record>
+
+
+
+    <!-- Action -->
+    <record id="action_coffee_purchase" model="ir.actions.act_window">
+        <field name="name">Purchases</field>
+        <field name="res_model">coffee.purchase</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="view_id" ref="view_coffee_purchase_list"/>
+    </record>
+</odoo>

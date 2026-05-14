@@ -1,0 +1,101 @@
+<odoo>
+    <!-- Managers: Full Access to all models -->
+    <record id="rule_coffee_manager_full_ingredient" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Ingredient</field>
+        <field name="model_id" ref="model_estate_coffee_ingredient"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_building_stock" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Building Stock</field>
+        <field name="model_id" ref="model_building_stock"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_coffee_machine" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Machines</field>
+        <field name="model_id" ref="model_coffee_machine"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_machine_stock" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Machine Stock</field>
+        <field name="model_id" ref="model_machine_stock"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_cleaning_log" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Cleaning Log</field>
+        <field name="model_id" ref="model_cleaning_log"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_building_transfer" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Building Transfer</field>
+        <field name="model_id" ref="model_coffee_building_transfer"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <record id="rule_coffee_manager_full_purchase" model="ir.rule">
+        <field name="name">Coffee Manager Full Access - Purchases</field>
+        <field name="model_id" ref="model_coffee_purchase"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_manager'))]"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+    </record>
+
+    <!-- Users: Only records they follow -->
+    <record id="rule_coffee_user_followers_ingredient" model="ir.rule">
+        <field name="name">Users Access if Follower - Ingredient</field>
+        <field name="model_id" ref="model_estate_coffee_ingredient"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_building_stock" model="ir.rule">
+        <field name="name">Users Access if Follower - Building Stock</field>
+        <field name="model_id" ref="model_building_stock"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_coffee_machine" model="ir.rule">
+        <field name="name">Users Access if Follower - Machines</field>
+        <field name="model_id" ref="model_coffee_machine"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_machine_stock" model="ir.rule">
+        <field name="name">Users Access if Follower - Machine Stock</field>
+        <field name="model_id" ref="model_machine_stock"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_cleaning_log" model="ir.rule">
+        <field name="name">Users Access if Follower - Cleaning Log</field>
+        <field name="model_id" ref="model_cleaning_log"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_building_transfer" model="ir.rule">
+        <field name="name">Users Access if Follower - Building Transfer</field>
+        <field name="model_id" ref="model_coffee_building_transfer"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+
+    <record id="rule_coffee_user_followers_purchase" model="ir.rule">
+        <field name="name">Users Access if Follower - Purchases</field>
+        <field name="model_id" ref="model_coffee_purchase"/>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user'))]"/>
+        <field name="domain_force">[('message_follower_ids.partner_id','in',[user.partner_id.id])]</field>
+    </record>
+</odoo>

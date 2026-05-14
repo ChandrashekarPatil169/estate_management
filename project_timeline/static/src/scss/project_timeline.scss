@@ -1,0 +1,26 @@
+.o_project_timeline_item {
+
+    small[name="allocated_hours"] {
+        font-size: 0.85rem;   // more consistent than %
+    }
+
+    img {
+        margin-top: -1px;
+        vertical-align: middle; // better alignment in Owl/BS5
+    }
+}
+
+.o_timeline_exp_date {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.o_exp_date {
+    color: #dc3545 !important;
+    font-weight: 600;
+}
+
+.o_done_date {
+    color: #2ecb71 !important;
+    font-weight: 600;
+}

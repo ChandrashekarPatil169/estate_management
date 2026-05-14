@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================== -->
+    <!-- Property / Building / Floor / Unit / Room -->
+    <!-- ============================== -->
+    <record id="action_property" model="ir.actions.act_window">
+        <field name="name">Properties</field>
+        <field name="res_model">estate.property</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_building" model="ir.actions.act_window">
+        <field name="name">Buildings</field>
+        <field name="res_model">estate.building</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_floor" model="ir.actions.act_window">
+        <field name="name">Floors</field>
+        <field name="res_model">estate.floor</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_unit" model="ir.actions.act_window">
+        <field name="name">Units</field>
+        <field name="res_model">estate.unit</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_room" model="ir.actions.act_window">
+        <field name="name">Rooms</field>
+        <field name="res_model">estate.room</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_maintenance_request" model="ir.actions.act_window">
+        <field name="name">Maintenance Requests</field>
+        <field name="res_model">estate.maintenance.request</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ============================== -->
+    <!-- Farm Management -->
+    <!-- ============================== -->
+    <record id="action_farm" model="ir.actions.act_window">
+        <field name="name">Farms</field>
+        <field name="res_model">estate.farm</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+    <record id="action_farm_new" model="ir.actions.act_window">
+        <field name="name">All Farms</field>
+        <field name="res_model">estate.farm</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Click "Create" to add a new farm.
+            </p>
+        </field>
+    </record>
+
+
+    <record id="action_livestock" model="ir.actions.act_window">
+        <field name="name">Livestock</field>
+        <field name="res_model">estate.livestock</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_farm_task" model="ir.actions.act_window">
+        <field name="name">Farm Tasks</field>
+        <field name="res_model">estate.farm.task</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_farm_employee" model="ir.actions.act_window">
+        <field name="name">Farm Employees</field>
+        <field name="res_model">estate.farm.employee</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">estate.asset</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_farm_plot" model="ir.actions.act_window">
+        <field name="name">Farm Plots</field>
+        <field name="res_model">estate.farm.plot</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_irrigation" model="ir.actions.act_window">
+        <field name="name">Irrigation Logs</field>
+        <field name="res_model">estate.irrigation</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_compliance" model="ir.actions.act_window">
+        <field name="name">Compliance</field>
+        <field name="res_model">estate.farm.compliance</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_sales" model="ir.actions.act_window">
+        <field name="name">Post-Harvest &amp; Sales</field>
+        <field name="res_model">estate.farm.sales</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+    <record id="action_room_table" model="ir.actions.act_window">
+        <field name="name">Room Tables</field>
+        <field name="res_model">estate.room.table</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ============================== -->
+    <!-- Miscellaneous -->
+    <!-- ============================== -->
+    <record id="action_unit_payment" model="ir.actions.act_window">
+        <field name="name">Unit Payments</field>
+        <field name="res_model">estate.unit.payment</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_location" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">estate.location</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+        <record id="view_unit_type_list" model="ir.ui.view">
+        <field name="name">estate.unit.type.list</field>
+        <field name="model">estate.unit.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_unit_type_form" model="ir.ui.view">
+        <field name="name">estate.unit.type.form</field>
+        <field name="model">estate.unit.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_unit_type" model="ir.actions.act_window">
+        <field name="name">Unit Types</field>
+        <field name="res_model">estate.unit.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <record id="view_building_payment_form" model="ir.ui.view">
+        <field name="name">estate.building.payment.form</field>
+        <field name="model">estate.building.payment</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+
+                    <!-- ===== HEADER INFO ===== -->
+                    <group string="Payment Information">
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="building_id"/>
+                            <field name="property_id"/>
+                            <field name="product_id"/>
+                        </group>
+
+                        <group>
+                            <field name="amount" readonly="amount_locked"/>
+                            <field name="due_date" readonly="due_date_locked"/>
+                            <field name="amount_locked" widget="boolean_toggle"/>
+                            <field name="due_date_locked" widget="boolean_toggle"/>
+                            <field name="recurring_payment" widget="boolean_toggle"/>
+                            <field name="recurring_start_date"
+                                   invisible="recurring_payment == False"/>
+
+                            <field name="recurring_end_date"
+                                   invisible="recurring_payment == False"/>
+                            <!--                            <field name="payment_date"/>-->
+                        </group>
+                        <group string="Meter Details">
+                            <field name="meter_start_reading"/>
+                            <field name="meter_end_reading"/>
+                            <field name="meter_consumed" readonly="1"/>
+                        </group>
+                        <group string="Payment Completion">
+                            <group>
+                                <field name="payment_done_date"/>
+                                <field name="payment_method_id"/>
+                            </group>
+                            <group>
+                                <field name="receipt_number"/>
+                            </group>
+                        </group>
+                        <group string="Additional Details">
+                            <field name="description"/>
+                            <field name="service_billing_date"/>
+                        </group>
+                    </group>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+    <!-- ================================================= -->
+    <!-- BUILDING PAYMENT LIST VIEW -->
+    <!-- ================================================= -->
+    <record id="view_building_payment_list" model="ir.ui.view">
+        <field name="name">estate.building.payment.list</field>
+        <field name="model">estate.building.payment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="building_id"/>
+                <field name="property_id"/>
+                <field name="product_id"/>
+                <field name="amount"/>
+                <!--                <field name="payment_date"/>-->
+                <field name="due_date"/>
+                <field name="payment_done_date"/>
+                <field name="meter_start_reading"/>
+                <field name="meter_end_reading"/>
+                <field name="meter_consumed"/>
+                <field name="receipt_number"/>
+                <field name="description" optional="hide"/>
+                <field name="service_billing_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_building_payment_pivot" model="ir.ui.view">
+        <field name="name">estate.building.payment.pivot</field>
+        <field name="model">estate.building.payment</field>
+        <field name="arch" type="xml">
+            <pivot string="Building Payment Analysis">
+
+                <!-- ROW GROUPS -->
+                <field name="building_id" type="row"/>
+                <field name="property_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="payment_method_id" type="row"/>
+                <field name="recurring_payment" type="row"/>
+
+                <!-- TIME -->
+                <field name="due_date" interval="month" type="col"/>
+                <field name="payment_done_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <field name="amount" type="measure"/>
+                <field name="meter_consumed" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+       <record id="action_building_payment" model="ir.actions.act_window">
+        <field name="name">Building Payments</field>
+        <field name="res_model">estate.building.payment</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_unit_payment" model="ir.actions.act_window">
+        <field name="name">Unit Payments</field>
+        <field name="res_model">estate.unit.payment</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+    <record id="action_payment_method" model="ir.actions.act_window">
+        <field name="name">Payment Methods</field>
+        <field name="res_model">estate.payment.method</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+</odoo>

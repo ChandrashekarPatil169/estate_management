@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record id="mail_template_po_submit_approval" model="mail.template">
+            <field name="name">PO Submitted for Approval</field>
+
+            <!-- Point this to your actual PR model record -->
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+            <!-- ✅ Keep these on a single line to avoid linefeed/carriage return errors -->
+            <field name="subject">PO {{ object.name }} submitted for approval</field>
+            <field name="email_from">{{ object.company_id.email }}</field>
+            <field name="email_to"></field>
+
+            <field name="auto_delete" eval="False"/>
+
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>A Purchase Order has been submitted for approval.</p>
+                    <ul>
+                        <li>
+                            <b>PR Reference:</b>
+                            <t t-out="object.name"/>
+                        </li>
+                        <li>
+                            <b>Requested By:</b>
+                            <t t-if="object.employee_id">
+                                <t t-out="object.employee_id.name"/>
+                            </t>
+                            <t t-else="">N/A</t>
+                        </li>
+                        <li>
+                            <b>Department:</b>
+                            <t t-if="object.department_id">
+                                <t t-out="object.department_id.name"/>
+                            </t>
+                            <t t-else="">N/A</t>
+                        </li>
+                    </ul>
+                    <p>Please review the Purchase Order in the system.</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

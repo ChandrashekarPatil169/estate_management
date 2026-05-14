@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+       <data>
+    <record id="email_template_approver_added" model="mail.template">
+        <field name="name">Governance approver notify</field>
+        <field name="model_id" ref="project_main_mgmt.model_project_subtask"/>
+        <field name="subject">You were added as Approver</field>
+        <field name="body_html">
+            <![CDATA[
+                <p>Hi,</p>
+
+                <p>You have been added as approver for:</p>
+
+                <p>
+                Project: <b><t t-esc="object.project_id.name"/></b><br/>
+                Subtask: <b><t t-esc="object.name"/></b>
+                </p>
+                ]]>
+        </field>
+    </record>
+    <record id="email_template_approver_removed" model="mail.template">
+        <field name="name">Governance approver removal notify</field>
+        <field name="model_id" ref="project_main_mgmt.model_project_subtask"/>
+        <field name="subject">You were removed as Approver</field>
+        <field name="body_html">
+            <![CDATA[
+                <p>Hi,</p>
+
+                <p>You have been removed as approver for:</p>
+
+                <p>
+                Project: <b><t t-esc="object.project_id.name"/></b><br/>
+                Subtask: <b><t t-esc="object.name"/></b>
+                </p>
+                ]]>
+        </field>
+    </record>
+       </data>
+</odoo>

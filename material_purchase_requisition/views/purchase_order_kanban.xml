@@ -1,0 +1,15 @@
+<odoo>
+    <record id="purchase_order_kanban_state" model="ir.ui.view">
+        <field name="name">purchase.order.kanban.state</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.view_purchase_order_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="default_group_by">state</attribute>
+                <attribute name="class" add="o_kanban_pipeline"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

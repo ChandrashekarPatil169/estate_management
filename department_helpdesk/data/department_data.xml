@@ -1,0 +1,23 @@
+<odoo>
+
+<!--    <record id="dept_facility" model="helpdesk.department">-->
+<!--        <field name="name">Facility</field>-->
+<!--        <field name="code">facility</field>-->
+<!--    </record>-->
+
+<!--    <record id="dept_it" model="helpdesk.department">-->
+<!--        <field name="name">IT Incident</field>-->
+<!--        <field name="code">it</field>-->
+<!--    </record>-->
+
+<!--    <record id="dept_inventory" model="helpdesk.department">-->
+<!--        <field name="name">Inventory</field>-->
+<!--        <field name="code">inventory</field>-->
+<!--    </record>-->
+
+<!--    <record id="dept_hr" model="helpdesk.department">-->
+<!--        <field name="name">HR</field>-->
+<!--        <field name="code">hr</field>-->
+<!--    </record>-->
+
+</odoo>

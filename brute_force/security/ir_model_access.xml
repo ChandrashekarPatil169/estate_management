@@ -1,0 +1,18 @@
+<odoo>
+    <record id="access_auth_attempt_user" model="ir.model.access">
+        <field name="name">Authentication Attempt - User</field>
+        <field name="model_id" ref="model_res_authentication_attempt"/>
+        <field name="group_id" eval="False"/>
+        <field name="perm_read" eval="True"/>
+    </record>
+
+    <record id="access_auth_attempt_manager" model="ir.model.access">
+        <field name="name">Authentication Attempt - Admin</field>
+        <field name="model_id" ref="model_res_authentication_attempt"/>
+        <field name="group_id" ref="base.group_system"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

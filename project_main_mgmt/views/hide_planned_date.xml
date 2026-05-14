@@ -1,0 +1,46 @@
+<odoo>
+    <record id="view_task_form_hide_native_scheduling_final" model="ir.ui.view">
+        <field name="name">project.task.form.hide.native.scheduling.final</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- 1. Hide the Standard Deadline Row & its Label -->
+            <xpath expr="//label[@for='date_deadline']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@id='date_deadline_and_recurring_task']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+<!--            &lt;!&ndash; 2. Hide the Community 'Planned Dates' (date_start & date_end) &ndash;&gt;-->
+<!--            &lt;!&ndash; We target the label and the fields using the correct names for Odoo 19 Community &ndash;&gt;-->
+<!--            <xpath expr="//label[@for='planned_date_start']" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//*[(@name='planned_date_start')]" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//*[(@name='planned_date_end')]" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+<!--            &lt;!&ndash; 3. Hide the Enterprise/Planning names (planned_date_start/end) &ndash;&gt;-->
+<!--            <xpath expr="//label[@for='planned_date_start']" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//*[(@name='planned_date_start')]" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+<!--            <xpath expr="//*[(@name='planned_date_end')]" position="attributes" fail_on_error="0">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+<!--            &lt;!&ndash; 4. Hide Allocated Time (Allocated Hours) &ndash;&gt;-->
+<!--            <xpath expr="//field[@name='allocated_hours']" position="attributes">-->
+<!--                <attribute name="invisible">1</attribute>-->
+<!--            </xpath>-->
+
+        </field>
+    </record>
+</odoo>

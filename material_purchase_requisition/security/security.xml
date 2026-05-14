@@ -1,0 +1,7 @@
+<odoo>
+    <record id="group_pr_user" model="res.groups">
+        <field name="name">PR User</field>
+    </record>
+
+
+</odoo>

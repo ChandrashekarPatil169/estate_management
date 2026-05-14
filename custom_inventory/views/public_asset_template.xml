@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="public_asset_template" name="Public Asset Page">
+        <t t-call="website.layout">
+            <div class="container mt-5">
+                <h2 class="text-center mb-4">Asset Details</h2>
+
+                <div class="card p-4 shadow">
+                    <table class="table table-bordered">
+                        <tbody>
+
+                            <tr><th>Asset Tag</th><td><t t-esc="asset.asset_tag"/></td></tr>
+                            <tr><th>Asset Type</th><td><t t-esc="asset.asset_type_id.name"/></td></tr>
+                            <tr><th>Asset Category</th><td><t t-esc="asset.asset_category_id.name"/></td></tr>
+                            <tr><th>Warehouse</th><td><t t-esc="asset.warehouse_id.name"/></td></tr>
+
+                            <tr><th>Product</th><td><t t-esc="asset.product_name_id.name"/></td></tr>
+                            <tr><th>Brand</th><td><t t-esc="asset.brand_id.name"/></td></tr>
+                            <tr><th>Model</th><td><t t-esc="asset.model_id.name"/></td></tr>
+                            <tr><th>Serial No</th><td><t t-esc="asset.serial_no"/></td></tr>
+                            <tr><th>Quantity</th><td><t t-esc="asset.quantity"/></td></tr>
+                            <tr><th>Part Number</th><td><t t-esc="asset.part_number"/></td></tr>
+
+                            <tr><th>Purchase Date</th><td><t t-esc="asset.purchase_date"/></td></tr>
+                            <tr><th>Manufacture Date</th><td><t t-esc="asset.manufacture_date"/></td></tr>
+                            <tr><th>Warranty Start</th><td><t t-esc="asset.warranty_start"/></td></tr>
+                            <tr><th>Warranty End</th><td><t t-esc="asset.warranty_end"/></td></tr>
+                            <tr><th>Expiry Date</th><td><t t-esc="asset.expiry_date"/></td></tr>
+
+                            <tr><th>AWB / Bill No</th><td><t t-esc="asset.awb_or_bill_no"/></td></tr>
+                            <tr><th>Part</th><td><t t-esc="asset.part"/></td></tr>
+
+                            <tr><th>In Charge</th><td><t t-esc="asset.in_charge.name"/></td></tr>
+                            <tr><th>Asset Owner</th><td><t t-esc="asset.asset_owner.name"/></td></tr>
+
+                            <tr><th>Location</th><td><t t-esc="asset.location_id.name"/></td></tr>
+                            <tr><th>Sub Location</th><td><t t-esc="asset.sub_location_id.name"/></td></tr>
+                            <tr><th>Cabin</th><td><t t-esc="asset.cabin_id.name"/></td></tr>
+                            <tr><th>Project</th><td><t t-esc="asset.project_id.name"/></td></tr>
+
+                            <tr><th>Property</th><td><t t-esc="asset.property_id.name"/></td></tr>
+                            <tr><th>Building</th><td><t t-esc="asset.building_id.name"/></td></tr>
+                            <tr><th>Floor</th><td><t t-esc="asset.floor_id.name"/></td></tr>
+                            <tr><th>Unit</th><td><t t-esc="asset.unit_id.name"/></td></tr>
+                            <tr><th>Room</th><td><t t-esc="asset.room_id.name"/></td></tr>
+
+                            <tr><th>Lifecycle Status</th><td><t t-esc="asset.lifecycle_state"/></td></tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,21 @@
+{
+    'name': 'Project Hierarchy Management',
+    'version': '1.0',
+    'summary': 'Adds Parent/Subproject hierarchy support to Projects',
+    'category': 'Project',
+    'author': 'Your Company',
+    'license': 'LGPL-3',
+    'depends': ['project'],
+    'data': [
+        "security/ir.model.access.csv",
+        'data/mail_template_project_rejected.xml',
+        'views/project_views.xml',
+        'views/res_config_settings_view.xml',
+        "views/project_approval_matrix_views.xml",
+        "views/project_reject_wizard_views.xml",
+        "views/project_kanban_inherit.xml",
+        "views/menu.xml",
+    ],
+    'installable': True,
+    'application': False,
+}

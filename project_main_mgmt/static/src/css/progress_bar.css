@@ -1,0 +1,180 @@
+/* Make radio labels color squares */
+.progress_color_radio .form-check-label {
+    font-size: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+
+/* Color square base */
+.progress_color_radio .form-check-label::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+}
+
+/* GREEN */
+.progress_color_radio .form-check-input[data-value="bg-success"] + .form-check-label::before {
+    background: #28a745;
+}
+
+/* YELLOW */
+.progress_color_radio .form-check-input[data-value="bg-warning"] + .form-check-label::before {
+    background: #ffc107;
+}
+
+/* RED */
+.progress_color_radio .form-check-input[data-value="bg-danger"] + .form-check-label::before {
+    background: #dc3545;
+}
+
+/* BLUE */
+.progress_color_radio .form-check-input[data-value="bg-info"] + .form-check-label::before {
+    background: #17a2b8;
+}
+
+/* PURPLE */
+.progress_color_radio .form-check-input[data-value="bg-primary"] + .form-check-label::before {
+    background: #6f42c1;
+}
+
+/* BLACK */
+.progress_color_radio .form-check-input[data-value="bg-dark"] + .form-check-label::before {
+    background: #343a40;
+}
+
+/* Highlight selected */
+.progress_color_radio .form-check-input:checked + .form-check-label::before {
+    border: 3px solid #000;
+}
+
+/* Hide all options by default */
+.progress_color_radio .form-check {
+    display: none;
+}
+
+/* Always show selected */
+.progress_color_radio .form-check:has(input:checked) {
+    display: inline-block;
+}
+
+/* Hover expand */
+.progress_color_radio:hover .form-check {
+    display: inline-block;
+}
+
+/* When editing list row */
+.o_list_view .o_selected_row .progress_color_radio .form-check {
+    display: inline-block;
+}
+
+
+
+
+
+
+/* Make radio labels color squares *//*
+
+.o_field_radio .form-check-label {
+    font-size: 0;
+    cursor: pointer;
+    display: inline-block;
+}
+
+*/
+/* Color square base *//*
+
+.o_field_radio .form-check-label::before {
+    content: "";
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+}
+
+*/
+/* GREEN *//*
+
+.form-check-input[data-value="bg-success"] + .form-check-label::before {
+    background: #28a745;
+}
+
+*/
+/* YELLOW *//*
+
+.form-check-input[data-value="bg-warning"] + .form-check-label::before {
+    background: #ffc107;
+}
+
+*/
+/* RED *//*
+
+.form-check-input[data-value="bg-danger"] + .form-check-label::before {
+    background: #dc3545;
+}
+
+*/
+/* BLUE *//*
+
+.form-check-input[data-value="bg-info"] + .form-check-label::before {
+    background: #17a2b8;
+}
+
+*/
+/* PURPLE *//*
+
+.form-check-input[data-value="bg-primary"] + .form-check-label::before {
+    background: #6f42c1;
+}
+
+*/
+/* BLACK *//*
+
+.form-check-input[data-value="bg-dark"] + .form-check-label::before {
+    background: #343a40;
+}
+
+*/
+/* Highlight selected *//*
+
+.form-check-input:checked + .form-check-label::before {
+    border: 3px solid #000;
+}
+
+*/
+/* =========================================
+   INLINE EXPAND / COLLAPSE (HOVER BASED)
+   ========================================= *//*
+
+
+*/
+/* Hide all options by default *//*
+
+.o_field_radio .form-check {
+    display: none;
+}
+
+*/
+/* Always show selected *//*
+
+.o_field_radio .form-check:has(input:checked) {
+    display: inline-block;
+}
+
+*/
+/* When hovering over the field → show all *//*
+
+.o_field_radio:hover .form-check {
+    display: inline-block;
+}
+
+*/
+/* ✅ IMPORTANT: When row is being edited, show all *//*
+
+.o_list_view .o_selected_row .o_field_radio .form-check {
+    display: inline-block;
+}
+*/

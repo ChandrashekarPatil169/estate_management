@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Reuse the existing helpdesk dashboard access group from odoo_website_helpdesk_dashboard.
+         No new group needed — the external ticketing dashboard uses the same access gate. -->
+</odoo>

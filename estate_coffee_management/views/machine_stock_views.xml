@@ -1,0 +1,79 @@
+<odoo>
+    <record id="view_machine_stock_list" model="ir.ui.view">
+        <field name="name">machine.stock.list</field>
+        <field name="model">machine.stock</field> <!-- FIXED -->
+        <field name="arch" type="xml">
+            <list>
+                <field name="machine_id"/>
+                <field name="building_id_main"/>
+                <field name="ingredient_id"/>
+                <field name="quantity"/>
+                <field name="refill_date"/>
+                <field name="employee_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_machine_stock_form" model="ir.ui.view">
+        <field name="name">machine.stock.form</field>
+        <field name="model">machine.stock</field> <!-- FIXED -->
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                            invisible="state == 'confirmed'"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="machine_id" domain="[('id','in',allowed_machine_ids)]"/>
+                        <field name="building_id_main"/>
+
+                        <field name="ingredient_id"/>
+                        <field name="quantity"/>
+                        <field name="employee_id"/>
+                        <field name="refill_date"/>
+                    </group>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+    <!-- Pivot View -->
+    <record id="view_machine_stock_pivot" model="ir.ui.view">
+        <field name="name">machine.stock.pivot</field>
+        <field name="model">machine.stock</field>
+        <field name="arch" type="xml">
+            <pivot string="Machine Refill Analysis">
+
+                <!-- Rows -->
+                <field name="machine_id" type="row"/>
+                <field name="building_id_main" type="row"/>
+                <field name="ingredient_id" type="row"/>
+                <field name="employee_id" type="row"/>
+                <field name="state" type="row"/>
+
+                <!-- Columns -->
+                <field name="refill_date" type="col"/>
+
+                <!-- Measures -->
+                <field name="quantity" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="action_machine_stock" model="ir.actions.act_window">
+        <field name="name">Machine Refills</field>
+        <field name="res_model">machine.stock</field> <!-- FIXED -->
+        <field name="view_mode">list,form,pivot</field>
+        <field name="view_id" ref="view_machine_stock_list"/>
+    </record>
+</odoo>

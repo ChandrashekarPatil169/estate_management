@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================= -->
+    <!-- LIST VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_subtask_list" model="ir.ui.view">
+        <field name="name">project.subtask.list</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="story_id"/>
+                <field name="assignee_id"/>
+                <field name="estimate"/>
+                <field name="status"/>
+                <field name="subtask_progress" widget="progressbar"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- FORM VIEW (Your Existing) -->
+    <!-- ================================= -->
+    <record id="view_project_subtask_form" model="ir.ui.view">
+        <field name="name">project.subtask.form</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <form string="Subtask">
+                <!-- ✅ HEADER MUST BE HERE -->
+                <header>
+                    <field name="stage_id"
+                           widget="statusbar"
+                           class="my-custom-stages"
+                           options="{'clickable': 1, 'fold_field': 'fold'}"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <!-- NEW: Documents Smart Button -->
+                        <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-paperclip">
+                            <field name="document_count" string="Documents" widget="statinfo"/>
+                        </button>
+
+                        <button name="action_view_child_subtasks"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-sitemap">
+
+                            <field name="subtask_count"
+                                   string="Subtasks"
+                                   widget="statinfo"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="project_id"/>
+                        <field name="task_id"/>
+                        <field name="story_id"/>
+                        <field name="task_type_id"/>
+                        <field name="task_label_id"/>
+                        <field name="assignee_id"/>
+                        <field name="priorities"/>
+                        <field name="estimate"/>
+                        <field name="status"/>
+                        <field name="tag_ids"
+                               widget="many2many_tags"
+                               domain="[('project_ids', '=', project_id)]"
+                               options="{'color_field': 'color', 'no_create_edit': True}"
+                               context="{'project_id': project_id}"/>
+                        <field name="subtask_weightage"/>
+                        <field name="planned_start_date"/>
+                        <field name="planned_end_date"/>
+                        <field name="expected_end_date"/>
+                        <field name="completed_date" readonly="1"/>
+                        <field name="subtask_progress" widget="progressbar"/>
+
+                    </group>
+
+                    <!-- NOTEBOOK -->
+                    <notebook>
+
+                        <!-- GOVERNANCE PAGE -->
+                        <page string="Governance">
+
+                            <group>
+                                <!-- Select who can approve -->
+                                <field name="approver_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+
+                                <field name="evidence_required"
+                                       options="{'resizable': false}"
+                                       placeholder="Add evidence here..."/>
+
+                                <!-- Audit info -->
+                                <field name="approved_by_id" readonly="1"/>
+
+                                <!-- Internal flag -->
+                                <field name="is_done" invisible="1"/>
+
+
+                            </group>
+
+                            <group>
+                                <button name="action_mark_done"
+                                        type="object"
+                                        string="Approve &amp; Mark Done"
+                                        class="glow-on-hover"
+                                        invisible="is_done"/>
+
+                                <!-- In the Subtask form view -->
+                                <!--                                <button name="action_mark_done"-->
+                                <!--                                        type="object"-->
+                                <!--                                        string="Mark Done"-->
+                                <!--                                        invisible="project_id_state != 'approved' or is_done == True"-->
+                                <!--                                        class="oe_highlight"/>-->
+
+                            </group>
+
+                        </page>
+                        <!-- NEW: Documents Page -->
+                        <page string="Documents" name="documents_page">
+                            <field name="document_ids" widget="many2many_binary" string="Attach Files"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="inherited_notes" readonly="1" widget="html"/>
+                        </page>
+                        <page string="Subtasks">
+
+                            <field name="child_ids"
+                                   context="{
+                                    'default_parent_id': id,
+                                    'default_task_id': task_id,
+                                    'default_project_id': project_id
+                                    }"
+                                   mode="list,form"
+                                   options="{'no_open': False}">
+
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="assignee_id"/>
+                                    <field name="stage_id"/>
+                                    <field name="estimate"/>
+                                    <field name="subtask_progress" widget="progressbar"/>
+                                </list>
+
+                            </field>
+
+                        </page>
+                        <page name="sla" string="SLA">
+
+
+                            <!-- SLA Overview -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Overview
+                                </div>
+
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_risk"
+                                           widget="badge"
+                                           decoration-success="sla_risk == 'green'"
+                                           decoration-warning="sla_risk == 'amber'"
+                                           decoration-danger="sla_risk == 'red'"/>
+
+
+                                    <field name="sla_days_label" widget="badge"/>
+                                </setting>
+                            </group>
+                            <!-- SLA Monitoring -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Monitoring
+                                </div>
+
+
+                                <setting class="col-lg-12">
+                                    <button name="action_open_child_subtask_sla_monitoring"
+                                            type="object"
+                                            class="btn btn-link p-0"
+                                            icon="fa-shield">
+                                        Open Child Subtask SLA Monitoring
+                                    </button>
+                                </setting>
+                            </group>
+
+
+                            <!-- SLA Deadlines -->
+                            <group class="row mt16 o_settings_container">
+
+
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Deadlines
+                                </div>
+
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_child_subtask_sla_7_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming (Next 7 Days)
+                                    </button>
+                                </setting>
+
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_child_subtask_sla_30_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming (Next 30 Days)
+                                    </button>
+                                </setting>
+
+
+                            </group>
+                            <!-- SLA Escalation Rules -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Escalation Rules
+                                </div>
+
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_escalation_rules"
+                                           placeholder="Define subtask-specific SLA escalation rules..."
+                                           nolabel="1"/>
+                                </setting>
+                            </group>
+
+
+                            <!-- Escalation Owners -->
+                            <group string="Escalation Owners">
+                                <group col="2">
+
+
+                                    <div class="o_form_label">Amber (&lt;= 3 Days Remaining)</div>
+                                    <field name="sla_amber_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+
+                                    <div class="o_form_label">Red (Overdue)</div>
+                                    <field name="sla_red_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+
+                                    <div class="o_form_label">Overdue +3 Days</div>
+                                    <field name="sla_overdue_3_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+
+                                    <div class="o_form_label">Overdue +6 Days</div>
+                                    <field name="sla_overdue_6_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+
+                                </group>
+                            </group>
+
+
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- KANBAN VIEW (Odoo 19 OWL Safe) -->
+    <!-- ================================= -->
+    <!--    <record id="view_subtask_sla_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">project.subtask.sla.kanban</field>-->
+    <!--        <field name="model">project.subtask</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <kanban default_group_by="stage_id">-->
+
+    <!--                <field name="name"/>-->
+    <!--                <field name="sla_stage"/>-->
+
+    <!--                <templates>-->
+    <!--                    <t t-name="card">-->
+    <!--                        <div class="oe_kanban_card">-->
+
+    <!--                            <strong>-->
+    <!--                                <field name="name"/>-->
+    <!--                            </strong>-->
+
+    <!--&lt;!&ndash;                            <div>&ndash;&gt;-->
+    <!--&lt;!&ndash;                                <span t-if="record.sla_stage.raw_value == 'green'"&ndash;&gt;-->
+    <!--&lt;!&ndash;                                      class="badge bg-success">Green&ndash;&gt;-->
+    <!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                                <span t-if="record.sla_stage.raw_value == 'amber'"&ndash;&gt;-->
+    <!--&lt;!&ndash;                                      class="badge bg-warning">Amber&ndash;&gt;-->
+    <!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                                <span t-if="record.sla_stage.raw_value == 'red'"&ndash;&gt;-->
+    <!--&lt;!&ndash;                                      class="badge bg-danger">Red&ndash;&gt;-->
+    <!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                                <span t-if="record.sla_stage.raw_value == 'red_3'"&ndash;&gt;-->
+    <!--&lt;!&ndash;                                      class="badge bg-danger">+3 Days&ndash;&gt;-->
+    <!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                                <span t-if="record.sla_stage.raw_value == 'red_6'"&ndash;&gt;-->
+    <!--&lt;!&ndash;                                      class="badge bg-danger">+6 Days&ndash;&gt;-->
+    <!--&lt;!&ndash;                                </span>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </templates>-->
+
+    <!--            </kanban>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_subtask_kanban" model="ir.ui.view">
+        <field name="name">project.subtask.kanban</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+
+            <kanban default_group_by="stage_id" domain="[('parent_id','=',False)]">
+
+                <!-- fields -->
+                <field name="project_id"/>
+                <field name="name"/>
+                <field name="task_id"/>
+                <field name="expected_end_date"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="estimate"/>
+                <field name="subtask_progress"/>
+                <field name="task_type_id"/>
+                <field name="progress_color" invisible="1"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="oe_kanban_card p-3 rounded shadow-sm">
+                            <!-- 🔥 PROJECT -->
+                            <div class="text-muted small fw-bold text-info">
+                                <field name="project_id"/>
+                            </div>
+
+                            <!-- 🔥 TASK + SUBTASK TITLE -->
+                            <div class="fw-bold fs-5 mb-2 text-primary">
+                                <field name="task_id"/>
+                                →
+                                <field name="name"/>
+                            </div>
+
+                            <!-- dates -->
+                            <div class="text-muted small">
+                                <b>Start:</b>
+                                <field name="planned_start_date"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                <b>End:</b>
+                                <field name="planned_end_date"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                <b>Expected:</b>
+                                <field name="expected_end_date"/>
+                            </div>
+
+                            <!-- estimate -->
+                            <div class="text-muted small mt-1">
+                                <b>Estimate:</b>
+                                <field name="estimate"/>
+                                hrs
+                            </div>
+                            <div class="fw-bold text-info small">
+                                Sub Task Type:
+                                <field name="task_type_id"/>
+
+                            </div>
+
+                            <!-- 🔥 progress -->
+                            <div class="progress mt-2" style="height:8px;">
+                                <div t-att-class="'progress-bar ' + (record.progress_color.raw_value or 'bg-primary')"
+                                     role="progressbar"
+                                     t-att-style="'width:' + (record.subtask_progress.raw_value or 0) + '%;'"></div>
+                            </div>
+
+                            <div class="small text-muted mt-1">
+                                <t t-esc="record.subtask_progress.raw_value or 0"/>
+                                %
+                            </div>
+                            <div class="o_kanban_footer d-flex justify-content-end">
+                                <div class="kanban_status_big">
+                                    <field name="status"
+                                           widget="state_selection"
+                                           options="{'clickable': True}"/>
+                                </div>
+                            </div>
+
+                            <!-- stage -->
+                            <!-- <div class="mt-2">-->
+                            <!-- <span class="badge bg-secondary">-->
+                            <!-- <field name="stage_id"/>-->
+                            <!-- </span>-->
+                            <!-- </div>-->
+
+                        </div>
+
+                    </t>
+                </templates>
+
+            </kanban>
+
+        </field>
+    </record>    <!--    <record id="view_project_subtask_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">project.subtask.kanban</field>-->
+    <!--        <field name="model">project.subtask</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <kanban default_group_by="sla_stage">-->
+
+    <!--                <field name="name"/>-->
+    <!--                <field name="sla_stage"/>-->
+
+    <!--                <templates>-->
+    <!--                    <t t-name="card">-->
+    <!--                        <div class="o_kanban_record">-->
+    <!--                            <strong>-->
+    <!--                                <field name="name"/>-->
+    <!--                            </strong>-->
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </templates>-->
+
+    <!--            </kanban>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="view_project_subtask_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">project.subtask.kanban</field>-->
+    <!--        <field name="model">project.subtask</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            &lt;!&ndash; 🔥 GROUP BY STATUS &ndash;&gt;-->
+    <!--            <kanban default_group_by="status">-->
+
+    <!--                <field name="name"/>-->
+    <!--                <field name="status"/>-->
+    <!--                <field name="assignee_id"/>-->
+    <!--                <field name="estimate"/>-->
+
+    <!--                <templates>-->
+    <!--                    <t t-name="card">-->
+    <!--                        <div class="o_kanban_record">-->
+
+    <!--                            <strong>-->
+    <!--                                <field name="name"/>-->
+    <!--                            </strong>-->
+
+    <!--                            <div>-->
+    <!--                                👤-->
+    <!--                                <field name="assignee_id"/>-->
+    <!--                            </div>-->
+
+    <!--                            <div>-->
+    <!--                                ⏱-->
+    <!--                                <field name="estimate"/>-->
+    <!--                                hrs-->
+    <!--                            </div>-->
+
+    <!--                            <div>-->
+    <!--                                Status:-->
+    <!--                                <field name="status"/>-->
+    <!--                            </div>-->
+
+    <!--                        </div>-->
+    <!--                    </t>-->
+    <!--                </templates>-->
+
+    <!--            </kanban>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="view_project_subtask_kanban" model="ir.ui.view">-->
+    <!--        <field name="name">project.subtask.kanban</field>-->
+    <!--        <field name="model">project.subtask</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <kanban default_group_by="status">-->
+
+    <!--                &lt;!&ndash; Declare all used fields &ndash;&gt;-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="assignee_id"/>-->
+    <!--                <field name="estimate"/>-->
+    <!--                <field name="story_id"/>-->
+    <!--                <field name="kanban_state"/>-->
+
+    <!--                <templates>-->
+    <!--                    <t t-name="card">-->
+
+    <!--                        <div class="o_kanban_record d-flex flex-column h-100">-->
+
+    <!--                            &lt;!&ndash; MAIN BODY &ndash;&gt;-->
+    <!--                            <main class="o_project_kanban_main flex-grow-1">-->
+
+    <!--                                <div class="d-flex align-items-baseline gap-1">-->
+    <!--                                    <span class="text-truncate d-block fs-5 fw-bold">-->
+    <!--                                        <field name="name"/>-->
+    <!--                                    </span>-->
+    <!--                                </div>-->
+
+    <!--                                <div class="o_project_kanban_body min-w-0 pb-2">-->
+
+    <!--                                    <div class="text-muted">-->
+    <!--                                        Story:-->
+    <!--                                        <field name="story_id"/>-->
+    <!--                                    </div>-->
+
+    <!--                                    <div class="text-muted">-->
+    <!--                                        Assignee:-->
+    <!--                                        <field name="assignee_id"/>-->
+    <!--                                    </div>-->
+
+    <!--                                    <div class="text-muted">-->
+    <!--                                        Estimate:-->
+    <!--                                        <field name="estimate"/>-->
+    <!--                                        hrs-->
+    <!--                                    </div>-->
+
+    <!--                                </div>-->
+
+    <!--                            </main>-->
+
+    <!--                            &lt;!&ndash; 🔥 FOOTER REQUIRED FOR PROJECT CIRCLE &ndash;&gt;-->
+    <!--                            <footer class="mt-auto pt-0">-->
+    <!--                                <div class="d-flex ms-auto align-items-center">-->
+
+    <!--                                    &lt;!&ndash; Use Project widget &ndash;&gt;-->
+    <!--                                    <field name="kanban_state"-->
+    <!--                                           widget="project_state_selection"/>-->
+
+    <!--                                </div>-->
+    <!--                            </footer>-->
+
+    <!--                        </div>-->
+
+    <!--                    </t>-->
+    <!--                </templates>-->
+
+    <!--            </kanban>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <!-- ================================= -->
+    <!-- ACTIVITY VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_subtask_activity" model="ir.ui.view">
+        <field name="name">project.subtask.activity</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <activity string="Subtask Activities">
+                <field name="name"/>
+                <field name="assignee_id"/>
+            </activity>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- PIVOT VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_subtask_pivot" model="ir.ui.view">
+        <field name="name">project.subtask.pivot</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <pivot string="Subtask Analysis">
+                <field name="project_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="estimate" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+    <record id="view_project_subtask_graph" model="ir.ui.view">
+        <field name="name">project.subtask.graph</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <graph string="Subtask Graph" type="bar">
+                <field name="project_id"/>
+                <field name="estimate" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_project_subtask_calendar" model="ir.ui.view">
+        <field name="name">project.subtask.calendar</field>
+        <field name="model">project.subtask</field>
+        <field name="arch" type="xml">
+            <calendar string="Subtasks"
+                      date_start="planned_start_date"
+                      date_stop="planned_end_date"
+                      color="assignee_id">
+                <field name="name"/>
+                <field name="project_id"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- SEARCH VIEW (Recommended) -->
+    <!-- ================================= -->
+    <!--    <record id="view_project_subtask_search" model="ir.ui.view">-->
+    <!--        <field name="name">project.subtask.search</field>-->
+    <!--        <field name="model">project.subtask</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="project_id"/>-->
+    <!--                <field name="assignee_id"/>-->
+
+    <!--                <filter name="filter_done"-->
+    <!--                        string="Done"-->
+    <!--                        domain="[('status','=','done')]"/>-->
+
+    <!--                <group string="Group By">-->
+    <!--                    <filter name="group_project"-->
+    <!--                            string="Project"-->
+    <!--                            context="{'group_by':'project_id'}"/>-->
+
+    <!--                    <filter name="group_status"-->
+    <!--                            string="Status"-->
+    <!--                            context="{'group_by':'status'}"/>-->
+
+    <!--                    <filter name="group_assignee"-->
+    <!--                            string="Assignee"-->
+    <!--                            context="{'group_by':'assignee_id'}"/>-->
+    <!--                </group>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!-- ================================= -->
+    <!-- ACTION -->
+    <!-- ================================= -->
+    <!--    <record id="action_project_subtask" model="ir.actions.act_window">-->
+    <!--        <field name="name">Subtasks</field>-->
+    <!--        <field name="res_model">project.subtask</field>-->
+    <!--        <field name="view_mode">kanban,list,form,activity,pivot</field>-->
+    <!--    </record>-->
+    <!--    <record id="action_project_subtask" model="ir.actions.act_window">-->
+    <!--        <field name="name">Subtasks</field>-->
+    <!--        <field name="res_model">project.subtask</field>-->
+
+    <!--        &lt;!&ndash; add all views &ndash;&gt;-->
+    <!--        <field name="view_mode">kanban,list,form,activity,pivot,graph,calendar</field>-->
+
+    <!--        &lt;!&ndash; MAKE KANBAN FIRST &ndash;&gt;-->
+    <!--        <field name="view_id" ref="view_subtask_sla_kanban"/>-->
+    <!--    </record>-->
+    <record id="action_project_subtask" model="ir.actions.act_window">
+        <field name="name">Subtasks</field>
+        <field name="res_model">project.subtask</field>
+        <field name="view_mode">kanban,list,form,activity,pivot,graph,calendar</field>
+    </record>
+    <record id="view_project_subtask_stage_form" model="ir.ui.view">
+        <field name="name">project.subtask.stage.form</field>
+        <field name="model">project.subtask.stage</field>
+        <field name="arch" type="xml">
+            <form string="Subtask Stage">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="progress"/>
+                        <field name="fold"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_project_subtask_stage_list" model="ir.ui.view">
+        <field name="name">project.subtask.stage.list</field>
+        <field name="model">project.subtask.stage</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="progress"/>
+                <field name="fold"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_project_subtask_timeline" model="ir.ui.view">
+        <field name="name">project.subtask.timeline</field>
+        <field name="model">project.subtask</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+
+            <timeline
+                    string="Subtask Timeline"
+                    date_start="planned_start_date"
+                    date_stop="planned_end_date"
+                    default_group_by="assignee_id"
+                    event_open_popup="true"
+            >
+
+                <!-- Load Required Fields -->
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="story_id"/>
+                <field name="assignee_id"/>
+                <field name="estimate"/>
+                <field name="status"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="completed_date"/>
+                <field name="subtask_progress"/>
+
+                <templates>
+                    <t t-name="timeline-item">
+                        <div style="white-space: nowrap; font-size: 13px;">
+
+                            <!-- Subtask Name -->
+
+                            <t t-out="record.name"/>
+
+                            <!-- Planned Dates -->
+                            <t t-if="record.planned_start_date and record.planned_end_date">
+                                | Planned:
+                                <t t-out="record.planned_start_date"/>
+                                -
+                                <t t-out="record.planned_end_date"/>
+                            </t>
+
+                            <!-- Expected -->
+                            <t t-if="record.expected_end_date">
+                                |
+                                <span style="color:#dc3545;">
+                                    Exp:
+                                    <t t-out="record.expected_end_date"/>
+                                </span>
+                            </t>
+
+                            <!-- Completed -->
+                            <t t-if="record.completed_date">
+                                |
+                                <span style="color:#2ecb71;">
+                                    Done:
+                                    <t t-out="record.completed_date"/>
+                                </span>
+                            </t>
+                            <!-- PROJECT PROGRESS BAR -->
+
+                            <t t-set="progress" t-value="record.subtask_progress || 0"/>
+
+                            <t t-set="bar_color"
+                               t-value="progress &lt; 30
+                                        ? '#dc3545'
+                                        : (progress &lt; 70
+                                        ? '#f4d03f'
+                                        : '#2ecb71')"/>
+
+                            <div style="margin-top:5px; width:200px;">
+                                <div style="background:#e9ecef; height:6px; border-radius:4px;">
+                                    <div t-att-style="'width:' + progress + '%; height:6px; border-radius:4px; background:' + bar_color + ';'">
+                                    </div>
+                                </div>
+                                <small style="font-size:11px;">
+                                    <t t-esc="progress.toFixed(1)"/>%
+                                </small>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </timeline>
+
+        </field>
+    </record>
+    <record id="action_project_subtask_stage" model="ir.actions.act_window">
+        <field name="name">Subtask Stages</field>
+        <field name="res_model">project.subtask.stage</field>
+        <field name="view_mode">list,form,timeline</field>
+    </record>
+
+</odoo>

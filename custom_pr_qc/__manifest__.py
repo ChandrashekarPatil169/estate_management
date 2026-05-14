@@ -1,0 +1,20 @@
+{
+    'name': 'Material Quality Check',
+    'version': '1.0',
+    'depends': ['purchase', 'stock', 'material_purchase_requisition', "mail"],
+    'data': [
+        'security/quality_security.xml',
+        'security/ir.model.access.csv',
+        'data/email_template_qc_notify.xml',
+        'data/email_template_qc_done.xml',
+        'data/email_template_qc_reminder.xml',
+        'data/cron.xml',
+        'wizard/qc_status_wizard_view.xml',
+        'wizard/qc_rejection_wizard_view.xml',
+        'views/quality_check_views.xml',
+        'views/res_config_settings_views.xml',
+        'views/menu_views.xml',
+    ],
+    'installable': True,
+    'license': 'LGPL-3',
+}

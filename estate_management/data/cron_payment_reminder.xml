@@ -1,0 +1,22 @@
+<odoo>
+
+    <record id="ir_cron_estate_payment_due_reminder" model="ir.cron">
+        <field name="name">Estate Payment Due Reminder</field>
+
+        <field name="model_id" ref="model_estate_building_payment"/>
+
+        <field name="state">code</field>
+
+        <field name="code">model.cron_payment_due_reminder()</field>
+
+
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+<!--        <field name="numbercall">-1</field>-->
+
+        <field name="active">True</field>
+
+    </record>
+
+</odoo>

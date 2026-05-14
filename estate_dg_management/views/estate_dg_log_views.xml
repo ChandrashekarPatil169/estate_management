@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_estate_dg_log_list" model="ir.ui.view">
+        <field name="name">estate.dg.log.list</field>
+        <field name="model">estate.dg.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date"/>
+                <field name="dg_id"/>
+                <field name="session"/>
+                <field name="reading"/>
+                <field name="topup_liters"/>
+                <field name="running_hours"/>
+                <field name="consumed_liters"/>
+                <field name="operator"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_dg_log_form" model="ir.ui.view">
+        <field name="name">estate.dg.log.form</field>
+        <field name="model">estate.dg.log</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="dg_id"/>
+                        <field name="date"/>
+                        <field name="session"/>
+                        <field name="time"/>
+                        <field name="reading"/>
+                        <field name="topup_liters"/>
+                        <field name="from_datetime"/>
+                        <field name="to_datetime"/>
+                        <field name="running_hours_main" readonly="1"/>
+
+                        <!--                        <field name="running_hours"/>-->
+                        <field name="operator"/>
+                        <field name="operator_name"/>
+                        <field name="remarks"/>
+                    </group>
+                    <group>
+                        <field name="consumed_liters" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_dg_log_pivot" model="ir.ui.view">
+        <field name="name">estate.dg.log.pivot</field>
+        <field name="model">estate.dg.log</field>
+        <field name="arch" type="xml">
+            <pivot string="DG Log Analysis">
+                <field name="dg_id" type="row"/>
+                <field name="date" type="col"/>
+                <field name="consumed_liters" type="measure"/>
+                <field name="running_hours_main" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="view_users_form_inherit_dg_hierarchy" model="ir.ui.view">
+        <field name="name">res.users.form.dg.hierarchy</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+
+                <page string="DG Hierarchy">
+
+                    <group>
+                        <field name="dg_parent_id"/>
+                    </group>
+
+                    <group string="DG Subordinates">
+                        <field name="dg_child_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="login"/>
+                            </list>
+                        </field>
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

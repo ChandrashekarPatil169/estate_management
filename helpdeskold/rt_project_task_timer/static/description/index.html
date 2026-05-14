@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador de Tareas de Proyecto - Seguimiento Automático de Tiempo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+
+        /* Header / Banner */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 60px 40px;
+        }
+
+        section:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            color: #667eea;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin: 30px 0 15px;
+            color: #764ba2;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Color Indicators */
+        .color-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            min-width: 150px;
+        }
+
+        .color-box.green {
+            background: #10b981;
+            color: white;
+        }
+
+        .color-box.yellow {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .color-box.red {
+            background: #ef4444;
+            color: white;
+        }
+
+        .color-box h5 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        /* Benefits List */
+        .benefits-list {
+            list-style: none;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .benefits-list li {
+            padding: 15px 15px 15px 50px;
+            margin-bottom: 15px;
+            background: white;
+            border-left: 4px solid #667eea;
+            border-radius: 5px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .benefits-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 15px;
+            color: #10b981;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        /* Installation Steps */
+        .steps {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .step {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #764ba2;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .step h4 {
+            display: inline-block;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        .step p {
+            margin-left: 50px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: #2d3748;
+            color: #68d391;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 20px auto;
+            max-width: 800px;
+            overflow-x: auto;
+        }
+
+        /* Screenshot Placeholder */
+        .screenshot-placeholder {
+            background: #e5e7eb;
+            border: 3px dashed #9ca3af;
+            border-radius: 10px;
+            padding: 60px;
+            text-align: center;
+            margin: 30px 0;
+            color: #6b7280;
+        }
+
+        .screenshot-placeholder p {
+            font-size: 1.2em;
+        }
+
+        /* Support Section */
+        .support-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 30px auto;
+            max-width: 800px;
+        }
+
+        .support-box h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .support-box a {
+            color: #fbbf24;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .support-box a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1f2937;
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .header p {
+                font-size: 1.1em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header / Banner -->
+        <div class="header">
+            <h1>⏱️ Temporizador de Tareas de Proyecto</h1>
+            <p>Seguimiento Automático de Tiempo con Alertas Visuales</p>
+        </div>
+
+        <!-- Overview Section -->
+        <section>
+            <h2>Rastrea el Tiempo Automáticamente en Cada Tarea</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 800px; margin: 0 auto;">
+                Mantén tus tareas de proyecto bajo control con seguimiento automático de tiempo que inicia
+                en el momento que creas una tarea y proporciona retroalimentación visual en tiempo real basada en el tiempo transcurrido.
+            </p>
+        </section>
+
+        <!-- Features Section -->
+        <section>
+            <h2>Características Principales</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h4>Inicio Automático del Temporizador</h4>
+                    <p>El temporizador inicia automáticamente cuando creas una nueva tarea. ¡No se requiere intervención manual!</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">⏸️</span>
+                    <h4>Detención Automática Inteligente</h4>
+                    <p>El temporizador se detiene automáticamente cuando mueves la tarea a una etapa de conclusión (etapas plegadas).</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🎨</span>
+                    <h4>Alertas Codificadas por Color</h4>
+                    <p>Indicadores visuales de color en vistas kanban y formulario basados en umbrales de tiempo transcurrido.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">⚙️</span>
+                    <h4>Umbrales Configurables</h4>
+                    <p>Establece tus propios umbrales de tiempo para alertas amarillas y rojas en Configuración.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🌍</span>
+                    <h4>Seguimiento de Tiempo en UTC</h4>
+                    <p>Seguimiento de tiempo consistente para todos los usuarios sin importar su zona horaria.</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h4>Visualización en Kanban</h4>
+                    <p>Visualización del temporizador en tiempo real en vista kanban con badges codificados por color (formato HH:MM:SS).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Color Indicators Section -->
+        <section>
+            <h2>Alertas Visuales de Tiempo</h2>
+            <p style="text-align: center; font-size: 1.1em; color: #666; margin-bottom: 30px;">
+                Las tareas se codifican automáticamente por colores según el tiempo transcurrido para ayudarte a identificar tareas que necesitan atención.
+            </p>
+            <div class="color-indicators">
+                <div class="color-box green">
+                    <h5>🟢 Verde</h5>
+                    <p>Menos de 1 hora</p>
+                    <p><small>(Por defecto)</small></p>
+                </div>
+                <div class="color-box yellow">
+                    <h5>🟡 Amarillo</h5>
+                    <p>1-2 horas</p>
+                    <p><small>(Advertencia)</small></p>
+                </div>
+                <div class="color-box red">
+                    <h5>🔴 Rojo</h5>
+                    <p>Más de 2 horas</p>
+                    <p><small>(Alerta)</small></p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 30px; color: #666;">
+                💡 <strong>Nota:</strong> Los umbrales de tiempo son totalmente configurables en Configuración → Proyecto → Configuración del Temporizador
+            </p>
+        </section>
+
+        <!-- Benefits Section -->
+        <section>
+            <h2>¿Por Qué Usar el Temporizador de Tareas?</h2>
+            <ul class="benefits-list">
+                <li><strong>Mejora la Gestión del Tiempo:</strong> Ve instantáneamente qué tareas están tomando demasiado tiempo</li>
+                <li><strong>Aumenta la Productividad:</strong> Las alertas visuales ayudan a los miembros del equipo a mantenerse enfocados</li>
+                <li><strong>Mejor Planificación:</strong> Usa los datos de tiempo acumulado para mejorar estimaciones futuras</li>
+                <li><strong>Seguimiento Automático:</strong> No necesitas recordar iniciar/detener temporizadores manualmente</li>
+                <li><strong>Consistencia del Equipo:</strong> El seguimiento basado en UTC asegura que todos vean el mismo tiempo</li>
+                <li><strong>Configuración Sencilla:</strong> Ajusta los umbrales de tiempo para que coincidan con el flujo de trabajo de tu equipo</li>
+                <li><strong>Historial Completo:</strong> Rastrea fecha de inicio, fecha de fin y tiempo total acumulado</li>
+                <li><strong>Integración con Kanban:</strong> Ve el estado del temporizador directamente en tu tablero kanban</li>
+            </ul>
+        </section>
+
+        <!-- Installation Section -->
+        <section>
+            <h2>Instalación</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h4>Descarga el Módulo</h4>
+                    <p>Descarga el módulo rt_project_task_timer desde la tienda de Odoo Apps</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h4>Instala en Odoo</h4>
+                    <p>Ve a Aplicaciones → Cargar Módulo → Selecciona el archivo ZIP → Instalar</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h4>Configura (Opcional)</h4>
+                    <p>Navega a Configuración → Proyecto → Configuración del Temporizador para ajustar los umbrales de tiempo</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <h4>Comienza a Usar</h4>
+                    <p>¡Crea una nueva tarea y el temporizador iniciará automáticamente!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuration Section -->
+        <section>
+            <h2>Configuración</h2>
+            <h3>Configuración de Umbrales de Tiempo</h3>
+            <p style="margin-bottom: 20px; color: #666;">
+                Navega a <strong>Configuración → Proyecto → Configuración del Temporizador</strong> para configurar:
+            </p>
+            <ul class="benefits-list" style="max-width: 700px;">
+                <li><strong>Horas para Alerta Amarilla:</strong> Establece el umbral para advertencia amarilla (por defecto: 1 hora)</li>
+                <li><strong>Horas para Alerta Roja:</strong> Establece el umbral para alerta roja (por defecto: 2 horas)</li>
+            </ul>
+
+            <h3 style="margin-top: 40px;">Cómo Funciona</h3>
+            <p style="margin-bottom: 20px; color: #666;">El temporizador sigue estas reglas:</p>
+            <ul class="benefits-list" style="max-width: 700px;">
+                <li>El temporizador <strong>inicia automáticamente</strong> cuando creas una nueva tarea</li>
+                <li>El temporizador <strong>continúa corriendo</strong> mientras la tarea está en etapas activas</li>
+                <li>El temporizador <strong>se detiene automáticamente</strong> cuando la tarea se mueve a una etapa plegada/concluida</li>
+                <li>El temporizador <strong>se reinicia automáticamente</strong> si mueves la tarea de vuelta a una etapa activa</li>
+                <li>Todos los tiempos se almacenan en <strong>UTC</strong> para consistencia entre zonas horarias</li>
+            </ul>
+        </section>
+
+        <!-- Screenshots Section -->
+        <section>
+            <h2>Capturas de Pantalla</h2>
+
+            <div style="margin: 30px 0; text-align: center;">
+                <img src="primera_timer.png" alt="Vista Kanban con Temporizador" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px;">
+                <p style="color: #666; font-style: italic;">Vista Kanban con badges de temporizador codificados por colores</p>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center;">
+                <img src="segunda_timer.png" alt="Vista de Formulario de Tarea" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px;">
+                <p style="color: #666; font-style: italic;">Widget de temporizador en la vista de formulario de tarea</p>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center;">
+                <img src="tercera_timer.png" alt="Configuración del Temporizador" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px;">
+                <p style="color: #666; font-style: italic;">Página de configuración para ajustar umbrales de tiempo</p>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center;">
+                <img src="cuarto_timer.png" alt="Temporizador en Acción" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px;">
+                <p style="color: #666; font-style: italic;">Temporizador mostrando alertas visuales en tiempo real</p>
+            </div>
+
+            <div style="margin: 30px 0; text-align: center;">
+                <img src="quinto_timer.png" alt="Estados del Temporizador" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 15px;">
+                <p style="color: #666; font-style: italic;">Diferentes estados del temporizador (en ejecución, pausado, concluido)</p>
+            </div>
+        </section>
+
+        <!-- Technical Details -->
+        <section>
+            <h2>Detalles Técnicos</h2>
+            <ul class="benefits-list">
+                <li><strong>Versión:</strong> 19.0.1.0.0</li>
+                <li><strong>Categoría:</strong> Gestión de Proyectos</li>
+                <li><strong>Dependencias:</strong> project (módulo núcleo de Odoo)</li>
+                <li><strong>Licencia:</strong> LGPL-3</li>
+                <li><strong>Versión de Odoo:</strong> 19.0</li>
+                <li><strong>Idiomas:</strong> Soporte multilingüe</li>
+            </ul>
+        </section>
+
+        <!-- Support Section -->
+        <section>
+            <div class="support-box">
+                <h3>¿Necesitas Ayuda o Soporte?</h3>
+                <p style="margin-bottom: 20px;">Nuestro equipo está aquí para ayudarte a aprovechar al máximo el Temporizador de Tareas</p>
+                <p>📧 Email: <a href="mailto:rayibarra@rootrivial.com">rayibarra@rootrivial.com</a></p>
+                <p style="margin-top: 20px;">🌐 Sitio Web: <a href="https://rootrivial.com" target="_blank">rootrivial.com</a></p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Temporizador de Tareas de Proyecto</strong> - Desarrollado por Rootrivial</p>
+            <p>© 2025 Rootrivial. Todos los derechos reservados.</p>
+            <p style="margin-top: 20px;">
+                <a href="https://rootrivial.com" target="_blank">Sitio Web</a>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

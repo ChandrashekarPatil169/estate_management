@@ -1,0 +1,71 @@
+/* 1. THE SUBMIT BUTTON (glow-on-hover) */
+button.glow-on-hover,
+.btn.glow-on-hover {
+    padding: 5px 15px !important;
+    font-size: 12px !important;
+    width: auto !important;
+    min-width: 100px !important;
+    font-weight: 600 !important;
+    color: #28a745 !important;
+    background: transparent !important;
+    border: 2px solid #28a745 !important;
+    border-radius: 6px !important;
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: hidden !important;
+    transition: color 0.4s ease !important;
+    text-transform: uppercase;
+}
+
+button.glow-on-hover::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 0%; height: 100%;
+    background: #28a745;
+    z-index: -1;
+    transition: width 0.4s ease;
+}
+
+button.glow-on-hover:hover {
+    color: #fff !important;
+}
+
+button.glow-on-hover:hover::before {
+    width: 100% !important;
+}
+
+
+/* Unique Document Stat Button */
+.oe_stat_button.doc-stat-btn {
+    position: relative !important;
+    z-index: 1 !important;
+    overflow: hidden !important;
+    transition: all 0.4s ease !important;
+    border: 1px solid #007bff !important; /* Blue border */
+    background: #fff !important;
+    border-radius: 4px !important;
+}
+
+/* The Blue Fill Effect (Starts at the bottom) */
+.oe_stat_button.doc-stat-btn::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%; /* Starts empty */
+    background: #007bff; /* Odoo blue */
+    z-index: -1;
+    transition: height 0.3s ease-in-out;
+}
+
+
+
+
+
+
+
+
+
+

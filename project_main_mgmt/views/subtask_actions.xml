@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- My Subtasks -->
+    <record id="action_project_subtask_my" model="ir.actions.act_window">
+        <field name="name">My Subtasks</field>
+        <field name="res_model">project.subtask</field>
+        <field name="view_mode">kanban,list,form,timeline,activity,pivot</field>
+        <field name="domain">[('assignee_id', '=', uid)]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- All Subtasks -->
+    <record id="action_project_subtask_all" model="ir.actions.act_window">
+        <field name="name">All Subtasks</field>
+        <field name="res_model">project.subtask</field>
+        <field name="view_mode">kanban,list,form,timeline,activity,pivot</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

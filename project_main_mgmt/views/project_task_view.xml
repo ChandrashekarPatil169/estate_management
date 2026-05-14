@@ -1,0 +1,456 @@
+<odoo>
+    <record id="view_task_form_agile_fields" model="ir.ui.view">
+        <field name="name">project.task.form.agile.fields</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <!-- 0. Add the Smart Button -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_subtasks" type="object" class="oe_stat_button" icon="fa-sitemap"
+                        invisible="category != 'software'">
+                    <field name="subtask_count" string="Subtasks" widget="statinfo"/>
+                </button>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="action_view_task_documents" type="object" class="oe_stat_button" icon="fa-paperclip">
+                    <field name="document_count" string="Documents" widget="statinfo"/>
+                </button>
+            </xpath>
+
+
+            <!-- 1. Add Story / Epic -->
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="story_id" options="{'no_create': True}" invisible="category != 'software'"/>
+                <field name="enable_backlog_flow" invisible="1"/>
+
+                <field name="epic_id" readonly="1" force_save="1"
+                       invisible="category != 'software' or enable_backlog_flow != 1"/>
+
+            </xpath>
+            <!-- 1. Add Story / Epic -->
+            <xpath expr="//field[@name='name']" position="after">
+
+                <div class="mt-2">
+                    <span class="o_form_label">Task Progress</span>
+
+                    <field name="task_progress"
+                           widget="progressbar"
+                           options="{'max_value':100}"/>
+                </div>
+
+            </xpath>
+
+            <xpath expr="//field[@name='user_ids']" position="after">
+                <field name="priorities"/>
+                <field name="task_type_id"/>
+                <field name="task_label_id"/>
+
+                <div class="mt-2">
+                    <span class="o_form_label">SubTask Progress</span>
+
+                    <field name="task_subtask_avg"
+                           widget="progressbar"
+                           options="{'max_value':100}"/>
+                </div>
+
+            </xpath>
+
+            <!-- 2. Add Agile fields -->
+            <xpath expr="//sheet/group/group[2]" position="inside">
+                <field name="status"/>
+                <field name="weightage" string="Task Weightage"/>
+                <field name="estimate"/>
+                <!--                <field name="sla_due_date"/>-->
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="completed_date" readonly="1"/>
+
+            </xpath>
+
+            <!-- 3. TARGETING BY FIELD: Instead of targeting the Page string, target the field inside it -->
+            <xpath expr="//field[@name='child_ids']" position="after">
+                <field name="subtask_ids"
+                       context="{'default_story_id': story_id, 'default_project_id': project_id, 'default_task_id': id}">
+                    <list create="true" delete="true" edit="true">
+                        <field name="name"/>
+                        <field name="assignee_id" widget="many2one_avatar_user"/>
+                        <field name="estimate" widget="float_time"/>
+                        <field name="subtask_progress" widget="progressbar"/>
+                        <field name="status" widget="badge" decoration-success="status == 'done'"
+                               decoration-info="status == 'in_progress'"/>
+                    </list>
+                    <form string="Subtask Detail">
+                        <sheet>
+                            <group>
+                                <group>
+                                    <field name="name" placeholder="What needs to be done?"/>
+                                    <field name="assignee_id"/>
+
+                                    <field name="status"/>
+                                </group>
+                                <group>
+                                    <field name="estimate" widget="float_time"/>
+                                    <field name="project_id" readonly="1" force_save="1"/>
+                                    <field name="story_id" readonly="1" force_save="1"/>
+                                    <field name="task_id" invisible="1"/>
+                                </group>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </xpath>
+
+            <!-- Hide the original Odoo field -->
+            <xpath expr="//field[@name='child_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+            <!-- 4. Blocking page -->
+            <!--            <xpath expr="//notebook" position="inside">-->
+            <!--                <page string="Blocking" name="blocking_info" invisible="category != 'software'">-->
+            <!--                    <group>-->
+            <!--                        <field name="is_blocked"/>-->
+            <!--                        <field name="block_reason" invisible="not is_blocked" required="is_blocked"/>-->
+            <!--                    </group>-->
+            <!--                </page>-->
+            <!--            </xpath>-->
+
+
+            <xpath expr="//notebook" position="inside">
+                <!-- GOVERNANCE PAGE -->
+                <page string="Governance">
+
+                    <group>
+                        <!-- Select who can approve -->
+                        <field name="approver_ids"
+                               widget="many2many_tags"
+                               options="{'no_create': True}"/>
+
+                        <field name="evidence_required"
+                               options="{'resizable': false}"
+                               placeholder="Add evidence here..."/>
+
+                        <!-- Audit info -->
+                        <field name="approved_by_id" readonly="1"/>
+
+                        <!-- Internal flag -->
+                        <field name="is_done" invisible="1"/>
+
+
+                    </group>
+
+                    <group>
+                        <button name="action_mark_done"
+                                type="object"
+                                string="Approve &amp; Mark Done"
+                                class="btn-primary"
+                                invisible="is_done"/>
+                    </group>
+
+                </page>
+                <page string="Documents" name="task_documents_page">
+                    <field name="document_ids" widget="many2many_binary" string="Attach Files"/>
+                </page>
+                <page string="Notes" invisible="category != 'software'">
+                    <field name="inherited_notes" readonly="1" widget="html"/>
+                </page>
+
+                <page name="sla" string="SLA">
+
+                    <!-- SLA Overview -->
+                    <group class="row mt16 o_settings_container">
+                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                            SLA Overview
+                        </div>
+
+                        <setting class="col-lg-12">
+                            <field name="sla_risk"
+                                   widget="badge"
+                                   decoration-success="sla_risk == 'green'"
+                                   decoration-warning="sla_risk == 'amber'"
+                                   decoration-danger="sla_risk == 'red'"/>
+
+                            <field name="sla_days_label" widget="badge"/>
+                        </setting>
+                    </group>
+
+
+                    <group class="row mt16 o_settings_container">
+                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">SLA Monitoring</div>
+                        <setting class="col-lg-12">
+                            <button name="action_open_sla_monitoring" type="object" class="btn btn-link p-0"
+                                    icon="fa-shield">Open SLA Monitoring
+                            </button>
+                        </setting>
+                    </group>
+
+                    <group class="row mt16 o_settings_container">
+
+                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                            SLA Deadlines
+                        </div>
+
+                        <setting class="col-lg-6">
+                            <button name="action_open_subtask_sla_7_days"
+                                    type="object"
+                                    class="btn btn-outline-primary w-100"
+                                    icon="fa-calendar">
+                                Upcoming (Next 7 Days)
+                            </button>
+                        </setting>
+
+                        <setting class="col-lg-6">
+                            <button name="action_open_subtask_sla_30_days"
+                                    type="object"
+                                    class="btn btn-outline-primary w-100"
+                                    icon="fa-calendar">
+                                Upcoming (Next 30 Days)
+                            </button>
+                        </setting>
+
+                    </group>
+
+
+                    <!-- SLA Escalation Rules -->
+                    <group class="row mt16 o_settings_container">
+                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                            SLA Escalation Rules
+                        </div>
+
+                        <setting class="col-lg-12">
+                            <field name="sla_escalation_rules"
+                                   placeholder="Define task-specific SLA escalation rules..."
+                                   nolabel="1"/>
+                        </setting>
+                    </group>
+
+
+                    <!-- Escalation Owners -->
+                    <group string="Escalation Owners">
+
+                        <group col="2">
+
+                            <div class="o_form_label">Amber (&lt;3 Days Remaining)</div>
+                            <field name="sla_amber_user_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+
+                            <div class="o_form_label">Red (Overdue)</div>
+                            <field name="sla_red_user_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+
+                            <div class="o_form_label">Overdue +3 Days</div>
+                            <field name="sla_overdue_3_user_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+
+                            <div class="o_form_label">Overdue +6 Days</div>
+                            <field name="sla_overdue_6_user_ids"
+                                   widget="many2many_tags"
+                                   nolabel="1"/>
+
+                        </group>
+
+                    </group>
+
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+    <record id="view_task_sla_kanban" model="ir.ui.view">
+        <field name="name">project.task.sla.kanban</field>
+        <field name="model">project.task</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column">
+                <field name="name"/>
+                <field name="stage_id"/>
+                <field name="sla_stage"/>
+                <field name="story_id"/>
+                <templates>
+                    <t t-name="card">
+
+                        <div class="oe_kanban_card p-3">
+
+                            <!-- PROJECT -->
+                            <div class="text-muted small fw-bold text-info">
+                                <field name="project_id"/>
+                            </div>
+
+                            <!-- TASK NAME -->
+
+                            <div class="fw-bold fs-5 mb-2 text-primary">
+                                <field name="name"/>
+                                →
+                                <field name="story_id"/>
+                            </div>
+
+                            <!-- DATES -->
+                            <div class="text-muted small">
+                                <b>Start:</b>
+                                <field name="planned_start_date"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                <b>End:</b>
+                                <field name="planned_end_date"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                <b>Expected:</b>
+                                <field name="expected_end_date"/>
+                            </div>
+
+                            <!-- 🔥 ESTIMATE STRING -->
+                            <div class="mt-2 text-primary fw-bold">
+                                Estimate:
+                                <field name="estimate"/>
+                                hrs
+                            </div>
+
+                            <!-- PROGRESS BAR -->
+                            <div class="progress mt-2" style="height:8px;">
+                                <div class="progress-bar bg-primary"
+                                     role="progressbar"
+                                     t-att-style="'width:' + (record.progress.raw_value or 0) + '%;'">
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="remove_task_default_status" model="ir.ui.view">
+        <field name="name">project.task.kanban.remove.status</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state'][@widget='project_task_state_selection']"
+                   position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="project_task_add_custom_status" model="ir.ui.view">
+        <field name="name">project.task.kanban.add.custom.status</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//t[@t-name='card']//footer" position="inside">
+
+                <div class="o_kanban_footer d-flex justify-content-end">
+                    <div class="kanban_status_big">
+
+                        <field name="status"
+                               widget="state_selection"
+                               options="{'clickable': True}"/>
+
+                    </div>
+                </div>
+
+            </xpath>
+
+        </field>
+    </record>
+    <record id="project_task_tree_custom_status" model="ir.ui.view">
+        <field name="name">project.task.tree.custom.status</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.project_task_view_tree_main_base"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='state']" position="replace">
+
+                <field name="status"
+                       widget="state_selection"
+                       options="{'clickable': True}"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="project_task_form_custom_status" model="ir.ui.view">
+        <field name="name">project.task.form.custom.status</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+
+            <!-- Replace default state -->
+            <xpath expr="//div[contains(@class,'o_state_container')]/field[@name='state']"
+                   position="replace">
+
+                <field name="status"
+                       widget="state_selection"
+                       class="o_task_state_widget"
+                       options="{'clickable': True, 'is_toggle_mode': False}"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!--    <record id="view_task_form_hide_agile_dates" model="ir.ui.view">-->
+    <!--        <field name="name">project.task.form.hide.agile.dates</field>-->
+    <!--        <field name="model">project.task</field>-->
+    <!--        <field name="inherit_id" ref="project.view_task_form2"/>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            &lt;!&ndash; 1. Hide the Standard Odoo Deadline &ndash;&gt;-->
+    <!--            <xpath expr="//field[@name='date_deadline']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+
+    <!--            -->
+
+    <!--            &lt;!&ndash; 3. Hide the labels that are showing in your screenshot &ndash;&gt;-->
+    <!--            <xpath expr="//field[@name='planned_date_start']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+
+    <!--            <xpath expr="//field[@name='planned_date_end']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="view_task_stage_form_inherit_progress" model="ir.ui.view">
+        <field name="name">project.task.stage.form.progress</field>
+        <field name="model">project.task.type</field>
+        <field name="inherit_id" ref="project.task_type_edit"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="progress"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_task_tree_progress" model="ir.ui.view">
+        <field name="name">project.task.tree.progress</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>   <!-- main list view -->
+        <field name="arch" type="xml">
+
+            <!-- add after name -->
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="task_progress" widget="progressbar"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

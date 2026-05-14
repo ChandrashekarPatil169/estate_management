@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Root menu -->
+    <menuitem id="menu_estate_dg_root"
+              name="Diesel Generators"
+              parent="estate_management.menu_estate_root"
+              sequence="20"/>
+
+    <!-- 1️⃣ Generator Master -->
+    <menuitem id="menu_estate_generator_master"
+              name="Generator Master"
+              parent="menu_estate_dg_root"
+              action="action_estate_generator_master"
+              sequence="10"/>
+
+    <!-- 2️⃣ Manage Generators -->
+    <menuitem id="menu_estate_dg_manage"
+              name="Manage Generators"
+              parent="menu_estate_dg_root"
+              action="action_estate_dg"
+              sequence="20"/>
+
+    <!-- 3️⃣ Fuel Type -->
+    <menuitem id="menu_estate_fuel_type"
+              name="Fuel Type Master"
+              parent="menu_estate_dg_root"
+              action="action_estate_fuel_type"
+              sequence="30"/>
+
+    <!-- 4️⃣ Fuel Purchases -->
+    <menuitem id="menu_estate_dg_purchase"
+              name="Fuel Purchases"
+              parent="menu_estate_dg_root"
+              action="action_estate_dg_purchase"
+              sequence="40"/>
+
+    <!-- 5️⃣ Main Stock -->
+    <menuitem id="menu_estate_stock_main"
+              name="Main Stock"
+              parent="menu_estate_dg_root"
+              action="action_estate_stock_main"
+              sequence="50"/>
+
+    <!-- 6️⃣ DG Refills -->
+    <menuitem id="menu_estate_dg_refill"
+              name="DG Refills"
+              parent="menu_estate_dg_root"
+              action="action_estate_dg_refill"
+              sequence="60"/>
+
+    <!-- 7️⃣ Daily Logs -->
+    <menuitem id="menu_estate_dg_log"
+              name="Daily Logs"
+              parent="menu_estate_dg_root"
+              action="action_estate_dg_log"
+              sequence="70"/>
+
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<odoo>-->
+
+
+<!--    &lt;!&ndash; Root menu for Diesel Generators under Estate Management &ndash;&gt;-->
+<!--    <menuitem id="menu_estate_dg_root"-->
+<!--              name="Diesel Generators"-->
+<!--              parent="estate_management.menu_estate_root"-->
+<!--              sequence="20"/>-->
+
+<!--    &lt;!&ndash; Submenu: Manage Generators &ndash;&gt;-->
+<!--    <menuitem id="menu_estate_dg_manage"-->
+<!--              name="Manage Generators"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_dg"-->
+<!--              sequence="10"/>-->
+
+<!--    &lt;!&ndash; Submenu: Fuel Purchases &ndash;&gt;-->
+<!--    <menuitem id="menu_estate_dg_purchase"-->
+<!--              name="Fuel Purchases"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_dg_purchase"-->
+<!--              sequence="20"/>-->
+
+<!--    &lt;!&ndash; Submenu: DG Refills &ndash;&gt;-->
+<!--    <menuitem id="menu_estate_dg_refill"-->
+<!--              name="DG Refills"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_dg_refill"-->
+<!--              sequence="30"/>-->
+
+<!--    &lt;!&ndash; Submenu: Daily Logs &ndash;&gt;-->
+<!--    <menuitem id="menu_estate_dg_log"-->
+<!--              name="Daily Logs"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_dg_log"-->
+<!--              sequence="40"/>-->
+<!--    <menuitem-->
+<!--            id="menu_estate_generator_master"-->
+<!--            name="Generator Master"-->
+<!--            parent="menu_estate_dg_root"-->
+<!--            action="action_estate_generator_master"-->
+<!--            sequence="10"/>-->
+
+<!--</odoo>-->

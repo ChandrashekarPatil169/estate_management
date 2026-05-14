@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================= PROJECT ================= -->
+    <record id="view_project_list" model="ir.ui.view">
+        <field name="name">project.project.list</field>
+        <field name="model">project.project.custom</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="project_code"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="hcount_subproject" string="Sub projects count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_form" model="ir.ui.view">
+        <field name="name">project.project.form</field>
+        <field name="model">project.project.custom</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <!-- SMART BUTTONS -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="haction_open_subprojects"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-folder">
+                            <field name="hcount_subproject"
+                                   widget="statinfo"
+                                   string="Subprojects"/>
+                        </button>
+                    </div>
+
+                    <!-- BASIC -->
+                    <group string="Project Details">
+                        <group>
+                            <field name="name"/>
+                            <field name="project_code"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="customer_company_id"/>
+                            <field name="address"/>
+                        </group>
+                    </group>
+
+                    <!-- 🔥 HIERARCHY -->
+                    <!--                    <notebook>-->
+                    <!--                        <page string="Related Details">-->
+                    <!--                            <group readonly="1">-->
+                    <!--                                <field name="hdown_subproject_ids"-->
+                    <!--                                       widget="many2many_tags"-->
+                    <!--                                       context="{-->
+                    <!--                                           'default_hup_project_id': id,-->
+                    <!--                                           'default_project_code': project_code,-->
+                    <!--                                           'default_partner_id': partner_id.id-->
+                    <!--                                       }"/>-->
+                    <!--                            </group>-->
+                    <!--                        </page>-->
+                    <!--                    </notebook>-->
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_project_pivot" model="ir.ui.view">
+        <field name="name">project.project.pivot</field>
+        <field name="model">project.project.custom</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Project Analysis" sample="1">
+
+                <!-- EXACT CRM STYLE -->
+                <field name="create_date" interval="month" type="col"/>
+                <field name="partner_id" type="row"/>
+
+                <!-- SAFE MEASURES -->
+                <field name="hcount_subproject" type="measure" string="Sub Projects Count"/>
+
+                <!-- HIDDEN SUPPORT FIELDS (LIKE CRM) -->
+                <field name="company_id" invisible="1"/>
+                <field name="create_date" interval="year" invisible="1"/>
+
+            </pivot>
+
+        </field>
+    </record>
+
+
+    <record id="view_project_kanban" model="ir.ui.view">
+        <field name="name">project.project.kanban</field>
+        <field name="model">project.project.custom</field>
+        <field name="arch" type="xml">
+
+            <kanban class="o_kanban_mobile o_kanban_small_column"
+                    style="background:#f1f5f9;">
+
+                <field name="name"/>
+                <field name="project_code"/>
+                <field name="partner_id"/>
+                <field name="customer_company_id"/>
+                <field name="hcount_subproject"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="oe_kanban_global_click o_kanban_record rounded shadow-sm"
+                             style="background:#ffffff; border:1px solid #e2e8f0;">
+
+                            <!-- 🔷 HEADER -->
+                            <div class="p-3"
+                                 style="background: linear-gradient(90deg, #6366f1, #3b82f6); color:white;">
+
+                                <div class="fw-semibold">
+                                    <field name="name"/>
+                                </div>
+
+                                <div class="small opacity-75">
+                                    #
+                                    <field name="project_code"/>
+                                </div>
+
+                            </div>
+
+                            <!-- 🔹 BODY -->
+                            <div class="p-3">
+
+                                <!-- COMPANY (FIXED WRAP) -->
+                                <div class="small text-muted d-flex align-items-start mb-2">
+                                    <i class="fa fa-building me-1 mt-1"/>
+                                    <span style="line-height:1.3;">
+                                        <field name="customer_company_id"/>
+                                    </span>
+                                </div>
+
+                                <!-- 🔥 KPI (COMPACT + CENTERED) -->
+                                <div class="text-center mt-2 mb-2">
+
+                                    <div class="fw-bold fs-4 text-primary">
+                                        <field name="hcount_subproject"/>
+                                    </div>
+
+                                    <div class="small text-muted">
+                                        Subprojects
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- 🔹 FOOTER (CLEAN) -->
+                            <div class="px-3 pb-2 pt-1 border-top d-flex align-items-center text-muted small">
+
+                                <i class="fa fa-user me-1"/>
+                                <field name="partner_id"/>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+                </templates>
+
+            </kanban>
+
+        </field>
+    </record>
+    <record id="view_subproject_list" model="ir.ui.view">
+        <field name="name">project.subproject.list</field>
+        <field name="model">project.subproject</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="subproject_code"/>
+                <field name="name"/>
+                <field name="project_code"/>
+                <field name="hcount_ticket" optional="hide"/>
+                <field name="assigned_ticket_count" optional="hide"/>
+                <field name="resolved_ticket_count" optional="hide"/>
+                <field name="completed_ticket_count" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_subproject_form" model="ir.ui.view">
+        <field name="name">project.subproject.form</field>
+        <field name="model">project.subproject</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <!-- SMART BUTTON -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="haction_open_tickets"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-ticket">
+                            <field name="hcount_ticket"
+                                   widget="statinfo"
+                                   string="Tickets"/>
+                        </button>
+                    </div>
+
+                    <!-- BASIC -->
+                    <group string="Subproject Details">
+                        <group>
+                            <field name="name"/>
+
+                            <field name="subproject_code"/>
+                            <field name="hup_project_id"/>
+                        </group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="customer_company_id"/>
+                            <field name="address"/>
+                        </group>
+                        <group string="Ticket Summary">
+                            <field name="assigned_ticket_count" readonly="1"/>
+                            <field name="resolved_ticket_count" readonly="1"/>
+                            <field name="completed_ticket_count" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- 🔥 HIERARCHY -->
+                    <!--                    <notebook>-->
+                    <!--                        <page string="Related Details">-->
+                    <!--                            <group readonly="1">-->
+                    <!--                                <field name="hdown_ticket_ids"-->
+                    <!--                                       widget="many2many_tags"-->
+                    <!--                                       context="{-->
+                    <!--                                           'default_hup_project_id': hup_project_id.id,-->
+                    <!--                                           'default_hup_subproject_id': id,-->
+                    <!--                                           'default_project_code': project_code,-->
+                    <!--                                           'default_subproject_code': subproject_code,-->
+                    <!--                                           'default_partner_id': partner_id.id-->
+                    <!--                                       }"/>-->
+                    <!--                            </group>-->
+                    <!--                        </page>-->
+                    <!--                    </notebook>-->
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_subproject_kanban" model="ir.ui.view">
+        <field name="name">project.subproject.kanban</field>
+        <field name="model">project.subproject</field>
+        <field name="arch" type="xml">
+
+            <kanban class="o_kanban_mobile o_kanban_small_column"
+                    style="background:#f1f5f9;">
+
+                <field name="name"/>
+                <field name="subproject_code"/>
+                <field name="hup_project_id"/>
+                <field name="assigned_ticket_count"/>
+                <field name="resolved_ticket_count"/>
+                <field name="completed_ticket_count"/>
+                <field name="partner_id"/>
+                <field name="customer_company_id"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="oe_kanban_global_click o_kanban_record rounded shadow-sm overflow-hidden"
+                             style="background:#ffffff; border:1px solid #dbeafe;">
+
+                            <!-- 🔷 MEDIUM GRADIENT HEADER -->
+                            <div class="p-3"
+                                 style="background: linear-gradient(90deg, #6366f1, #3b82f6); color:white;">
+
+                                <div class="fw-semibold fs-5">
+                                    <field name="name"/>
+                                </div>
+
+                                <div class="small opacity-75">
+                                    #
+                                    <field name="subproject_code"/>
+                                </div>
+
+                            </div>
+
+                            <div class="p-3">
+
+                                <!-- 🔹 PROJECT -->
+                                <div class="mb-3 small d-flex align-items-center">
+                                    <i class="fa fa-folder text-primary me-1"/>
+                                    <span class="text-muted me-1">Project:</span>
+                                    <span class="fw-medium text-dark">
+                                        <field name="hup_project_id"/>
+                                    </span>
+                                </div>
+
+                                <!-- 🔥 MEDIUM COLOR KPI BLOCKS -->
+                                <div class="d-flex gap-2">
+
+                                    <!-- Assigned -->
+                                    <div class="flex-fill p-2 rounded text-center"
+                                         style="background:#fef3c7;">
+                                        <div class="fw-bold fs-5" style="color:#b45309;">
+                                            <field name="assigned_ticket_count"/>
+                                        </div>
+                                        <div class="small text-muted">Assigned</div>
+                                    </div>
+
+                                    <!-- Resolved -->
+                                    <div class="flex-fill p-2 rounded text-center"
+                                         style="background:#dbeafe;">
+                                        <div class="fw-bold fs-5" style="color:#1d4ed8;">
+                                            <field name="resolved_ticket_count"/>
+                                        </div>
+                                        <div class="small text-muted">Resolved</div>
+                                    </div>
+
+                                    <!-- Completed -->
+                                    <div class="flex-fill p-2 rounded text-center"
+                                         style="background:#dcfce7;">
+                                        <div class="fw-bold fs-5" style="color:#15803d;">
+                                            <field name="completed_ticket_count"/>
+                                        </div>
+                                        <div class="small text-muted">Done</div>
+                                    </div>
+
+                                </div>
+
+                                <!-- 🔹 FOOTER -->
+                                <div class="mt-3 pt-2 border-top d-flex justify-content-between align-items-center">
+
+                                    <div class="small text-muted d-flex align-items-center">
+                                        <i class="fa fa-user me-1"/>
+                                        <field name="partner_id"/>
+                                    </div>
+
+                                    <div class="small text-muted d-flex align-items-center">
+                                        <i class="fa fa-building me-1"/>
+                                        <field name="customer_company_id"/>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </t>
+                </templates>
+
+            </kanban>
+
+        </field>
+    </record>
+    <record id="view_subproject_pivot" model="ir.ui.view">
+        <field name="name">project.subproject.pivot</field>
+        <field name="model">project.subproject</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Subproject Analysis" sample="1">
+
+                <!-- ROWS -->
+                <field name="hup_project_id" type="row"/>
+                <field name="subproject_code" type="row"/>
+
+                <!-- COLUMNS -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURES (YOUR LOGIC 🔥) -->
+                <field name="assigned_ticket_count" type="measure"/>
+                <field name="resolved_ticket_count" type="measure"/>
+                <field name="completed_ticket_count" type="measure"/>
+
+            </pivot>
+
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form_location"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.location</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='sequence']" position="after">
+                <field name="project_id" options="{'no_create': True}"/>
+                <field name="user_story_id"
+                       domain="[('project_id', '=', project_id)]"/>
+                <field name="hup_project_id" string="External Project"/>
+                <field name="hup_subproject_id" string="External Subproject"/>
+                <field name="ticket_reference_id"/>
+                <field name="customer_partner_id"/>
+
+                <field name="customer_company_id"/>
+                <field name="customer_address" style="min-height: 80px;"/>
+            </xpath>
+            <xpath expr="//h1/field[@name='number']" position="before">
+                <label for="number" string="Ticket Number: "/>
+            </xpath>
+
+            <!-- Target the Ticket Name (Subject) section -->
+            <xpath expr="//h2/field[@name='name']" position="before">
+                <label for="name" string="Ticket Title: "/>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="priority"/>
+
+                <field name="severity_level"/>
+                <field name="support_level"/>
+
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_tasks"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-tasks">
+                    <field name="task_count" widget="statinfo" string="Tasks"/>
+                </button>
+            </xpath>
+            <!--            <xpath expr="//notebook" position="inside">-->
+
+            <!--            <page string="User Stories">-->
+
+            <!--                <field name="user_story_ids" readonly="1">-->
+
+            <!--                    <list>-->
+            <!--                        <field name="name"/>-->
+            <!--                        <field name="code"/>-->
+            <!--                        <field name="status"/>-->
+            <!--                        <field name="priority"/>-->
+            <!--                        <field name="assignee_id"/>-->
+            <!--                    </list>-->
+
+            <!--                </field>-->
+
+            <!--            </page>-->
+            <!--            </xpath>-->
+
+        </field>
+    </record>
+
+
+    <!-- ================= ACTIONS ================= -->
+    <record id="action_project_custom" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">project.project.custom</field>
+        <field name="view_mode">list,form,pivot,kanban</field>
+    </record>
+
+    <record id="action_subproject" model="ir.actions.act_window">
+        <field name="name">Subprojects</field>
+        <field name="res_model">project.subproject</field>
+        <field name="view_mode">list,form,kanban,pivot</field>
+    </record>
+
+
+    <!-- ================= MENUS ================= -->
+    <menuitem id="menu_project"
+              name="Projects"
+              parent="helpdesk_mgmt.helpdesk_ticket_menu"
+              sequence="1"
+              action="action_project_custom"/>
+
+    <menuitem id="menu_subproject"
+              name="Subprojects"
+              parent="helpdesk_mgmt.helpdesk_ticket_menu"
+              sequence="2"
+              action="action_subproject"/>
+
+
+    <record id="view_ticket_reference_list" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.reference.list</field>
+        <field name="model">helpdesk.ticket.reference</field>
+        <field name="arch" type="xml">
+            <list string="Ticket References">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_ticket_reference_form" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.reference.form</field>
+        <field name="model">helpdesk.ticket.reference</field>
+        <field name="arch" type="xml">
+            <form string="Ticket Reference">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ticket_reference" model="ir.actions.act_window">
+        <field name="name">Ticket References</field>
+        <field name="res_model">helpdesk.ticket.reference</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_ticket_reference"
+              name="Ticket References"
+              parent="helpdesk_mgmt.helpdesk_ticket_menu"
+              action="action_ticket_reference"
+              sequence="8"/>
+
+
+</odoo>
+
+

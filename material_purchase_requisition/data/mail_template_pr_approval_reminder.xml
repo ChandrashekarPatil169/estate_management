@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="mail_template_pr_approval_reminder" model="mail.template">
+        <field name="name">PR Approval Reminder</field>
+        <field name="model_id"
+               ref="material_purchase_requisition.model_material_purchase_requisition"/>
+
+        <!-- SINGLE LINE ONLY - NO ENTERS -->
+        <field name="subject">Reminder: Approval pending for PR {{ object.name }}</field>
+        <field name="email_from">{{ object.company_id.email }}</field>
+        <field name="email_to">{{ object.current_approver_id.email_formatted or object.current_approver_id.partner_id.email }}</field>
+
+        <field name="auto_delete" eval="False"/>
+
+        <!-- BODY -->
+        <field name="body_html"><![CDATA[
+    <html>
+      <body>
+        <p>Hello <t t-esc="object.current_approver_id.name"/> ,</p>
+
+        <p>The following Purchase Requisition is pending your approval:</p>
+
+        <ul>
+          <li><b>PR:</b> <t t-esc="object.name"/></li>
+          <li><b>Requested By:</b> <t t-esc="object.employee_id.name"/></li>
+          <li>
+            <b>Total:</b>
+            <t t-esc="object.currency_id.symbol"/>
+            <t t-esc="'%.2f' % object.total_amount"/>
+          </li>
+          <li><b>Submitted On:</b> <t t-esc="object.submitted_on"/></li>
+        </ul>
+
+        <p>
+          <a t-att-href="object.get_base_url() + '/web#id=%s&model=material.purchase.requisition&view_type=form' % object.id">
+            Open Purchase Requisition
+          </a>
+        </p>
+      </body>
+    </html>
+  ]]></field>
+    </record>
+
+</odoo>

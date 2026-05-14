@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- 🔥 MISC MENU ROOT -->
+    <!-- ===================================================== -->
+    <menuitem id="menu_inventory_misc_root"
+              name="Miscellaneous"
+              parent="custom_inventory_menu_root"
+              groups="base.group_system,custom_inventory.group_warehouse_manager"
+              sequence="90"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 ASSET TYPE -->
+    <!-- ===================================================== -->
+    <record id="view_asset_type_list" model="ir.ui.view">
+        <field name="model">inventory.asset.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="example_tag"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_type_form" model="ir.ui.view">
+        <field name="model">inventory.asset.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="example_tag"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_type" model="ir.actions.act_window">
+        <field name="name">Asset Types</field>
+        <field name="res_model">inventory.asset.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_asset_type" name="Asset Types"
+              parent="menu_inventory_misc_root"
+              action="action_asset_type"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 ASSET CATEGORY -->
+    <!-- ===================================================== -->
+    <record id="view_asset_category_list" model="ir.ui.view">
+        <field name="model">inventory.asset.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_asset_category_form" model="ir.ui.view">
+        <field name="model">inventory.asset.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_asset_category" model="ir.actions.act_window">
+        <field name="name">Asset Categories</field>
+        <field name="res_model">inventory.asset.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_asset_category"
+              name="Asset Categories"
+              parent="menu_inventory_misc_root"
+              action="action_asset_category"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 LOCATION -->
+    <!-- ===================================================== -->
+    <record id="view_location_list" model="ir.ui.view">
+        <field name="model">inventory.location</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="example_tag"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="model">inventory.location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="example_tag"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_location" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">inventory.location</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_location"
+              name="Locations"
+              parent="menu_inventory_misc_root"
+              action="action_location"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 SUB LOCATION -->
+    <!-- ===================================================== -->
+    <record id="view_sub_location_list" model="ir.ui.view">
+        <field name="model">inventory.sub_location</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_sub_location_form" model="ir.ui.view">
+        <field name="model">inventory.sub_location</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sub_location" model="ir.actions.act_window">
+        <field name="name">Sub Locations</field>
+        <field name="res_model">inventory.sub_location</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sub_location"
+              name="Sub Locations"
+              parent="menu_inventory_misc_root"
+              action="action_sub_location"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 CABIN -->
+    <!-- ===================================================== -->
+    <record id="view_cabin_list" model="ir.ui.view">
+        <field name="model">inventory.cabin</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_cabin_form" model="ir.ui.view">
+        <field name="model">inventory.cabin</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_cabin" model="ir.actions.act_window">
+        <field name="name">Cabins</field>
+        <field name="res_model">inventory.cabin</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_cabin"
+              name="Cabins"
+              parent="menu_inventory_misc_root"
+              action="action_cabin"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 PRODUCT -->
+    <!-- ===================================================== -->
+    <record id="view_product_list" model="ir.ui.view">
+        <field name="model">inventory.product</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_product_form" model="ir.ui.view">
+        <field name="model">inventory.product</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_product" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">inventory.product</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_product"
+              name="Products"
+              parent="menu_inventory_misc_root"
+              action="action_product"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 BRAND -->
+    <!-- ===================================================== -->
+    <record id="view_brand_list" model="ir.ui.view">
+        <field name="model">inventory.brand</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_brand_form" model="ir.ui.view">
+        <field name="model">inventory.brand</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_brand" model="ir.actions.act_window">
+        <field name="name">Brands</field>
+        <field name="res_model">inventory.brand</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_brand"
+              name="Brands"
+              parent="menu_inventory_misc_root"
+              action="action_brand"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 PROJECT -->
+    <!-- ===================================================== -->
+    <record id="view_project_list" model="ir.ui.view">
+        <field name="model">inventory.project</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_project_form" model="ir.ui.view">
+        <field name="model">inventory.project</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_project_master" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">inventory.project</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_project_master"
+              name="Projects"
+              parent="menu_inventory_misc_root"
+              action="action_project_master"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 MAINTENANCE CATEGORY -->
+    <!-- ===================================================== -->
+    <record id="view_maintenance_category_list" model="ir.ui.view">
+        <field name="model">maintenance.category</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_maintenance_category_form" model="ir.ui.view">
+        <field name="model">maintenance.category</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_maintenance_category" model="ir.actions.act_window">
+        <field name="name">Maintenance Categories</field>
+        <field name="res_model">maintenance.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_maintenance_category"
+              name="Maintenance Categories"
+              parent="menu_inventory_misc_root"
+              action="action_maintenance_category"/>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 SOFTWARE LICENSE TYPE -->
+    <!-- ===================================================== -->
+    <record id="view_software_license_type_list" model="ir.ui.view">
+        <field name="model">software.license.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_software_license_type_form" model="ir.ui.view">
+        <field name="model">software.license.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="description"/>
+                    </group>
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_software_license_type" model="ir.actions.act_window">
+        <field name="name">Software License Types</field>
+        <field name="res_model">software.license.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_software_license_type"
+              name="Software License Types"
+              parent="menu_inventory_misc_root"
+              action="action_software_license_type"/>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 SOFTWARE INSTALLATION -->
+    <!-- ===================================================== -->
+    <record id="view_software_installation_list" model="ir.ui.view">
+        <field name="model">software.installation</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="software_id"/>
+                <field name="device"/>
+                <field name="model_id"/>
+                <field name="installed_by"/>
+                <field name="install_date"/>
+                <field name="remarks"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_software_installation_form" model="ir.ui.view">
+        <field name="model">software.installation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="software_id"/>
+                        <field name="device"/>
+                        <field name="model_id"/>
+                        <field name="installed_by"/>
+                        <field name="install_date"/>
+                        <field name="remarks"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_software_installation" model="ir.actions.act_window">
+        <field name="name">Software Installations</field>
+        <field name="res_model">software.installation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_software_installation"
+              name="Software Installations"
+              parent="menu_inventory_misc_root"
+              action="action_software_installation"/>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 SOFTWARE RENEWAL -->
+    <!-- ===================================================== -->
+    <record id="view_software_renewal_list" model="ir.ui.view">
+        <field name="model">software.renewal</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="software_id"/>
+                <field name="renewal_date"/>
+                <field name="renewed_by"/>
+                <field name="amount"/>
+                <field name="remarks"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_software_renewal_form" model="ir.ui.view">
+        <field name="model">software.renewal</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="software_id"/>
+                        <field name="renewal_date"/>
+                        <field name="renewed_by"/>
+                        <field name="amount"/>
+                        <field name="remarks"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_software_renewal" model="ir.actions.act_window">
+        <field name="name">Software Renewals</field>
+        <field name="res_model">software.renewal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_software_renewal"
+              name="Software Renewals"
+              parent="menu_inventory_misc_root"
+              action="action_software_renewal"/>
+
+    <!-- ===================================================== -->
+    <!-- 🔹 TICKET LIST VIEW -->
+    <!-- ===================================================== -->
+    <record id="view_ticket_list" model="ir.ui.view">
+        <field name="model">ticket.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Tickets">
+
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="priority"/>
+                <field name="status"/>
+
+                <field name="inventory_id"/>
+                <field name="software_id"/>
+
+                <field name="asset_tag"/>
+                <field name="product_name_id"/>
+                <field name="brand_id"/>
+                <field name="model_id"/>
+
+                <field name="reported_by"/>
+                <field name="assigned_to"/>
+
+                <field name="assign_date"/>
+                <field name="resolve_date"/>
+                <field name="close_date"/>
+
+                <field name="cost"/>
+
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 TICKET FORM VIEW -->
+    <!-- ===================================================== -->
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="model">ticket.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Support Ticket">
+
+                <!-- HEADER BUTTONS -->
+                <header>
+
+                    <button name="action_resolve"
+                            type="object"
+                            string="Resolve"
+                            class="btn-primary"
+                            invisible="status == 'resolved' or status == 'closed'"/>
+
+                    <button name="action_close"
+                            type="object"
+                            string="Close"
+                            class="btn-danger"
+                            invisible="status == 'closed'"/>
+
+                </header>
+
+                <sheet>
+
+                    <!-- TITLE -->
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="subject"/>
+                    </group>
+
+                    <!-- STATUS & PRIORITY -->
+                    <group>
+                        <field name="priority"/>
+                        <field name="status"/>
+                    </group>
+
+                    <!-- DESCRIPTION -->
+                    <group>
+                        <field name="description"/>
+                    </group>
+
+                    <!-- ASSET LINK -->
+                    <group string="Related Asset">
+                        <field name="inventory_id"/>
+                        <field name="software_id"/>
+                    </group>
+
+                    <!-- AUTO DETAILS -->
+                    <group string="Asset Details">
+                        <field name="asset_tag" readonly="1"/>
+                        <field name="asset_type_id" readonly="1"/>
+                        <field name="asset_category_id" readonly="1"/>
+                        <field name="product_name_id" readonly="1"/>
+                        <field name="brand_id" readonly="1"/>
+                        <field name="model_id" readonly="1"/>
+                    </group>
+
+                    <!-- ASSIGNMENT -->
+                    <group string="Assignment">
+                        <field name="reported_by"/>
+                        <field name="assigned_to"/>
+                    </group>
+
+                    <!-- DATES -->
+                    <group string="Timeline">
+                        <field name="assign_date" readonly="1"/>
+                        <field name="resolve_date" readonly="1"/>
+                        <field name="close_date" readonly="1"/>
+                    </group>
+
+                    <!-- RESOLUTION -->
+                    <group string="Resolution">
+                        <field name="resolution_notes"/>
+                        <field name="cost"/>
+                    </group>
+
+                    <chatter/>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 ACTION -->
+    <!-- ===================================================== -->
+    <record id="action_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">ticket.ticket</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 MENU -->
+    <!-- ===================================================== -->
+    <menuitem id="menu_ticket"
+              name="Tickets"
+              parent="menu_inventory_misc_root"
+              action="action_ticket"/>
+
+</odoo>

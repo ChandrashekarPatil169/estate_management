@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Asset list View -->
+    <record id="view_asset_list" model="ir.ui.view">
+        <field name="name">estate.asset.list</field>
+        <field name="model">estate.asset</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code" readonly="code_locked"/>
+
+                <field name="asset_type_id"/>
+                <field name="purchase_date"/>
+                <field name="condition"/>
+                <field name="assigned_farm_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Asset Form View -->
+    <record id="view_asset_form" model="ir.ui.view">
+        <field name="name">estate.asset.form</field>
+        <field name="model">estate.asset</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="asset_type_id"/>
+                        <field name="code" readonly="code_locked"/>
+
+                        <field name="purchase_date"/>
+                        <field name="condition"/>
+                        <field name="assigned_farm_id"/>
+                        <field name="assigned_plot_id"/>
+                    </group>
+
+                    <group string="Advanced Info">
+                        <field name="maintenance_logs"/>
+                        <field name="fuel_consumables"/>
+                        <field name="depreciation_info"/>
+                    </group>
+
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_asset_pivot" model="ir.ui.view">
+        <field name="name">estate.asset.pivot</field>
+        <field name="model">estate.asset</field>
+        <field name="arch" type="xml">
+            <pivot string="Asset Analysis">
+
+                <!-- Category grouping -->
+                <field name="asset_type" type="row"/>
+                <field name="asset_type_id" type="row"/>
+                <field name="condition" type="row"/>
+
+                <!-- Farm relations -->
+                <field name="assigned_farm_id" type="row"/>
+                <field name="assigned_plot_id" type="row"/>
+                <field name="assigned_task_id" type="row"/>
+
+                <!-- Boolean grouping -->
+                <field name="code_locked" type="row"/>
+
+                <!-- Time analysis -->
+                <field name="purchase_date" interval="month" type="col"/>
+
+            </pivot>
+<!--            <pivot string="Asset Analysis">-->
+
+<!--                <field name="asset_type_id" type="row"/>-->
+<!--                <field name="condition" type="row"/>-->
+<!--                <field name="assigned_farm_id" type="row"/>-->
+<!--                <field name="assigned_plot_id" type="row"/>-->
+
+<!--                <field name="purchase_date" interval="month" type="col"/>-->
+
+<!--            </pivot>-->
+<!--            <pivot string="Asset Analysis">-->
+
+<!--                &lt;!&ndash; ROW GROUPS &ndash;&gt;-->
+<!--                <field name="name" type="row"/>-->
+<!--                <field name="asset_type" type="row"/>-->
+<!--                <field name="asset_type_id" type="row"/>-->
+<!--                <field name="condition" type="row"/>-->
+<!--                <field name="assigned_farm_id" type="row"/>-->
+<!--                <field name="assigned_plot_id" type="row"/>-->
+<!--                <field name="assigned_task_id" type="row"/>-->
+<!--                <field name="code_locked" type="row"/>-->
+
+<!--                &lt;!&ndash; TIME ANALYSIS &ndash;&gt;-->
+<!--                <field name="purchase_date" interval="month" type="col"/>-->
+<!--                <field name="create_date" interval="month" type="col"/>-->
+
+<!--                &lt;!&ndash; MEASURE &ndash;&gt;-->
+<!--                <field name="id" type="measure"/>-->
+
+<!--            </pivot>-->
+        </field>
+    </record>
+
+    <!-- Asset Action -->
+    <record id="action_asset" model="ir.actions.act_window">
+        <field name="name">Assets</field>
+        <field name="res_model">estate.asset</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- Asset Menu -->
+    <menuitem id="menu_asset" name="Assets" parent="menu_farm" action="action_asset" sequence="4"/>
+</odoo>

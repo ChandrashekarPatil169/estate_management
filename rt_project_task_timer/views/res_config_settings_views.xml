@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="res_config_settings_view_form_inherit_timer" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.timer</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="project.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='project_time']" position="after">
+                <block title="Task Timer" name="task_timer">
+                    <setting id="task_timer_yellow_hours_setting" help="Configure time thresholds for task timer color indicators">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label string="Yellow Alert (Hours)" for="task_timer_yellow_hours" class="col-3 o_light_label"/>
+                                <field name="task_timer_yellow_hours"/>
+                            </div>
+                            <div class="row">
+                                <label string="Red Alert (Hours)" for="task_timer_red_hours" class="col-3 o_light_label"/>
+                                <field name="task_timer_red_hours"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<odoo>-->
+
+<!--    <record id="res_config_settings_view_form_inherit_timer" model="ir.ui.view">-->
+<!--        <field name="name">res.config.settings.view.form.inherit.timer</field>-->
+<!--        <field name="model">res.config.settings</field>-->
+<!--        <field name="inherit_id" ref="project.res_config_settings_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <xpath expr="//block[@name='project_time']" position="after">-->
+<!--                <block title="Task Timer" name="task_timer">-->
+<!--                    <setting id="task_timer_yellow_hours_setting" help="Configure time thresholds for task timer colors">-->
+<!--                        <div class="content-group">-->
+<!--                            <div class="row mt16">-->
+<!--                                <label string="Alerta Amarilla (Horas)" for="task_timer_yellow_hours" class="col-3 o_light_label"/>-->
+<!--                                <field name="task_timer_yellow_hours"/>-->
+<!--                            </div>-->
+<!--                            <div class="row">-->
+<!--                                <label string="Alerta Roja (Horas)" for="task_timer_red_hours" class="col-3 o_light_label"/>-->
+<!--                                <field name="task_timer_red_hours"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </setting>-->
+<!--                </block>-->
+<!--            </xpath>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--</odoo>-->

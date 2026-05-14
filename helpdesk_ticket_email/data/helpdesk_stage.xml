@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<!--    <record id="stage_draft" model="helpdesk.ticket.stage">-->
+<!--        <field name="name">Draft</field>-->
+<!--        <field name="sequence">0</field>-->
+<!--    </record>-->
+
+    <record id="stage_submitted" model="helpdesk.ticket.stage">
+        <field name="name">Submitted</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="stage_assigned" model="helpdesk.ticket.stage">
+        <field name="name">Assigned</field>
+        <field name="sequence">4</field>
+    </record>
+
+<!--    <record id="stage_done" model="helpdesk.ticket.stage">-->
+<!--        <field name="name">Done</field>-->
+<!--        <field name="sequence">4</field>-->
+<!--    </record>-->
+
+</odoo>

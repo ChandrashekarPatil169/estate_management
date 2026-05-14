@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- GLOBAL RULE TEMPLATE -->
+
+    <!-- MODEL LIST -->
+
+    <record id="estate_coffee_ingredient_rw_rule" model="ir.rule">
+        <field name="name">Estate Coffee Ingredient Secure Access</field>
+        <field name="model_id" ref="model_estate_coffee_ingredient"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="building_stock_rw_rule" model="ir.rule">
+        <field name="name">Building Stock Secure Access</field>
+        <field name="model_id" ref="model_building_stock"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="coffee_machine_rw_rule" model="ir.rule">
+        <field name="name">Coffee Machine Secure Access</field>
+        <field name="model_id" ref="model_coffee_machine"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="machine_stock_rw_rule" model="ir.rule">
+        <field name="name">Machine Stock Secure Access</field>
+        <field name="model_id" ref="model_machine_stock"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="cleaning_log_rw_rule" model="ir.rule">
+        <field name="name">Cleaning Log Secure Access</field>
+        <field name="model_id" ref="model_cleaning_log"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="coffee_building_transfer_rw_rule" model="ir.rule">
+        <field name="name">Coffee Building Transfer Secure Access</field>
+        <field name="model_id" ref="model_coffee_building_transfer"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="coffee_purchase_rw_rule" model="ir.rule">
+        <field name="name">Coffee Purchase Secure Access</field>
+        <field name="model_id" ref="model_coffee_purchase"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="coffee_ingredient_master_rw_rule" model="ir.rule">
+        <field name="name">Coffee Ingredient Master Secure Access</field>
+        <field name="model_id" ref="model_coffee_ingredient_master"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_coffee_management.group_coffee_user')),
+                                   (4, ref('estate_coffee_management.group_coffee_employee')),
+                                   (4, ref('estate_coffee_management.group_coffee_manager')),
+                                   (4, ref('estate_coffee_management.group_coffee_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>

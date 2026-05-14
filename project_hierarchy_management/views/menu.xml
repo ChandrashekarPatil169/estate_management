@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ============================= -->
+    <!-- Approval Matrix Menu -->
+    <!-- ============================= -->
+    <menuitem id="menu_project_approval_root"
+              name="Project Configuration"
+              parent="project.menu_project_config"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_project_approval_matrix"
+              name="Approval Matrix"
+              parent="menu_project_approval_root"
+              action="action_project_approval_matrix"
+              groups="base.group_system"/>
+
+</odoo>

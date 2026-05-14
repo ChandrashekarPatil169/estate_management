@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_approval_team_manager,Purchase Approval Team Manager,model_purchase_approval_team,purchase.group_purchase_manager,1,1,1,1
+access_purchase_approval_team_user,Purchase Approval Team User,model_purchase_approval_team,purchase.group_purchase_user,1,1,1,0
+access_purchase_approval_team_approver,Purchase Approval Team Approver,model_purchase_approval_team,purchase_rfq_approval.group_purchase_approver,1,0,0,0
+access_purchase_approval_rule_manager,Purchase Approval Rule Manager,model_purchase_approval_rule,purchase.group_purchase_manager,1,1,1,1
+access_purchase_approval_rule_user,Purchase Approval Rule User,model_purchase_approval_rule,purchase.group_purchase_user,1,1,1,0
+access_purchase_approval_rule_approver,Purchase Approval Rule Approver,model_purchase_approval_rule,purchase_rfq_approval.group_purchase_approver,1,0,0,0
+access_purchase_approval_history_user,Purchase Approval History User,model_purchase_approval_history,purchase.group_purchase_user,1,0,0,0
+access_purchase_approval_history_approver,Purchase Approval History Approver,model_purchase_approval_history,purchase_rfq_approval.group_purchase_approver,1,0,0,0
+access_purchase_vendor_reject_wizard,Purchase Vendor Reject Wizard,model_purchase_vendor_reject_wizard,base.group_user,1,1,1,1

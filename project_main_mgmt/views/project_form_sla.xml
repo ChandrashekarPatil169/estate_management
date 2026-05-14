@@ -1,0 +1,242 @@
+<odoo>
+    <data>
+        <record id="view_project_form_hide_date" model="ir.ui.view">
+            <field name="name">project.project.form.hide.date</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_start']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="view_project_form_sla" model="ir.ui.view">
+            <field name="name">project.project.form.sla</field>
+            <field name="model">project.project</field>
+
+            <!-- Inherit project form -->
+            <field name="inherit_id" search="[('name','=','project.project.form')]"/>
+
+            <field name="arch" type="xml">
+
+
+                <!-- 1. Adding 2 Fields (e.g., in the main group) -->
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="planned_start_date"/>
+                    <field name="planned_end_date"/>
+                </xpath>
+
+
+                <!-- Add SLA tab -->
+                <xpath expr="//notebook/page[@name='settings']" position="after">
+                    <page name="sla" string="SLA">
+
+                        <!-- ======================= -->
+                        <!-- SLA OVERVIEW -->
+                        <!-- ======================= -->
+                        <group class="row mt16 o_settings_container">
+                            <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                SLA Overview
+                            </div>
+
+                            <setting class="col-lg-12">
+                                <field name="sla_risk"
+                                       widget="badge"
+                                       decoration-success="sla_risk == 'green'"
+                                       decoration-warning="sla_risk == 'amber'"
+                                       decoration-danger="sla_risk == 'red'"/>
+                                <field name="sla_days_label" widget="badge"/>
+                            </setting>
+                        </group>
+
+
+                        <!-- ======================= -->
+                        <!-- SLA MONITORING -->
+                        <!-- ======================= -->
+                        <group class="row mt16 o_settings_container">
+                            <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                SLA Monitoring
+                            </div>
+
+                            <setting class="col-lg-12">
+                                <button
+                                        name="action_open_sla_monitoring"
+                                        type="object"
+                                        class="btn btn-link p-0"
+                                        icon="fa-shield">
+                                    Open SLA Monitoring
+                                </button>
+                            </setting>
+                        </group>
+
+                        <group class="row mt16 o_settings_container">
+
+                            <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                SLA Deadlines
+                            </div>
+
+                            <setting class="col-lg-6">
+                                <button name="action_open_story_sla_7_days"
+                                        type="object"
+                                        class="btn btn-outline-primary w-100"
+                                        icon="fa-calendar">
+                                    Upcoming (Next 7 Days)
+                                </button>
+                            </setting>
+
+                            <setting class="col-lg-6">
+                                <button name="action_open_story_sla_30_days"
+                                        type="object"
+                                        class="btn btn-outline-primary w-100"
+                                        icon="fa-calendar">
+                                    Upcoming (Next 30 Days)
+                                </button>
+                            </setting>
+
+                        </group>
+
+                        <group class="row mt16 o_settings_container">
+
+                            <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                SLA Escalation rules
+                            </div>
+
+                            <!-- Free Text Rules -->
+                            <setting class="col-lg-12">
+                                <field name="sla_escalation_rules"
+                                       placeholder="Define project-specific SLA escalation governance rules..."
+                                       nolabel="1"/>
+                            </setting>
+
+
+                            <!--                        <setting class="col-lg-6">-->
+                            <!--                            <field name="sla_current_recipients" readonly="1"/>-->
+                            <!--                        </setting>-->
+
+                            <!--                        &lt;!&ndash; Reminder Timings &ndash;&gt;-->
+                            <!--                        <setting class="col-lg-6">-->
+                            <!--                            <field name="sla_last_escalated_at" readonly="1"/>-->
+                            <!--                        </setting>-->
+
+                            <!--                        <setting class="col-lg-6">-->
+                            <!--                            <field name="sla_next_escalation_at" readonly="1"/>-->
+                            <!--                        </setting>-->
+
+
+                            <!--                        &lt;!&ndash; Reminder Configuration &ndash;&gt;-->
+                            <!--                        <setting class="col-lg-6">-->
+                            <!--                            <field name="sla_reminder_policy"/>-->
+                            <!--                        </setting>-->
+
+                            <!--                        &lt;!&ndash; Escalation Summary (Readonly Info) &ndash;&gt;-->
+                            <!--                        <setting class="col-lg-6">-->
+                            <!--                            <field name="sla_escalation_policy"/>-->
+                            <!--                        </setting>-->
+
+                        </group>
+
+                        <!-- ======================= -->
+                        <!-- ESCALATION OWNERS + REMINDER TIMINGS -->
+                        <!-- ======================= -->
+
+                        <group string="Escalation Owners and Reminder Timings">
+
+                            <group col="2">
+
+                                <!-- Row 1 -->
+                                <div class="o_form_label">Amber (&lt;72h before deadline)</div>
+                                <field name="sla_amber_user_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"/>
+
+                                <!-- Row 2 -->
+                                <div class="o_form_label">Red (At Deadline)</div>
+                                <field name="sla_red_user_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"/>
+
+                                <!-- Row 3 -->
+                                <div class="o_form_label">Overdue +3 Days</div>
+                                <field name="sla_overdue_3_user_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"/>
+
+                                <!-- Row 4 -->
+                                <div class="o_form_label">Overdue +6 Days</div>
+                                <field name="sla_overdue_6_user_ids"
+                                       widget="many2many_tags"
+                                       nolabel="1"/>
+
+                            </group>
+
+                        </group>
+
+                        <!--                    <group string="SLA Deadlines" col="1">-->
+
+                        <!--                        <button name="action_open_sla_7_days"-->
+                        <!--                                type="object"-->
+                        <!--                                class="oe_stat_button"-->
+                        <!--                                icon="fa-calendar">-->
+                        <!--                            <div class="o_stat_info">-->
+                        <!--                                <span class="o_stat_text">Upcoming (Next 7 Days)</span>-->
+                        <!--                            </div>-->
+                        <!--                        </button>-->
+
+                        <!--                        <button name="action_open_sla_30_days"-->
+                        <!--                                type="object"-->
+                        <!--                                class="oe_stat_button"-->
+                        <!--                                icon="fa-calendar">-->
+                        <!--                            <div class="o_stat_info">-->
+                        <!--                                <span class="o_stat_text">Upcoming (Next 30 Days)</span>-->
+                        <!--                            </div>-->
+                        <!--                        </button>-->
+
+                        <!--                    </group>-->
+
+                        <!--                    &lt;!&ndash; ======================= &ndash;&gt;-->
+                        <!--                    &lt;!&ndash; SLA OVERVIEW SECTION &ndash;&gt;-->
+                        <!--                    &lt;!&ndash; ======================= &ndash;&gt;-->
+                        <!--                    <group>-->
+                        <!--                        <separator string="SLA Overview"/>-->
+
+                        <!--                        <group col="2">-->
+                        <!--                            <field name="sla_risk"-->
+                        <!--                                widget="badge"-->
+                        <!--                                decoration-success="sla_risk == 'green'"-->
+                        <!--                                decoration-warning="sla_risk == 'amber'"-->
+                        <!--                                decoration-danger="sla_risk == 'red'"/>-->
+                        <!--                        </group>-->
+                        <!--                    </group>-->
+
+
+                        <!--                    &lt;!&ndash; ======================= &ndash;&gt;-->
+                        <!--                    &lt;!&ndash; SLA MONITORING SECTION &ndash;&gt;-->
+                        <!--                    &lt;!&ndash; ======================= &ndash;&gt;-->
+                        <!--                    <group>-->
+                        <!--                        <separator string="SLA Monitoring"/>-->
+
+                        <!--                        <button-->
+                        <!--                            name="action_open_sla_monitoring"-->
+                        <!--                            type="object"-->
+                        <!--                            class="oe_stat_button"-->
+                        <!--                            icon="fa-shield">-->
+
+                        <!--                            <div class="o_stat_info">-->
+                        <!--                                <span class="o_stat_text">-->
+                        <!--                                    Open SLA Monitoring-->
+                        <!--                                </span>-->
+                        <!--                            </div>-->
+
+                        <!--                        </button>-->
+
+                        <!--                    </group>-->
+
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

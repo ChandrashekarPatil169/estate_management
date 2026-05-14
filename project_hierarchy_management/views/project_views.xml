@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="project_form_approval_buttons" model="ir.ui.view">
+        <field name="name">project.project.form.approval.buttons</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <!-- Fields must be declared to be used in invisible logic -->
+                <field name="state" invisible="1"/>
+                <field name="is_current_user_approver" invisible="1"/>
+
+                <button name="action_approve"
+                        type="object"
+                        string="Approve"
+                        class="btn-primary"
+                        invisible="state != 'draft' or not is_current_user_approver"/>
+
+                <button name="action_open_reject_wizard"
+                        type="object"
+                        string="Reject"
+                        class="btn-danger"
+                        invisible="state != 'draft' or not is_current_user_approver"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 1. Add Parent Field to the Quick-Create (Simplified) Popup -->
+    <record id="project_form_add_parent_fields_simplified" model="ir.ui.view">
+        <field name="name">project.project.form.simplified.hierarchy</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="parent_project_id" placeholder="Select Parent Project..."/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- 2. Add Smart Button & Parent Field to the MAIN Project Form -->
+    <record id="project_form_inherit_main_hierarchy" model="ir.ui.view">
+        <field name="name">project.project.form.main.hierarchy</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <!-- Add Parent Field after Name -->
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <group>
+                    <field name="parent_project_id" readonly="id"/>
+                </group>
+            </xpath>
+            <!-- Add Smart Button to the existing button box -->
+            <!--            <xpath expr="//div[@name='button_box']/button[1]" position="before">-->
+            <!--                <button type="object"-->
+            <!--                        name="action_open_sub_projects"-->
+            <!--                        class="oe_stat_button"-->
+            <!--                        icon="fa-sitemap">-->
+            <!--                    <field name="sub_project_count" widget="statinfo" string="Sub-Projects"/>-->
+            <!--                </button>-->
+            <!--            </xpath>-->
+
+            <!--            <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">-->
+            <!--                <button type="object"-->
+            <!--                        name="action_open_sub_projects"-->
+            <!--                        class="oe_stat_button"-->
+            <!--                        icon="fa-sitemap">-->
+            <!--                    <field name="sub_project_count" widget="statinfo" string="Sub-Projects"/>-->
+            <!--                </button>-->
+            <!--            </xpath>-->
+        </field>
+    </record>
+
+
+    <!-- 3. Standard List View with Parent Column -->
+    <record id="project_tree_inherit_hierarchy" model="ir.ui.view">
+        <field name="name">project.project.list.hierarchy</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="parent_project_id" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="project_form_share_button_field_loader" model="ir.ui.view">
+        <field name="name">project.project.form.share.button.field.loader</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="priority">998</field>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="can_share_project" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="project_form_share_button_access_fix" model="ir.ui.view">
+        <field name="name">project.project.form.share.button.access.fix</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_open_share_project_wizard']" position="replace">
+                <button name="action_open_share_project_wizard"
+                        string="Share Project"
+                        type="object"
+                        class="oe_highlight"
+                        invisible="privacy_visibility in ['followers', 'employees'] or is_template or not can_share_project"
+                        context="{'default_access_mode': 'read'}"
+                        data-hotkey="r"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!--   -->
+    <!--    <record id="project_tree_enable_hierarchy" model="ir.ui.view">-->
+    <!--        <field name="name">project.project.tree.enable.hierarchy</field>-->
+    <!--        <field name="model">project.project</field>-->
+    <!--        <field name="inherit_id" ref="project.view_project"/>-->
+    <!--        &lt;!&ndash; The field_parent attribute enables the expansion arrows &ndash;&gt;-->
+    <!--        <field name="field_parent">child_ids</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <xpath expr="//tree" position="attributes">-->
+    <!--                &lt;!&ndash; Ensure no default grouping to allow the hierarchy to render &ndash;&gt;-->
+    <!--                <attribute name="default_group_by"> </attribute>-->
+    <!--            </xpath>-->
+
+    <!--            &lt;!&ndash; You must include parent_id in the view for the logic to work &ndash;&gt;-->
+    <!--            <xpath expr="//tree" position="inside">-->
+    <!--                <field name="parent_id" invisible="1"/>-->
+    <!--            </xpath>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<odoo> &lt;!&ndash; 1. Add Parent Field to the Quick-Create Popup &ndash;&gt;-->
+        <!--    <record id="project_form_add_parent_fields_simplified" model="ir.ui.view">-->
+        <!--        <field name="name">project.project.form.simplified.hierarchy</field>-->
+        <!--        <field name="model">project.project</field>-->
+        <!--        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <xpath expr="//field[@name='name']" position="after">-->
+        <!--                <field name="parent_project_id" placeholder="Select Parent Project..."/>-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record> &lt;!&ndash; 2. Add Smart Button & Parent Field to the MAIN Project Form &ndash;&gt;-->
+        <!--    <record id="project_form_inherit_main_hierarchy" model="ir.ui.view">-->
+        <!--        <field name="name">project.project.form.main.hierarchy</field>-->
+        <!--        <field name="model">project.project</field>-->
+        <!--        <field name="inherit_id" ref="project.edit_project"/>-->
+        <!--        <field name="arch" type="xml"> &lt;!&ndash; Add Parent Field to the Sheet &ndash;&gt;-->
+        <!--            <xpath expr="//field[@name='name']" position="after">-->
+        <!--                <group>-->
+        <!--                    <field name="parent_project_id" readonly="id"/>-->
+        <!--                </group>-->
+        <!--            </xpath> &lt;!&ndash; Add Smart Button to the Button Box &ndash;&gt;-->
+        <!--            <xpath expr="//div[contains(@class, 'oe_button_box')]" position="inside">-->
+        <!--                <button type="object" name="action_open_sub_projects" class="oe_stat_button" icon="fa-sitemap"-->
+        <!--                        invisible="sub_project_count == 0">-->
+        <!--                    <field name="sub_project_count" widget="statinfo" string="Sub-Projects"/>-->
+        <!--                </button>-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record> &lt;!&ndash; 3. Add Parent Field to Project List View &ndash;&gt;-->
+        <!--    <record id="project_tree_inherit_hierarchy" model="ir.ui.view">-->
+        <!--        <field name="name">project.project.list.hierarchy</field>-->
+        <!--        <field name="model">project.project</field>-->
+        <!--        <field name="inherit_id" ref="project.view_project"/>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <xpath expr="//field[@name='name']" position="after">-->
+        <!--                <field name="parent_project_id" optional="show"/>-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--</odoo>-->

@@ -1,0 +1,21 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_coffee_ingredient_manager,Coffee Ingredient Manager,model_estate_coffee_ingredient,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_building_stock_manager,Building Stock Manager,model_building_stock,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_coffee_machine_manager,Coffee Machine Manager,model_coffee_machine,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_machine_stock_manager,Machine Stock Manager,model_machine_stock,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_cleaning_log_manager,Cleaning Log Manager,model_cleaning_log,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_building_transfer_manager,Coffee Building Transfer Manager,model_coffee_building_transfer,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_coffee_purchase_manager,Coffee Purchase Manager,model_coffee_purchase,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_coffee_ingredient_user,Coffee Ingredient User,model_estate_coffee_ingredient,estate_coffee_management.group_coffee_user,1,1,1,0
+access_building_stock_user,Building Stock User,model_building_stock,estate_coffee_management.group_coffee_user,1,1,1,0
+access_coffee_machine_user,Coffee Machine User,model_coffee_machine,estate_coffee_management.group_coffee_user,1,1,1,0
+access_machine_stock_user,Machine Stock User,model_machine_stock,estate_coffee_management.group_coffee_user,1,1,1,0
+access_cleaning_log_user,Cleaning Log User,model_cleaning_log,estate_coffee_management.group_coffee_user,1,1,1,0
+access_building_transfer_user,Coffee Building Transfer User,model_coffee_building_transfer,estate_coffee_management.group_coffee_user,1,1,1,0
+access_coffee_purchase_user,Coffee Purchase User,model_coffee_purchase,estate_coffee_management.group_coffee_user,1,1,1,0
+
+access_coffee_ingredient_master_user,coffee.ingredient.master.user,model_coffee_ingredient_master,base.group_user,1,1,1,0
+access_coffee_ingredient_master_manager,coffee.ingredient.master.manager,model_coffee_ingredient_master,base.group_system,1,1,1,1
+
+access_coffee_building_transfer_manager,Coffee Transfer Manager,model_coffee_building_transfer,estate_coffee_management.group_coffee_manager,1,1,1,1
+access_coffee_building_transfer_user,Coffee Transfer User,model_coffee_building_transfer,estate_coffee_management.group_coffee_user,1,1,1,0

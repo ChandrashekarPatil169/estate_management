@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================= -->
+    <!-- LIST VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_epic_list" model="ir.ui.view">
+        <field name="name">project.epic.list</field>
+        <field name="model">project.epic</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="backlog_id"/>
+                <field name="epic_status"/>
+                <field name="priority"/>
+                <field name="owner_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="epic_progress"
+                       widget="progressbar"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- FORM VIEW (Your Existing) -->
+    <!-- ================================= -->
+    <record id="view_project_epic_form" model="ir.ui.view">
+        <field name="name">project.epic.form</field>
+        <field name="model">project.epic</field>
+        <field name="arch" type="xml">
+            <form string="Epic">
+                <sheet>
+                    <!-- Smart Button Box -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_epic_stories"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-list-alt">
+                            <field name="story_count" string="User Stories" widget="statinfo"/>
+                        </button>
+                        <!-- NEW: Documents Smart Button -->
+                        <button name="action_view_documents" type="object" class="oe_stat_button" icon="fa-paperclip">
+                            <field name="document_count" string="Documents" widget="statinfo"/>
+                        </button>
+                    </div>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="project_id"/>
+                        <field name="backlog_id"/>
+                        <field name="epic_status"/>
+                        <field name="priority"/>
+                        <field name="owner_id"/>
+                        <field name="planned_start_date"/>
+                        <field name="planned_end_date"/>
+                        <field name="expected_end_date"/>
+                        <field name="completed_date" readonly="1"/>
+                        <field name="epic_progress"
+                               widget="progressbar"
+                               options="{'max_value':100}"/>
+
+
+                    </group>
+
+                    <notebook>
+
+
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+
+
+                        <page string="Overview">
+                            <group>
+                                <field name="business_outcome"/>
+                                <field name="expected_value"/>
+                                <field name="target_milestone"/>
+                                <!--                                <field name="planned_start"/>-->
+                                <!--                                <field name="planned_end"/>-->
+                                <!--                                <field name="expected_end_date"/>-->
+                            </group>
+                        </page>
+
+                        <page string="User Stories">
+                            <field name="user_story_ids"
+                                   context="{
+               'default_epic_id': id,
+               'default_project_id': project_id,
+               'default_backlog_id': backlog_id
+           }">
+
+                                <list>
+                                    <field name="name"/>
+                                    <field name="priority"/>
+                                    <!-- 🔥 ADD THIS -->
+                                    <field name="task_avg_progress" string="Progress %" widget="progressbar"/>
+                                    <field name="ready"/>
+                                    <field name="status"/>
+                                </list>
+
+                                <!-- CLEAN FORM: No nested notebooks, just straight groups -->
+                                <form string="User Story">
+                                    <sheet>
+                                        <group>
+                                            <group string="Story Details">
+                                                <field name="name"/>
+                                                <field name="priority"/>
+
+                                                <field name="status"/>
+                                            </group>
+                                            <group string="Planning">
+                                                <field name="project_id" readonly="1" force_save="1"/>
+                                                <field name="epic_id" readonly="1" force_save="1"/>
+                                                <field name="ready"/>
+                                            </group>
+                                        </group>
+                                        <group string="Description &amp; Acceptance">
+                                            <field name="connextra_story" placeholder="As a... I want... So that..."/>
+                                            <field name="dod_checklist"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!--                        <page string="Governance">-->
+                        <!--                            <group>-->
+                        <!--                                <field name="approval_required"/>-->
+                        <!--                                <field name="evidence_required"/>-->
+                        <!--                            </group>-->
+                        <!--                        </page>-->
+                        <page string="Governance">
+
+                            <group>
+                                <!-- Select who can approve -->
+                                <field name="approver_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+
+                                <field name="evidence_required"
+                                       options="{'resizable': false}"
+                                       placeholder="Add evidence here..."/>
+
+                                <!-- Audit info -->
+                                <field name="approved_by_id" readonly="1"/>
+
+                                <!-- Internal flag -->
+                                <field name="is_done" invisible="1"/>
+
+                            </group>
+
+                            <group>
+                                <button name="action_mark_done"
+                                        type="object"
+                                        string="Approve &amp; Mark Done"
+                                        class="btn-primary"
+                                        invisible="is_done"/>
+                            </group>
+
+                        </page>
+
+                        <!-- NEW: Documents Page -->
+                        <page string="Documents" name="documents_page">
+                            <field name="document_ids" widget="many2many_binary" string="Attach Files"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="inherited_notes" readonly="1" widget="html"/>
+                        </page>
+                        <page name="sla" string="SLA">
+
+                            <!-- SLA Overview -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Overview
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_risk"
+                                           widget="badge"
+                                           decoration-success="sla_risk == 'green'"
+                                           decoration-warning="sla_risk == 'amber'"
+                                           decoration-danger="sla_risk == 'red'"/>
+                                    <field name="sla_days_label" widget="badge"/>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Monitoring -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Monitoring
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <button name="action_open_sla_monitoring"
+                                            type="object"
+                                            class="btn btn-link p-0"
+                                            icon="fa-shield">
+                                        Open SLA Monitoring
+                                    </button>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Deadlines -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Deadlines
+                                </div>
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_story_sla_7_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming Stories (Next 7 Days)
+                                    </button>
+                                </setting>
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_story_sla_30_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming Stories (Next 30 Days)
+                                    </button>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Escalation Rules -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Escalation Rules
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_escalation_rules"
+                                           placeholder="Define epic-level SLA escalation rules..."
+                                           nolabel="1"/>
+                                </setting>
+                            </group>
+
+                            <!-- Escalation Owners -->
+                            <group string="Escalation Owners">
+                                <group col="2">
+
+                                    <div class="o_form_label">Amber (&lt;3 Days Remaining)</div>
+                                    <field name="sla_amber_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Red (Overdue)</div>
+                                    <field name="sla_red_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Overdue +3 Days</div>
+                                    <field name="sla_overdue_3_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Overdue +6 Days</div>
+                                    <field name="sla_overdue_6_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                </group>
+                            </group>
+
+                        </page>
+
+
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- KANBAN VIEW (Odoo 19 OWL Compatible) -->
+    <!-- ================================= -->
+    <record id="view_project_epic_kanban_custom" model="ir.ui.view">
+        <field name="name">project.epic.kanban.custom</field>
+        <field name="model">project.epic</field>
+        <field name="arch" type="xml">
+
+            <!-- 🔥 GROUP BY EPIC STATUS -->
+            <kanban default_group_by="epic_status" class="o_kanban_small_column">
+
+                <!-- LOAD FIELDS -->
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="backlog_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="estimated"/>
+                <field name="epic_progress"/>
+                <field name="progress_color"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="o_kanban_record p-3">
+
+                            <!-- PROJECT -->
+                            <div class="text-info fw-bold small">
+                                <field name="project_id"/>
+                            </div>
+
+                            <!-- 🔥 BACKLOG + EPIC -->
+                            <div class="fw-bold text-primary fs-5 mb-1">
+                                <field name="backlog_id"/>
+                                →
+                                <field name="name"/>
+                            </div>
+
+                            <!-- START -->
+                            <div class="text-muted small">
+                                Start:
+                                <field name="planned_start_date"/>
+                            </div>
+
+                            <!-- END -->
+                            <div class="text-muted small">
+                                End:
+                                <field name="planned_end_date"/>
+                            </div>
+
+                            <div>
+                                <b>Expected End:</b>
+                                <field name="expected_end_date"/>
+                            </div>
+
+                            <!-- ESTIMATE -->
+                            <div class="text-primary fw-bold mt-1">
+                                Estimate:
+                                <field name="estimated"/>
+                                hrs
+                            </div>
+
+                            <div class="progress mt-2" style="height:8px;">
+                                <div t-att-class="'progress-bar ' + (record.progress_color.raw_value or 'bg-primary')"
+                                     role="progressbar"
+                                     t-att-style="'width:' + (record.epic_progress.raw_value or 0) + '%;'">
+                                </div>
+                            </div>
+
+                            <div class="small text-muted mt-1">
+                                <t t-esc="record.epic_progress.raw_value or 0"/>%
+                            </div>
+                            <div class="o_kanban_footer d-flex justify-content-end">
+                                <div class="kanban_status_big">
+                                    <field name="epic_status"
+                                           widget="state_selection"
+                                           options="{'clickable': True}"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </t>
+                </templates>
+
+            </kanban>
+
+        </field>
+    </record>    <!-- ================================= -->
+    <!-- ACTIVITY VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_epic_activity" model="ir.ui.view">
+        <field name="name">project.epic.activity</field>
+        <field name="model">project.epic</field>
+        <field name="arch" type="xml">
+            <activity string="Epic Activities">
+                <field name="name"/>
+                <field name="owner_id"/>
+            </activity>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- PIVOT VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_epic_pivot" model="ir.ui.view">
+        <field name="name">project.epic.pivot</field>
+        <field name="model">project.epic</field>
+        <field name="arch" type="xml">
+            <pivot string="Epic Analysis">
+                <field name="project_id" type="row"/>
+                <field name="epic_status" type="col"/>
+                <field name="id" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- SEARCH VIEW (Recommended) -->
+    <!-- ================================= -->
+    <!--    <record id="view_project_epic_search" model="ir.ui.view">-->
+    <!--        <field name="name">project.epic.search</field>-->
+    <!--        <field name="model">project.epic</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="project_id"/>-->
+    <!--                <field name="owner_id"/>-->
+
+    <!--                <filter name="filter_active"-->
+    <!--                        string="Active"-->
+    <!--                        domain="[('epic_status','=','active')]"/>-->
+
+    <!--                <group string="Group By">-->
+    <!--                    <filter name="group_project"-->
+    <!--                            string="Project"-->
+    <!--                            context="{'group_by':'project_id'}"/>-->
+    <!--                    <filter name="group_status"-->
+    <!--                            string="Status"-->
+    <!--                            context="{'group_by':'epic_status'}"/>-->
+    <!--                </group>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <record id="view_project_epic_timeline" model="ir.ui.view">
+        <field name="name">project.epic.timeline</field>
+        <field name="model">project.epic</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                    string="Epic Timeline"
+                    date_start="planned_start_date"
+                    date_stop="planned_end_date"
+                    default_group_by="owner_id"
+                    event_open_popup="true"
+                    colors="#2ecb71: epic_status == 'done';
+#ec7063: epic_status == 'cancelled';
+#f4d03f: epic_status == 'at_risk';
+#5dade2: epic_status == 'on_track'"
+            >
+
+                <!-- Load fields -->
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="backlog_id"/>
+                <field name="epic_status"/>
+                <field name="priority"/>
+                <field name="owner_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="completed_date"/>
+                <field name="epic_progress"/>
+
+                <templates>
+                    <t t-name="timeline-item">
+                        <div style="white-space: nowrap; font-size: 13px;">
+
+                            <!-- Epic Name -->
+
+                            <t t-out="record.name"/>
+
+                            <!-- Planned Dates -->
+                            <t t-if="record.planned_start_date and record.planned_end_date">
+                                | Planned:
+                                <t t-out="record.planned_start_date"/>
+                                -
+                                <t t-out="record.planned_end_date"/>
+                            </t>
+
+                            <!-- Expected -->
+                            <t t-if="record.expected_end_date">
+                                |
+                                <span style="color:#dc3545;">
+                                    Exp:
+                                    <t t-out="record.expected_end_date"/>
+                                </span>
+                            </t>
+
+                            <!-- Completed -->
+                            <t t-if="record.completed_date">
+                                |
+                                <span style="color:#2ecb71;">
+                                    Done:
+                                    <t t-out="record.completed_date"/>
+                                </span>
+                            </t>
+                            <t t-set="progress" t-value="record.epic_progress || 0"/>
+
+                            <t t-set="bar_color"
+                               t-value="progress &lt; 30
+                                        ? '#dc3545'
+                                        : (progress &lt; 70
+                                        ? '#f4d03f'
+                                        : '#2ecb71')"/>
+
+                            <div style="margin-top:5px; width:200px;">
+                                <div style="background:#e9ecef; height:6px; border-radius:4px;">
+                                    <div t-att-style="'width:' + progress + '%; height:6px; border-radius:4px; background:' + bar_color + ';'">
+                                    </div>
+                                </div>
+                                <small style="font-size:11px;">
+                                    <t t-esc="progress.toFixed(1)"/>%
+                                </small>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </timeline>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- ACTION -->
+    <!-- ================================= -->
+    <record id="action_project_epic" model="ir.actions.act_window">
+        <field name="name">Epics</field>
+        <field name="res_model">project.epic</field>
+        <field name="view_mode">kanban,list,form,timeline,activity,pivot</field>
+    </record>
+
+</odoo>

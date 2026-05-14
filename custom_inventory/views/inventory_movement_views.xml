@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+
+    <template id="report_inventory_movement">
+        <t t-call="web.html_container">
+
+            <t t-foreach="docs" t-as="doc">
+
+                <t t-call="web.external_layout">
+
+                    <div style="border:1px solid #000; padding:15px;">
+
+                        <!-- HEADER -->
+                        <h2 style="text-align:center; margin-bottom:15px;">
+                            Asset Movement Report
+                        </h2>
+
+                        <!-- TOP DETAILS -->
+                        <table style="width:100%; margin-bottom:15px;">
+                            <tr>
+                                <!-- LEFT -->
+                                <td style="width:50%; vertical-align:top;">
+                                    <p>
+                                        <b>Reference:</b>
+                                        <t t-esc="doc.reference"/>
+                                    </p>
+                                    <p>
+                                        <b>Date:</b>
+                                        <t t-esc="doc.date"/>
+                                    </p>
+                                    <p>
+                                        <b>Reason:</b>
+                                        <t t-esc="doc.reason"/>
+                                    </p>
+
+                                    <p>
+                                        <b>Type:</b>
+                                        <t t-if="doc.is_internal">Internal</t>
+                                        <t t-if="doc.is_external">External</t>
+                                    </p>
+                                </td>
+
+                                <!-- RIGHT -->
+                                <td style="width:50%; vertical-align:top;">
+                                    <!-- INTERNAL -->
+                                    <t t-if="doc.is_internal">
+                                        <p>
+                                            <b>From Warehouse:</b>
+                                            <t t-esc="doc.from_warehouse_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>From Employee:</b>
+                                            <t t-esc="doc.from_employee_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>From Address:</b>
+                                            <t t-esc="doc.from_address"/>
+                                        </p>
+                                        <p>
+                                            <b>To Warehouse:</b>
+                                            <t t-esc="doc.to_warehouse_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>To Employee:</b>
+                                            <t t-esc="doc.to_employee_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>To Address:</b>
+                                            <t t-esc="doc.to_address"/>
+                                        </p>
+                                    </t>
+
+                                    <!-- EXTERNAL -->
+                                    <t t-if="doc.is_external">
+                                        <p>
+                                            <b>From Warehouse:</b>
+                                            <t t-esc="doc.from_warehouse_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>Partner:</b>
+                                            <t t-esc="doc.partner_id.name"/>
+                                        </p>
+                                        <p>
+                                            <b>External Address:</b>
+                                            <t t-esc="doc.external_address"/>
+                                        </p>
+                                    </t>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- ASSET TABLE -->
+                        <table class="table table-sm"
+                               style="width:100%; border:1px solid #000; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background:#f2f2f2;">
+                                    <th style="border:1px solid #000;">Asset</th>
+                                    <th style="border:1px solid #000;">Product</th>
+                                    <th style="border:1px solid #000;">Brand</th>
+                                    <th style="border:1px solid #000;">Model</th>
+                                    <th style="border:1px solid #000;">Serial</th>
+                                    <th style="border:1px solid #000;">Part No</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-foreach="doc.movement_line_ids" t-as="line">
+                                    <tr>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.inventory_id.display_name"/>
+                                        </td>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.product_name_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.brand_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.model_id.name"/>
+                                        </td>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.serial_no"/>
+                                        </td>
+                                        <td style="border:1px solid #000;">
+                                            <t t-esc="line.part_no"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <!-- FOOTER SIGNATURE -->
+                        <table style="width:100%; margin-top:40px;">
+                            <tr>
+                                <td style="width:50%; text-align:left;">
+                                    <p>
+                                        <b>Sender Signature</b>
+                                    </p>
+                                    <br/>
+                                    _______________________
+                                </td>
+
+                                <td style="width:50%; text-align:right;">
+                                    <p>
+                                        <b>Receiver Signature</b>
+                                    </p>
+                                    <br/>
+                                    _______________________
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </t>
+
+            </t>
+
+        </t>
+    </template>
+    <record id="report_inventory_movement_action" model="ir.actions.report">
+        <field name="name">Asset Movement</field>
+        <field name="model">inventory.movement</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_inventory.report_inventory_movement</field>
+        <field name="report_file">custom_inventory.report_inventory_movement</field>
+    </record>
+
+
+    <!-- LIST -->
+    <record id="view_inventory_movement_list" model="ir.ui.view">
+        <field name="name">inventory.movement.list</field>
+        <field name="model">inventory.movement</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="reference" readonly="1"/>
+                <field name="date"/>
+
+                <field name="is_internal"/>
+
+                <field name="from_employee_id" optional="hide"/>
+                <field name="from_warehouse_id" optional="hide"/>
+                <field name="from_address" optional="hide"/>
+
+                <field name="to_employee_id" optional="hide"/>
+                <field name="to_warehouse_id" optional="hide"/>
+
+                <field name="to_address" optional="hide"/>
+                <field name="is_external"/>
+                <field name="partner_id" optional="hide"/>
+                <field name="external_address" optional="hide"/>
+
+
+                <field name="reason"/>
+
+
+                <!-- INTERNAL -->
+
+                <!-- EXTERNAL -->
+
+
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM -->
+    <record id="view_inventory_movement_form" model="ir.ui.view">
+        <field name="name">inventory.movement.form</field>
+        <field name="model">inventory.movement</field>
+        <field name="arch" type="xml">
+
+            <form string="Asset Movement">
+                <header>
+                    <button name="action_print"
+                            type="object"
+                            string="Print"
+                            class="btn-primary"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="reference" readonly="1"/>
+                    </group>
+
+
+                    <group>
+                        <field name="is_internal"/>
+                        <field name="is_external"/>
+                    </group>
+
+                    <!-- INTERNAL -->
+                    <group invisible="not is_internal">
+                        <group string="From">
+                            <field name="from_warehouse_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="from_employee_id"/>
+                            <field name="from_address"/>
+                        </group>
+
+                        <group string="To">
+                            <field name="to_warehouse_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                            <field name="to_employee_id"/>
+                            <field name="to_address"/>
+                        </group>
+                    </group>
+
+                    <!-- EXTERNAL -->
+                    <group invisible="not is_external">
+                        <field name="from_warehouse_id" options="{'no_create': True, 'no_create_edit': True}"/>
+
+                        <field name="partner_id"/>
+                        <field name="external_address"/>
+                    </group>
+
+                    <group>
+                        <field name="reason"/>
+                        <field name="date"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Assets">
+                            <field name="movement_line_ids" create="true" edit="true">
+                                <list editable="bottom" delete="true">
+                                    <field name="inventory_id" options="{'no_create': True, 'no_create_edit': True}"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+                                    <field name="serial_no"/>
+                                    <field name="part_no"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <!-- PRINT BUTTON -->
+
+
+                </sheet>
+                <chatter/>
+            </form>
+
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_inventory_movement" model="ir.actions.act_window">
+        <field name="name">Movement History</field>
+        <field name="res_model">inventory.movement</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="custom_inventory_menu_movement"
+              name="Movement History"
+              parent="custom_inventory_menu"
+              action="action_inventory_movement"
+              groups="base.group_system,custom_inventory.group_warehouse_manager"/>
+
+
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+        <!--<odoo>-->
+        <!--    &lt;!&ndash; list View &ndash;&gt;-->
+        <!--    <record id="view_inventory_movement_list" model="ir.ui.view">-->
+        <!--        <field name="name">inventory.movement.list</field>-->
+        <!--        <field name="model">inventory.movement</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <list string="Asset Movement History">-->
+        <!--                <field name="inventory_id"/>-->
+        <!--                <field name="from_location_id"/>-->
+        <!--                <field name="to_location_id"/>-->
+        <!--                <field name="moved_by"/>-->
+        <!--                <field name="reason"/>-->
+        <!--                <field name="date"/>-->
+        <!--            </list>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; Form View &ndash;&gt;-->
+        <!--    <record id="view_inventory_movement_form" model="ir.ui.view">-->
+        <!--        <field name="name">inventory.movement.form</field>-->
+        <!--        <field name="model">inventory.movement</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <form string="Asset Movement History">-->
+        <!--                <sheet>-->
+        <!--                    <group>-->
+        <!--                        <field name="inventory_id"/>-->
+        <!--                        <field name="from_location_id"/>-->
+        <!--                        <field name="to_location_id"/>-->
+        <!--                        <field name="moved_by"/>-->
+        <!--                        <field name="reason"/>-->
+        <!--                        <field name="date"/>-->
+        <!--                    </group>-->
+        <!--                </sheet>-->
+        <!--            </form>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; Action &ndash;&gt;-->
+        <!--    <record id="action_inventory_movement" model="ir.actions.act_window">-->
+        <!--        <field name="name">Asset Movement History</field>-->
+        <!--        <field name="res_model">inventory.movement</field>-->
+        <!--        <field name="view_mode">list,form</field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; Menu &ndash;&gt;-->
+        <!--    <menuitem id="custom_inventory_menu_movement"-->
+        <!--              name="Movement History"-->
+        <!--              parent="custom_inventory_menu"-->
+        <!--              action="action_inventory_movement"-->
+        <!--              groups="base.group_system,custom_inventory.group_warehouse_manager" />-->
+        <!--</odoo>-->

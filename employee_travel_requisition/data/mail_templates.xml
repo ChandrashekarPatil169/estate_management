@@ -1,0 +1,181 @@
+<odoo>
+
+    <!-- ========================= -->
+    <!-- SUBMIT -->
+    <!-- ========================= -->
+    <record id="email_travel_submit" model="mail.template">
+        <field name="name">Travel Submit</field>
+        <field name="model_id" ref="model_travel_request"/>
+        <field name="subject"><![CDATA[New Travel Request Submitted - <t t-out="object.name"/>]]></field>
+        <field name="auto_delete">False</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear Manager,</p>
+
+            <p>A new travel request has been submitted for your review.</p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Employee:</b> <t t-out="object.employee_id.name"/></li>
+                <li><b>Department:</b> <t t-out="object.department_id.name or 'N/A'"/></li>
+                <li><b>Travel Period:</b>
+                    <t t-out="object.first_travel_from"/> →
+                    <t t-out="object.first_travel_to"/>
+                </li>
+                <li><b>Total Budget:</b> <t t-out="object.grand_total"/></li>
+            </ul>
+
+            <p>Please review and approve/reject the request.</p>
+
+            <p>Regards,<br/>Travel Management System</p>
+            ]]>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- MANAGER → HR -->
+    <!-- ========================= -->
+    <record id="email_manager_to_hr" model="mail.template">
+        <field name="name">Manager to HR</field>
+        <field name="model_id" ref="model_travel_request"/>
+        <field name="subject"><![CDATA[Manager Pushed to HR - <t t-out="object.name"/>]]></field>
+        <field name="auto_delete">False</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear HR Team,</p>
+
+            <p>
+            The manager has completed review and pushed this request to HR.
+            </p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Employee:</b> <t t-out="object.employee_id.name"/></li>
+                <li><b>Department:</b> <t t-out="object.department_id.name or 'N/A'"/></li>
+                <li><b>Total Budget:</b> <t t-out="object.grand_total"/></li>
+            </ul>
+
+            <p><b>Approved Lines:</b></p>
+            <ul>
+                <t t-foreach="object.advance_line_ids" t-as="line">
+                    <t t-if="line.status == 'approved'">
+                        <li>
+                            <t t-out="line.description or 'No description'"/>
+                        </li>
+                    </t>
+                </t>
+            </ul>
+
+            <p><b>Rejected Lines:</b></p>
+            <ul>
+                <t t-foreach="object.advance_line_ids" t-as="line">
+                    <t t-if="line.status == 'rejected'">
+                        <li>
+                            <t t-out="line.description or 'No description'"/>
+                        </li>
+                    </t>
+                </t>
+            </ul>
+
+            <p>Please proceed with HR authorization.</p>
+
+            <p>Regards,<br/>Travel System</p>
+            ]]>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- HR → DIRECTOR -->
+    <!-- ========================= -->
+    <record id="email_hr_to_director" model="mail.template">
+        <field name="name">HR Approved</field>
+        <field name="model_id" ref="model_travel_request"/>
+        <field name="subject"><![CDATA[HR Approved - Awaiting Director Approval - <t t-out="object.name"/>]]></field>
+        <field name="auto_delete">False</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear Director,</p>
+
+            <p>
+            This travel request has been authorized by HR
+            (<b><t t-out="object.hr_approved_by.name or 'N/A'"/></b>)
+            and is awaiting your approval.
+            </p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Employee:</b> <t t-out="object.employee_id.name"/></li>
+                <li><b>Travel Period:</b>
+                    <t t-out="object.first_travel_from"/> →
+                    <t t-out="object.first_travel_to"/>
+                </li>
+                <li><b>Total Budget:</b> <t t-out="object.grand_total"/></li>
+            </ul>
+
+            <p>Please review and provide final approval.</p>
+
+            <p>Regards,<br/>Travel System</p>
+            ]]>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- DIRECTOR → USER -->
+    <!-- ========================= -->
+    <record id="email_director_to_user" model="mail.template">
+        <field name="name">Director Approved</field>
+        <field name="model_id" ref="model_travel_request"/>
+        <field name="subject"><![CDATA[Travel Request Approved - <t t-out="object.name"/>]]></field>
+        <field name="auto_delete">False</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear <t t-out="object.employee_id.name"/>,</p>
+
+            <p>
+            Your travel request has been approved by Director
+            <b><t t-out="object.director_approved_by.name or 'N/A'"/></b>.
+            </p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Travel Period:</b>
+                    <t t-out="object.first_travel_from"/> →
+                    <t t-out="object.first_travel_to"/>
+                </li>
+                <li><b>Approved Budget:</b> <t t-out="object.grand_total"/></li>
+            </ul>
+
+            <p>Please proceed with submitting your expenses.</p>
+
+            <p>Regards,<br/>Travel Team</p>
+            ]]>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- REJECT -->
+    <!-- ========================= -->
+    <record id="email_travel_rejected" model="mail.template">
+        <field name="name">Rejected</field>
+        <field name="model_id" ref="model_travel_request"/>
+        <field name="subject"><![CDATA[Travel Request Rejected - <t t-out="object.name"/>]]></field>
+        <field name="auto_delete">False</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Dear <t t-out="object.employee_id.name"/>,</p>
+
+            <p>Your travel request has been rejected.</p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Status:</b> Rejected</li>
+            </ul>
+
+            <p>Please contact the concerned authority for clarification.</p>
+
+            <p>Regards,<br/>Travel Team</p>
+            ]]>
+        </field>
+    </record>
+
+</odoo>

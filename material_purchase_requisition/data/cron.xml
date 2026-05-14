@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_cron_pr_pending_reminder" model="ir.cron">
+        <field name="name">PR Daily Reminder</field>
+        <field name="model_id" ref="model_material_purchase_requisition"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_notify_pending_approvals()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>

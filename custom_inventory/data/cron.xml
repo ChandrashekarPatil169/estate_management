@@ -1,0 +1,21 @@
+<odoo>
+    <record id="ir_cron_software_expiry" model="ir.cron">
+        <field name="name">Software Expiry Alert</field>
+        <field name="model_id" ref="model_software_asset"/>
+        <field name="state">code</field>
+        <field name="code">model.check_software_expiry()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+     <record id="cron_inventory_reminder" model="ir.cron">
+        <field name="name">Inventory Reminder Cron</field>
+        <field name="model_id" ref="model_custom_inventory"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_inventory_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="nextcall">2026-03-31 03:30:00</field>  <!-- for 9 AM IST -->
+        <field name="active">True</field>
+    </record>
+</odoo>

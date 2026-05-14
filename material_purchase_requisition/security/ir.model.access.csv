@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pr,access_pr,model_material_purchase_requisition,base.group_user,1,1,1,0
+access_pr_line,access_pr_line,model_material_purchase_requisition_line,base.group_user,1,1,1,1
+access_pr_log,access_pr_log,model_material_purchase_approval_log,base.group_user,1,0,1,0
+access_pr_rfq_wizard,access_pr_rfq_wizard,model_material_pr_rfq_wizard,base.group_user,1,0,1,0
+access_alternative_rfq_confirm_wizard,access_alternative_rfq_confirm_wizard,model_material_alternative_rfq_confirm_wizard,base.group_user,1,1,1,0
+access_purchase_approval_matrix_admin,purchase.approval.matrix admin,model_purchase_approval_matrix,base.group_system,1,1,1,1
+access_purchase_approval_matrix_user,purchase.approval.matrix user,model_purchase_approval_matrix,base.group_user,1,0,0,0
+access_ir_actions_act_window_user,access.ir.actions.act.window.user,base.model_ir_actions_act_window,base.group_user,1,0,0,0
+access_ir_actions_act_window_view_user,access.ir.actions.act.window.view.user,base.model_ir_actions_act_window_view,base.group_user,1,0,0,0
+access_purchase_order_user,purchase.order user,model_purchase_order,base.group_user,1,1,1,0
+access_pr_reminder_config_admin,pr.reminder.config admin,model_pr_approval_reminder_config,base.group_system,1,1,1,1

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!--    <record id="helpdesk_department_facility"-->
+<!--            model="helpdesk.department">-->
+<!--        <field name="name">Facility</field>-->
+<!--    </record>-->
+</odoo>
+

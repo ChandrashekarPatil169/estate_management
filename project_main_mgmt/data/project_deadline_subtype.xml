@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mt_project_deadline_change_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline</field>
+        <field name="description">Allows user to edit planned start and planned end dates</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+
+    </record>
+    <record id="mt_project_product_backlog_deadline_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline Access</field>
+        <field name="description">Allows this follower to change deadlines</field>
+        <field name="res_model">product.backlog</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1013</field>
+    </record>
+
+    <record id="mt_project_epic_deadline_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline Access</field>
+        <field name="description">Allows this follower to change deadlines</field>
+        <field name="res_model">project.epic</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1023</field>
+    </record>
+
+
+    <record id="mt_project_user_story_deadline_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline Access</field>
+        <field name="description">Allows this follower to change deadlines</field>
+        <field name="res_model">project.user.story</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1043</field>
+    </record>
+
+    <record id="mt_project_task_deadline_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline Access</field>
+        <field name="description">Allows this follower to change deadlines</field>
+        <field name="res_model">project.task</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1043</field>
+    </record>
+
+    <record id="mt_project_subtask_deadline_access" model="mail.message.subtype">
+        <field name="name">Changing Deadline Access</field>
+        <field name="description">Allows this follower to change deadlines</field>
+        <field name="res_model">project.subtask</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1053</field>
+    </record>
+</odoo>

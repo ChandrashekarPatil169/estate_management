@@ -1,0 +1,826 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- FACILITY TAB -->
+    <!-- ===================================================== -->
+
+    <record id="view_helpdesk_ticket_form_facility"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.facility</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Facility Details"
+                      name="facility_details"
+                      invisible="department_type != 'facility'">
+
+                    <!-- ================= Maintenance ================= -->
+                    <group string="Maintenance">
+                        <field name="maintenance_type_id"/>
+                        <field name="severity_id"/>
+                        <field name="trade_id"/>
+                        <field name="issue_type"/>
+                    </group>
+                    <!-- ================= Equipment ================= -->
+                    <group string="Equipment / Facility Objects" col="2">
+                        <field name="facility_asset_id"/>
+                        <field name="asset_serial" readonly="1"/>
+                        <!--                        <field name="meter_reading"/>-->
+                        <field name="warranty_status" readonly="1"/>
+                    </group>
+
+                    <!-- ================= Parts / Cost / Closeout ================= -->
+
+
+                    <!-- PARTS -->
+                    <group string="Parts, Cost and Closeout" col="4">
+
+                        <!-- PARTS -->
+                        <group string="Parts" colspan="4">
+
+                            <field name="parts_required_ids" colspan="4">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </list>
+                            </field>
+
+                            <field name="parts_issued_ids" colspan="4">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="qty"/>
+                                    <field name="uom_id"/>
+                                </list>
+                            </field>
+
+                        </group>
+
+                    </group>
+
+
+                    <!-- COST -->
+                    <group string="Cost">
+                        <field name="labor_hours"/>
+                        <field name="material_cost"/>
+                        <field name="labor_cost"/>
+                        <field name="other_cost"/>
+                        <field name="total_cost" readonly="1"/>
+                    </group>
+
+                    <!-- CLOSEOUT -->
+                    <group string="Before/After Photo." col="2">
+
+                        <field name="resolution_notes" colspan="2"/>
+
+                        <group string="Before Photos" colspan="2">
+                            <field name="before_photo_ids" widget="many2many_binary"/>
+                        </group>
+
+                        <group string="After Photos" colspan="2">
+                            <field name="after_photo_ids" widget="many2many_binary"/>
+                        </group>
+
+                        <group col="2" colspan="2">
+                            <field name="signoff_by"/>
+                            <field name="signoff_at"/>
+                        </group>
+                    </group>
+                    <!-- ================= Vendor ================= -->
+                    <group string="Vendor and Compliance" col="2">
+                        <group>
+                            <field name="vendor_contact"/>
+                            <field name="contract_id"/>
+                        </group>
+
+                        <group>
+                            <field name="permit_required"/>
+                            <field name="permit_id"
+                                   invisible="not permit_required"/>
+                            <field name="safety_checklist_completed"
+                                   invisible="not permit_required"/>
+                        </group>
+
+                        <group colspan="2">
+                            <!-- FIXED: correct widget -->
+                            <field name="attachments_permit" widget="many2many_binary"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
+
+            <!-- Add extra fields after channel -->
+            <xpath expr="//field[@name='channel_id']" position="after">
+                <field name="request_title"/>
+<!--                <field name="requested_person_id" readonly="1"/>-->
+<!--                <field name="req_department_id" readonly="1"/>-->
+
+
+                <field name="requested_date"/>
+<!--                <field name="department_id_main"/>-->
+                <field name="department_type"/>
+                <field name="manager_id_main" readonly="1"/>
+                <!--                <field name="manager_id" groups="helpdesk_mgmt.group_helpdesk_manager"/>-->
+
+
+                <!--                <field name="assign_to" groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"/>-->
+            </xpath>
+
+            <!-- Hide partner fields -->
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_email']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form_photos"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.photos</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_photos"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-camera">
+                    <field name="photo_count" widget="statinfo" string="Photos"/>
+                </button>
+            </xpath>
+            <!--            </xpath>-->
+
+        </field>
+    </record>
+
+    <record id="attachment_tree_photos" model="ir.ui.view">
+        <field name="name">attachment.kanban.photos</field>
+        <field name="model">ir.attachment</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_card">
+                            <field name="name"/>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!--    <record id="view_ticket_photos_split" model="ir.ui.view">-->
+    <!--        <field name="name">helpdesk.ticket.photos.split</field>-->
+    <!--        <field name="model">helpdesk.ticket</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Ticket Photos">-->
+    <!--                <sheet>-->
+    <!--                    <group col="2">-->
+
+    <!--                        &lt;!&ndash; LEFT COLUMN &ndash;&gt;-->
+    <!--                        <group string="Before Photos">-->
+    <!--                            <field name="before_photo_ids"-->
+    <!--                                   widget="many2many_kanban"-->
+    <!--                                   nolabel="1"/>-->
+    <!--                        </group>-->
+
+    <!--                        &lt;!&ndash; RIGHT COLUMN &ndash;&gt;-->
+    <!--                        <group string="After Photos">-->
+    <!--                            <field name="after_photo_ids"-->
+    <!--                                   widget="many2many_kanban"-->
+    <!--                                   nolabel="1"/>-->
+    <!--                        </group>-->
+
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!-- ===================================================== -->
+    <!-- LOCATION EXTENSION -->
+    <!-- ===================================================== -->
+
+
+    <!-- ===================================================== -->
+    <!-- SCHEDULING NOTEBOOK PAGE (Odoo 19 Compatible) -->
+    <!-- ===================================================== -->
+
+    <record id="view_helpdesk_ticket_form_scheduling_page"
+            model="ir.ui.view">
+
+        <field name="name">helpdesk.ticket.form.scheduling.page</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Scheduling"
+                      groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom">
+                    <group col="2">
+                        <group>
+                            <field name="target_start_at"/>
+                            <field name="target_end_at"/>
+                            <field name="preferred_window"/>
+                        </group>
+
+                        <group>
+                            <field name="downtime_expected"/>
+
+                            <field name="downtime_start"
+                                   invisible="not downtime_expected"/>
+                            <field name="downtime_end"
+                                   invisible="not downtime_expected"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form_priority_page"
+            model="ir.ui.view">
+
+        <field name="name">helpdesk.ticket.form.priority.page</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert after Scheduling page -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Priority and SLA"
+                      groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom">
+                    <group col="2">
+                        <group>
+                            <field name="urgency_id"/>
+                            <field name="impact_id"/>
+                            <field name="priority_master_id"/>
+                            <field name="sla_due_date"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_helpdesk_ticket_form_priority_page"
+            model="ir.ui.view">
+
+        <field name="name">helpdesk.ticket.form.priority.page</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert after Scheduling page -->
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Priority and SLA"
+                      groups="department_helpdesk.group_helpdesk_department_manager,
+                          department_helpdesk.group_helpdesk_admin_custom">
+
+                    <!-- ======================
+                         PRIORITY SECTION
+                    ======================= -->
+                    <group col="2">
+                        <group>
+                            <field name="urgency_id"/>
+                            <field name="impact_id"/>
+                            <field name="priority_master_id"/>
+                            <!--                            <field name="sla_due_date"/>-->
+                        </group>
+                    </group>
+
+
+                    <!-- ======================
+                         SLA OVERVIEW
+                    ======================= -->
+                    <group class="row mt16 o_settings_container">
+
+                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                            SLA Overview
+                        </div>
+
+                        <setting class="col-lg-12">
+
+                            <field name="sla_risk"
+                                   widget="badge"
+                                   decoration-success="sla_risk == 'green'"
+                                   decoration-warning="sla_risk == 'amber'"
+                                   decoration-danger="sla_risk == 'red'"/>
+
+                            <field name="sla_days_label" widget="badge"/>
+
+                        </setting>
+                    </group>
+
+
+                    <!-- ======================
+                         SLA MONITORING
+                    ======================= -->
+                    <!--                    <group class="row mt16 o_settings_container">-->
+
+                    <!--                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">-->
+                    <!--                            SLA Monitoring (Stories)-->
+                    <!--                        </div>-->
+
+                    <!--                        <setting class="col-lg-12">-->
+                    <!--                            <button name="action_open_sla_monitoring"-->
+                    <!--                                    type="object"-->
+                    <!--                                    class="btn btn-link p-0"-->
+                    <!--                                    icon="fa-shield">-->
+                    <!--                                Open SLA Monitoring-->
+                    <!--                            </button>-->
+                    <!--                        </setting>-->
+
+                    <!--                    </group>-->
+
+
+                    <!-- ======================
+                         SLA DEADLINES
+                    ======================= -->
+                    <!--                    <group class="row mt16 o_settings_container">-->
+
+                    <!--                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">-->
+                    <!--                            SLA Deadlines (Stories)-->
+                    <!--                        </div>-->
+
+                    <!--                        <setting class="col-lg-6">-->
+                    <!--                            <button name="action_open_story_sla_7_days"-->
+                    <!--                                    type="object"-->
+                    <!--                                    class="btn btn-outline-primary w-100"-->
+                    <!--                                    icon="fa-calendar">-->
+                    <!--                                Upcoming Stories (Next 7 Days)-->
+                    <!--                            </button>-->
+                    <!--                        </setting>-->
+
+                    <!--                        <setting class="col-lg-6">-->
+                    <!--                            <button name="action_open_story_sla_30_days"-->
+                    <!--                                    type="object"-->
+                    <!--                                    class="btn btn-outline-primary w-100"-->
+                    <!--                                    icon="fa-calendar">-->
+                    <!--                                Upcoming Stories (Next 30 Days)-->
+                    <!--                            </button>-->
+                    <!--                        </setting>-->
+
+                    <!--                    </group>-->
+
+
+                    <!-- ======================
+                         SLA ESCALATION RULES
+                    ======================= -->
+                    <!--                    <group class="row mt16 o_settings_container">-->
+
+                    <!--                        <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">-->
+                    <!--                            SLA Escalation Rules-->
+                    <!--                        </div>-->
+
+                    <!--                        <setting class="col-lg-12">-->
+                    <!--                            <field name="sla_escalation_rules"-->
+                    <!--                                   placeholder="Define backlog-level SLA escalation rules..."-->
+                    <!--                                   nolabel="1"/>-->
+                    <!--                        </setting>-->
+
+                    <!--                    </group>-->
+
+
+                    <!-- ======================
+                         ESCALATION OWNERS
+                    ======================= -->
+                    <group string="Escalation Owners">
+                        <group col="2">
+
+                            <div class="o_form_label">Amber (≤ 48 hours Remaining)</div>
+                            <field name="sla_amber_user_ids" widget="many2many_tags" nolabel="1"/>
+
+                            <div class="o_form_label">Red (Overdue)</div>
+                            <field name="sla_red_user_ids" widget="many2many_tags" nolabel="1"/>
+
+                            <div class="o_form_label">Overdue +3 Days</div>
+                            <field name="sla_overdue_3_user_ids" widget="many2many_tags" nolabel="1"/>
+
+                            <div class="o_form_label">Overdue +6 Days</div>
+                            <field name="sla_overdue_6_user_ids" widget="many2many_tags" nolabel="1"/>
+
+                        </group>
+                    </group>
+
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================= TAT DETAILS ================= -->
+    <record id="view_helpdesk_ticket_form_tat"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.tat</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Insert TAT page after Facility page -->
+            <xpath expr="//field[@name='maintenance_type_id']/ancestor::page"
+                   position="after">
+                <!-- Manager / Admin always see -->
+                <page string="Assignment Details"
+                      name="tat_details_tab_manager"
+                      groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom">
+
+                    <group col="2">
+                        <group>
+                            <field name="assign_to"/>
+                            <field name="assign_date"/>
+                            <field name="resolved_date"/>
+                            <field name="completed_date"/>
+                        </group>
+
+                        <group>
+                            <field name="tat_ticket" readonly="1"/>
+                            <field name="tat_assignment" readonly="1"/>
+                        </group>
+                    </group>
+
+                </page>
+
+
+                <!-- Assigned user sees only their ticket -->
+                <page string="Assignment Details"
+                      name="tat_details_tab_user"
+                      groups="department_helpdesk.group_helpdesk_user_custom"
+                      invisible="assign_to != uid">
+
+                    <group col="2">
+                        <group>
+                            <field name="assign_to"/>
+                            <field name="assign_date"/>
+                            <field name="resolved_date"/>
+                            <field name="completed_date"/>
+                        </group>
+
+                        <group>
+                            <field name="tat_ticket" readonly="1"/>
+                            <field name="tat_assignment" readonly="1"/>
+                        </group>
+                    </group>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- ================= LIST VIEW ================= -->
+    <record id="view_helpdesk_trade_list" model="ir.ui.view">
+        <field name="name">helpdesk.trade.list</field>
+        <field name="model">helpdesk.trade</field>
+        <field name="arch" type="xml">
+            <list string="Trade Master">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- URGENCY MASTER -->
+    <!-- ========================= -->
+
+    <record id="view_helpdesk_urgency_list" model="ir.ui.view">
+        <field name="name">helpdesk.urgency.list</field>
+        <field name="model">helpdesk.urgency</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_urgency_form" model="ir.ui.view">
+        <field name="name">helpdesk.urgency.form</field>
+        <field name="model">helpdesk.urgency</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_helpdesk_urgency" model="ir.actions.act_window">
+        <field name="name">Urgency</field>
+        <field name="res_model">helpdesk.urgency</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- IMPACT MASTER -->
+    <!-- ========================= -->
+
+    <record id="view_helpdesk_impact_list" model="ir.ui.view">
+        <field name="name">helpdesk.impact.list</field>
+        <field name="model">helpdesk.impact</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_impact_form" model="ir.ui.view">
+        <field name="name">helpdesk.impact.form</field>
+        <field name="model">helpdesk.impact</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_helpdesk_impact" model="ir.actions.act_window">
+        <field name="name">Impact</field>
+        <field name="res_model">helpdesk.impact</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <record id="helpdesk_ticket_form_inherit_hide_user" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.hide.user</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='user_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_helpdesk_ticket_form_channel_rename"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.channel.rename</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='channel_id']" position="attributes">
+                <attribute name="string">Requested Source</attribute>
+            </xpath>
+
+
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form_team_id_rename"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.channel.rename.team.id</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='channel_id']" position="attributes">
+                <attribute name="string">Requested Source</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="helpdesk_ticket_form_readonly_dates" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.readonly.dates</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Assign Date -->
+            <xpath expr="//field[@name='assign_date']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+            <!-- Resolved Date -->
+            <xpath expr="//field[@name='resolved_date']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+            <!-- Completed Date -->
+            <xpath expr="//field[@name='completed_date']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_helpdesk_priority" model="ir.actions.act_window">
+        <field name="name">Priority</field>
+        <field name="res_model">helpdesk.priority.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ================= ACTION ================= -->
+    <record id="action_helpdesk_trade" model="ir.actions.act_window">
+        <field name="name">Trade Master</field>
+        <field name="res_model">helpdesk.trade</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>
+                Create and manage Trades used in Helpdesk Tickets.
+            </p>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- ACTIONS -->
+    <!-- ===================================================== -->
+
+    <record id="action_request_type" model="ir.actions.act_window">
+        <field name="name">Request Type</field>
+        <field name="res_model">request.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_maintenance_type" model="ir.actions.act_window">
+        <field name="name">Maintenance Types</field>
+        <field name="res_model">maintenance.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_maintenance_severity" model="ir.actions.act_window">
+        <field name="name">Severities</field>
+        <field name="res_model">maintenance.severity</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- MENUS -->
+    <!-- ===================================================== -->
+
+    <menuitem id="menu_facility_master_root"
+              name="Facility Masters"
+              parent="helpdesk_mgmt.helpdesk_ticket_config_main_menu"
+              sequence="60"/>
+
+    <menuitem id="menu_helpdesk_trade"
+              name="Trade Master"
+              parent="menu_facility_master_root"
+              action="action_helpdesk_trade"
+              sequence="30"/>
+
+
+    <menuitem id="menu_helpdesk_severity"
+              name="Severity"
+              parent="menu_facility_master_root"
+              action="action_maintenance_severity"
+              sequence="40"/>
+
+
+    <menuitem id="menu_maintenance_type"
+              name="Maintenance Types"
+              parent="menu_facility_master_root"
+              action="action_maintenance_type"
+              sequence="10"/>
+
+    <menuitem id="menu_request_type"
+              name="Request Type"
+              parent="menu_facility_master_root"
+              action="action_request_type"
+              sequence="20"/>
+
+
+    <menuitem id="menu_helpdesk_priority_root"
+              name="Priority and SLAs"
+              parent="helpdesk_mgmt.helpdesk_ticket_config_main_menu"
+              sequence="50"/>
+
+    <menuitem id="menu_helpdesk_urgency"
+              name="Urgency"
+              parent="menu_helpdesk_priority_root"
+              action="action_helpdesk_urgency"/>
+
+    <menuitem id="menu_helpdesk_impact"
+              name="Impact"
+              parent="menu_helpdesk_priority_root"
+              action="action_helpdesk_impact"/>
+
+    <menuitem id="menu_helpdesk_priority"
+              name="Priority"
+              parent="menu_helpdesk_priority_root"
+              action="action_helpdesk_priority"/>
+
+
+    <record id="view_helpdesk_department_list" model="ir.ui.view">
+        <field name="name">helpdesk.department.list</field>
+        <field name="model">helpdesk.department</field>
+        <field name="arch" type="xml">
+            <list string="Helpdesk Departments">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="manager_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_helpdesk_department_form" model="ir.ui.view">
+        <field name="name">helpdesk.department.form</field>
+        <field name="model">helpdesk.department</field>
+        <field name="arch" type="xml">
+            <form string="Helpdesk Department">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="manager_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form_deadline_before_urgency"
+            model="ir.ui.view">
+
+        <field name="name">helpdesk.ticket.form.deadline.before.urgency</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='urgency_id']" position="before">
+
+                <field name="deadline"/>
+
+                <field name="time_remaining"
+                       widget="badge"
+                       decoration-success="time_status == 'ok'"
+                       decoration-warning="time_status == 'near'"
+                       decoration-danger="time_status == 'late'"/>
+
+                <!--                <field name="completed_date"/>-->
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- ================= ACTION ================= -->
+    <record id="action_helpdesk_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">helpdesk.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ================= MENU ================= -->
+
+    <menuitem id="menu_helpdesk_department"
+              name="Departments"
+              parent="menu_helpdesk_priority_root"
+              action="action_helpdesk_department"
+              sequence="15"/>
+
+
+    <menuitem id="helpdesk_mgmt.helpdesk_all_ticket_menu"
+              name="All Tickets"
+              parent="helpdesk_mgmt.helpdesk_ticket_menu"
+              groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"/>
+
+    <menuitem id="helpdesk_mgmt.helpdesk_ticket_config_main_menu"
+              name="Configuration"
+              parent="helpdesk_mgmt.helpdesk_ticket_main_menu"
+              groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"/>
+</odoo>

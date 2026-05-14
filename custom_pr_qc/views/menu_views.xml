@@ -1,0 +1,39 @@
+<odoo>
+    <!-- FIRST: Define the Action for Quality Checks -->
+    <!--    <record id="action_my_qc" model="ir.actions.act_window">-->
+    <!--        <field name="name">My Quality Checks</field>-->
+    <!--        <field name="res_model">material.quality.check</field>-->
+    <!--        <field name="view_mode">list,form</field>-->
+    <!--        &lt;!&ndash; This domain ensures they only see what they need to pass &ndash;&gt;-->
+    <!--        <field name="domain">[('is_fully_passed', '=', False)]</field>-->
+    <!--    </record>-->
+    <record id="action_my_qc" model="ir.actions.act_window">
+        <field name="name">Quality Checks</field>
+        <field name="res_model">material.quality.check</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_pending': 1}</field>
+    </record>
+
+
+    <!-- SECOND: Define the Action for Configuration -->
+    <record id="action_pr_qc_config" model="ir.actions.act_window">
+        <field name="name">QC Admin Configuration</field>
+        <field name="res_model">pr.approval.reminder.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- THIRD: Define the Menus -->
+    <!-- Task Menu -->
+    <menuitem id="menu_qc_tasks"
+              name="Validation"
+              parent="material_purchase_requisition.menu_pr_root"
+              action="action_my_qc"
+              sequence="10"/>
+
+    <!-- Config Menu -->
+    <menuitem id="menu_qc_config"
+              name="Validation Configurations"
+              parent="material_purchase_requisition.menu_pr_config_root"
+              action="action_qc_config"/>
+</odoo>

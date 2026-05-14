@@ -1,0 +1,65 @@
+<odoo>
+    <template id="product_vendor_evaluation_report">
+        <t t-call="web.external_layout">
+            <main>
+
+                <h2 style="text-align:center;">
+                    Product Vendor Evaluation
+                </h2>
+
+                <!-- PRODUCT-WISE -->
+                <t t-foreach="docs.mapped('product_id')" t-as="product">
+
+                    <h3>
+                        Product:
+                        <t t-esc="product.display_name"/>
+                    </h3>
+
+                    <table class="table table-bordered table-sm" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Vendor</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Delivery</th>
+                                <th>Discount</th>
+                                <th>Price %</th>
+                                <th>Qty %</th>
+                                <th>Delivery %</th>
+                                <th>Discount %</th>
+                                <th>Total %</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- VENDOR-WISE -->
+                            <t t-foreach="docs.filtered(lambda l: l.product_id == product)"
+                               t-as="line">
+                                <tr>
+                                    <td><t t-esc="line.vendor_id.name"/></td>
+                                    <td><t t-esc="line.price_unit"/></td>
+                                    <td><t t-esc="line.product_uom_qty"/></td>
+                                    <td>
+                                        <span t-field="line.delivery_date"
+                                              t-options='{"widget": "date"}'/>
+                                    </td>
+                                    <td><t t-esc="line.discount"/></td>
+                                    <td><t t-esc="line.eval_price_score"/></td>
+                                    <td><t t-esc="line.eval_qty_score"/></td>
+                                    <td><t t-esc="line.eval_delivery_score"/></td>
+                                    <td><t t-esc="line.eval_discount_score"/></td>
+                                    <td><strong>
+                                        <t t-esc="line.eval_total_score"/>
+                                    </strong></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <br/>
+                </t>
+
+            </main>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,128 @@
+<odoo>
+
+    <!-- Parent menu under Estate Management -->
+    <menuitem id="estate_coffee_parent"
+              name="Coffee Machine Management"
+              parent="estate_management.menu_estate_root"
+              sequence="30"/>
+
+    <!-- 1️⃣ Ingredients -->
+    <menuitem id="menu_coffee_ingredient"
+              name="Ingredients Details"
+              parent="estate_coffee_parent"
+              action="action_coffee_ingredient_master"
+              sequence="10"/>
+
+    <!-- 2️⃣ Purchases -->
+    <menuitem id="menu_coffee_purchase"
+              name="Purchases"
+              parent="estate_coffee_parent"
+              action="action_coffee_purchase"
+              sequence="20"/>
+
+    <!-- 3️⃣ Main Stock -->
+    <menuitem id="menu_coffee_main_stock"
+              name="Main Stock"
+              parent="estate_coffee_parent"
+              action="action_coffee_ingredient"
+              sequence="30"/>
+
+    <!-- 4️⃣ Building Stock -->
+    <menuitem id="menu_building_stock"
+              name="Building Stock"
+              parent="estate_coffee_parent"
+              action="action_building_stock"
+              sequence="40"/>
+
+    <!-- 5️⃣ Transfers -->
+    <menuitem id="menu_coffee_transfer"
+              name="All Transfers"
+              parent="estate_coffee_parent"
+              action="action_coffee_transfer"
+              sequence="50"/>
+
+    <!-- 6️⃣ Remaining -->
+
+    <menuitem id="menu_coffee_machine"
+              name="Machines Stock"
+              parent="estate_coffee_parent"
+              action="action_coffee_machine"
+              sequence="60"/>
+
+    <menuitem id="menu_machine_refills"
+              name="Machine Refills"
+              parent="estate_coffee_parent"
+              action="action_machine_stock"
+              sequence="40"/>
+
+    <menuitem id="menu_cleaning_log"
+              name="Cleaning Logs"
+              parent="estate_coffee_parent"
+              action="action_cleaning_log"
+              sequence="80"/>
+
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<odoo>-->
+<!--    &lt;!&ndash; Parent menu under Estate Management &ndash;&gt;-->
+<!--    <menuitem id="estate_coffee_parent"-->
+<!--              name="Coffee Machine Management"-->
+<!--              parent="estate_management.menu_estate_root"/>-->
+
+<!--    &lt;!&ndash; Coffee Management Menus &ndash;&gt;-->
+<!--    <menuitem id="menu_coffee_purchase"-->
+<!--              name="Purchases"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_coffee_purchase"/>-->
+
+<!--    <menuitem id="menu_coffee_main_stock"-->
+<!--              name="Main Stock"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_coffee_ingredient"/>-->
+
+<!--    <menuitem id="menu_building_stock"-->
+<!--              name="Building Stock"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_building_stock"/>-->
+
+<!--    <menuitem id="menu_coffee_machine"-->
+<!--              name="Machines Stock"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_coffee_machine"/>-->
+
+<!--    <menuitem id="menu_machine_refills"-->
+<!--              name="Machine Refills"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_machine_stock"/>-->
+
+<!--    <menuitem id="menu_cleaning_log"-->
+<!--              name="Cleaning Logs"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_cleaning_log"/>-->
+
+<!--    <menuitem id="menu_coffee_ingredient"-->
+<!--              name="Ingredients Details"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_coffee_ingredient_master"-->
+<!--              sequence="1"/>-->
+<!--    <menuitem id="menu_coffee_transfer"-->
+<!--              name="All Transfers"-->
+<!--              parent="estate_coffee_parent"-->
+<!--              action="action_coffee_transfer"-->
+<!--              />-->
+
+
+<!--</odoo>-->

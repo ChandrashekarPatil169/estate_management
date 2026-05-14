@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_qc_config_list" model="ir.ui.view">
+        <field name="name">material.quality.config.list</field>
+        <field name="model">material.quality.config</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="admin_checker_1"/>
+                <field name="admin_checker_2"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_qc_config" model="ir.actions.act_window">
+        <field name="name">Validation Configuration</field>
+        <field name="res_model">material.quality.config</field> <!-- MUST BE THIS -->
+        <field name="view_mode">list,form</field>
+        <field name="target">current</field>
+    </record>
+
+<!--    <menuitem id="menu_qc_config"-->
+<!--              name="QC Admin Configuration"-->
+<!--              parent="material_purchase_requisition.menu_pr_root"-->
+<!--              action="action_qc_config"-->
+<!--              sequence="100"/>-->
+</odoo>

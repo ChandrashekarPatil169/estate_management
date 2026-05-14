@@ -1,0 +1,716 @@
+<odoo>
+
+    <record id="view_project_form_product_backlog_button" model="ir.ui.view">
+        <field name="name">project.project.form.product.backlog.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="priority"/>
+            </xpath>
+            <!-- ADD THE DATE FIELD HERE: Placed after the native start date -->
+            <xpath expr="//field[@name='date_start']" position="after">
+                <field name="expected_end_date" widget="date"/>
+                <field name="completed_date" widget="date" readonly="1"/>
+            </xpath>
+
+            <!--            <xpath expr="//div[@name='button_box']" position="inside">-->
+            <!--            <xpath expr="//button[@name='action_open_sub_projects']" position="after">-->
+            <!--                <button name="action_view_product_backlogs"-->
+            <!--                        type="object"-->
+            <!--                        class="oe_stat_button"-->
+            <!--                        icon="fa-list"-->
+            <!--                        invisible="category != 'software'">-->
+            <!--                    <field name="backlog_count"-->
+            <!--                           string="Product Backlogs"-->
+            <!--                           widget="statinfo"/>-->
+            <!--                </button>-->
+
+            <!--            </xpath>-->
+            <!-- This single XPath handles BOTH positions at once -->
+            <xpath expr="//div[@name='button_box']/button[1]" position="before">
+                <!-- 1st Position -->
+                <button type="object"
+                        name="action_open_sub_projects"
+                        class="oe_stat_button"
+                        icon="fa-sitemap">
+                    <field name="sub_project_count" widget="statinfo" string="Sub-Projects"/>
+                </button>
+
+                <!-- 2nd Position (placed immediately after the 1st one) -->
+                <button name="action_view_product_backlogs"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-list"
+                        invisible="category != 'software' or not enable_backlog_flow">
+                    <field name="backlog_count"
+                           string="Product Backlogs"
+                           widget="statinfo"/>
+                </button>
+            </xpath>
+
+
+            <xpath expr="//field[@name='name']" position="after">
+                <div class="mt-2">
+                    <span class="o_form_label">Project Progress</span>
+                    <field name="project_progress" widget="progressbar" options="{'max_value':100}"/>
+                </div>
+            </xpath>
+
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_sla_selector"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-shield">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">SLA Monitor</span>
+                    </div>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_project_form_epic_button" model="ir.ui.view">
+        <field name="name">project.project.form.epic.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!--            <xpath expr="//div[@name='button_box']" position="inside">-->
+            <xpath expr="//button[@name='action_view_product_backlogs']" position="after">
+
+
+                <button name="action_view_project_epics"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-flag"
+                        invisible="category != 'software' or not enable_backlog_flow">
+
+                    <field name="epic_count"
+                           string="Epics"
+                           widget="statinfo"/>
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_project_form_subtask_button" model="ir.ui.view">
+        <field name="name">project.project.form.subtask.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_view_tasks']" position="after">
+                <button name="action_view_project_subtasks"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-tasks"
+                        invisible="category != 'software'">
+
+                    <field name="subtask_count"
+                           string="Subtasks"
+                           widget="statinfo"/>
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_project_form_story_button" model="ir.ui.view">
+        <field name="name">project.project.form.story.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//button[@name='action_view_tasks']" position="before">
+                <button name="action_view_project_user_stories"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-book"
+                        invisible="category != 'software'">
+
+                    <field name="user_story_count"
+                           string="User Stories"
+                           widget="statinfo"/>
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="project_kanban_extend_progress" model="ir.ui.view">
+        <field name="name">project.kanban.extend.progress</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <xpath expr="//progressbar[@field='last_update_status']" position="attributes">
+                <attribute name="colors">
+                    {
+                    "new": "secondary",
+                    "on_track": "success",
+                    "at_risk": "warning",
+                    "off_track": "danger",
+                    "on_hold": "info",
+                    "review": "primary",
+                    "done": "purple",
+                    "cancelled": "dark"
+                    }
+                </attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_sla_monitor_selector_form" model="ir.ui.view">
+        <field name="name">sla.monitor.selector.form</field>
+        <field name="model">sla.monitor.selector</field>
+        <field name="arch" type="xml">
+            <form string="SLA Monitoring">
+                <sheet>
+
+
+                    <!--                    <group col="2">-->
+                    <!--                        <field name="project_id"-->
+                    <!--                               options="{'no_create': True, 'no_open': True}"/>-->
+                    <!--                        <field name="sla_level"-->
+                    <!--                               widget="radio"-->
+                    <!--                               options="{'horizontal': true}"/>-->
+                    <!--                    </group>-->
+
+                    <group col="2">
+                        <field name="project_id"
+                               options="{'no_create': True, 'no_open': True}"/>
+
+                        <!-- Ensure this is present in the view for the logic to work -->
+                        <field name="enable_backlog_flow" invisible="1"/>
+
+                        <!-- WHEN TOGGLE IS TRUE: Show full sla_level -->
+                        <field name="sla_level"
+                               widget="radio"
+                               options="{'horizontal': true}"
+                               invisible="not enable_backlog_flow"/>
+
+                        <!-- WHEN TOGGLE IS FALSE: Show restricted sla_level -->
+                        <field name="sla_level_restricted"
+                               widget="radio"
+                               options="{'horizontal': true}"
+                               invisible="enable_backlog_flow"/>
+                    </group>
+                    <!--                    <group col="2">-->
+                    <!--                        <field name="enable_backlog_flow" invisible="1"/>-->
+
+                    <!--                        &lt;!&ndash; Show FULL list when toggle is ON &ndash;&gt;-->
+                    <!--                        <field name="sla_level"-->
+                    <!--                               widget="radio"-->
+                    <!--                               options="{'horizontal': true}"-->
+                    <!--                               invisible="not enable_backlog_flow"/>-->
+
+                    <!--                        &lt;!&ndash; Show RESTRICTED list when toggle is OFF &ndash;&gt;-->
+                    <!--                        <field name="sla_level_restricted"-->
+                    <!--                               widget="radio"-->
+                    <!--                               options="{'horizontal': true}"-->
+                    <!--                               invisible="enable_backlog_flow"/>-->
+                    <!--                    </group>-->
+
+
+                    <separator string="SLA Status Dashboard"/>
+
+                    <!-- ================= PROJECT ================= -->
+                    <field name="project_ids" invisible="sla_level != 'project'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                        record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                        record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                        record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                        record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                        record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                     ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small mt-1">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                        <a type="object"
+                                           name="action_open_sla_monitoring"
+                                           class="stretched-link"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+
+                    <!-- ================= BACKLOG ================= -->
+                    <field name="backlog_ids" invisible="sla_level != 'backlog'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                        record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                        record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                        record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                        record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                        record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                     ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                        <a type="object"
+                                           name="action_open_sla_monitoring"
+                                           class="stretched-link"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+
+                    <!-- ================= EPIC ================= -->
+                    <field name="epic_ids" invisible="sla_level != 'epic'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                        record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                        record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                        record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                        record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                        record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                     ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                        <a type="object"
+                                           name="action_open_sla_monitoring"
+                                           class="stretched-link"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+
+                    <!-- ================= STORY ================= -->
+                    <field name="story_ids" invisible="sla_level != 'story'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                        record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                        record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                        record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                        record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                        record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                     ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                        <a type="object"
+                                           name="action_open_sla_monitoring"
+                                           class="stretched-link"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+
+                    <!-- ================= TASK ================= -->
+                    <field name="task_ids" invisible="sla_level != 'task'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                        record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                        record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                        record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                        record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                        record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                     ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                        <a type="object"
+                                           name="action_open_sla_monitoring"
+                                           class="stretched-link"/>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+                    <!-- ================= SUBTASK ================= -->
+                    <field name="subtask_ids" invisible="sla_level != 'subtask'" readonly="1">
+                        <kanban default_group_by="sla_stage" records_draggable="0">
+                            <field name="sla_stage"/>
+                            <field name="name"/>
+                            <field name="sla_days_label"/>
+                            <field name="task_id"/>
+
+                            <templates>
+                                <t t-name="card">
+                                    <div class="o_kanban_record o_kanban_global_click"
+                                         t-att-class="
+                                                    record.sla_stage.raw_value == 'green' and 'bg-success-subtle' or
+                                                    record.sla_stage.raw_value == 'amber' and 'bg-warning-subtle' or
+                                                    record.sla_stage.raw_value == 'red' and 'bg-danger-subtle' or
+                                                    record.sla_stage.raw_value == 'red_3' and 'bg-danger text-white' or
+                                                    record.sla_stage.raw_value == 'red_6' and 'bg-danger fw-bold text-white'
+                                                    ">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                        <div class="text-muted small mt-1">
+                                            <b>Task:</b>
+                                            <field name="task_id"/>
+                                        </div>
+                                        <div class="text-muted small">
+                                            <field name="sla_days_label"/>
+                                        </div>
+                                    </div>
+                                </t>
+                            </templates>
+                        </kanban>
+                    </field>
+
+
+                </sheet>
+
+                <footer>
+                    <button string="Close"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="view_project_form_add_backlog_page" model="ir.ui.view">
+        <field name="name">project.project.form.add.backlog.page</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Add new tab -->
+            <xpath expr="//notebook" position="inside">
+
+                <!--                <page string="Product Backlogs" invisible="category != 'software'">-->
+                <page string="Product Backlogs"
+                      invisible="category != 'software' or not enable_backlog_flow">
+
+                    <field name="product_backlog_ids"
+                           context="{'default_project_id': id}">
+
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="status"/>
+
+                            <!-- 🔥 SHOW PROGRESS -->
+                            <field name="backlog_progress"
+                                   widget="progressbar"
+                                   options="{'max_value':100}"/>
+
+                            <field name="planned_end_date"/>
+                            <field name="sla_days_label"/>
+                        </list>
+
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="status"/>
+                                    <field name="planned_end_date"/>
+                                    <field name="backlog_progress"
+                                           widget="progressbar"/>
+                                </group>
+                            </sheet>
+                        </form>
+
+                    </field>
+
+                </page>
+                <page string="User Stories"
+                      invisible="enable_backlog_flow">
+
+                    <field name="user_story_ids"
+                           context="{'default_project_id': id}">
+
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="priority"/>
+                            <field name="status"/>
+                            <field name="task_avg_progress"
+                                   string="Progress %"
+                                   widget="progressbar"
+                                   options="{'max_value': 100}"/>
+                        </list>
+
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="project_id" readonly="1"/>
+                                    <field name="status"/>
+                                    <field name="task_avg_progress"
+                                           widget="progressbar"/>
+                                </group>
+                            </sheet>
+                        </form>
+
+                    </field>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <!--    <record id="view_project_kanban_toggle_backlog_flow" model="ir.ui.view">-->
+    <!--        <field name="name">project.project.kanban.toggle.backlog.flow</field>-->
+    <!--        <field name="model">project.project</field>-->
+    <!--        <field name="inherit_id" ref="project.view_project_kanban"/>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            &lt;!&ndash; 1. Make field available to kanban &ndash;&gt;-->
+    <!--            <xpath expr="//kanban" position="inside">-->
+    <!--                <field name="enable_backlog_flow"/>-->
+    <!--            </xpath>-->
+
+    <!--            &lt;!&ndash; 2. Fixed XPath: Targeting 'o_project_kanban_boxes' which exists in Project Kanban &ndash;&gt;-->
+    <!--            <xpath expr="//div[contains(@class, 'o_project_kanban_boxes')]" position="inside">-->
+    <!--                <button type="object"-->
+    <!--                        name="action_toggle_backlog_flow"-->
+    <!--                        class="btn btn-sm p-0 ms-2"-->
+    <!--                        title="Enable / Disable Backlog &amp; Epic">-->
+    <!--                    &lt;!&ndash; In Odoo 19, use t-if="record.field.raw_value" for boolean checks &ndash;&gt;-->
+    <!--                    <i class="fa fa-toggle-on text-success"-->
+    <!--                       t-if="record.enable_backlog_flow.raw_value"/>-->
+    <!--                    <i class="fa fa-toggle-off text-muted"-->
+    <!--                       t-if="!record.enable_backlog_flow.raw_value"/>-->
+    <!--                </button>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="view_project_kanban_toggle_backlog_flow" model="ir.ui.view">
+        <field name="name">project.project.kanban.toggle.backlog.flow</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+
+            <!-- 1. MUST include both fields so Owl can read them -->
+            <xpath expr="//kanban" position="inside">
+                <field name="enable_backlog_flow"/>
+                <field name="category"/>
+            </xpath>
+
+            <!-- 2. Apply the t-if to the button -->
+            <xpath expr="//div[contains(@class, 'o_project_kanban_boxes')]" position="inside">
+                <button type="object"
+                        name="action_toggle_backlog_flow"
+                        class="btn btn-sm p-0 ms-2"
+                        title="Enable / Disable Backlog &amp; Epic"
+                        t-if="record.category.raw_value == 'software'">
+
+                    <i class="fa fa-toggle-on text-success"
+                       t-if="record.enable_backlog_flow.raw_value"/>
+                    <i class="fa fa-toggle-off text-muted"
+                       t-if="!record.enable_backlog_flow.raw_value"/>
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_project_kanban_add_dates" model="ir.ui.view">
+        <field name="name">project.project.kanban.add.dates</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+            <!-- 🔥 VERY IMPORTANT: LOAD FIELD -->
+            <xpath expr="//kanban" position="inside">
+                <field name="project_progress"/>
+                <field name="progress_color"/>
+            </xpath>
+
+            <!-- ADD FIELDS AFTER PROJECT NAME -->
+            <xpath expr="//t[@t-name='card']//div[contains(@class,'o_project_kanban_body')]" position="inside">
+
+                <!-- 🔥 YOUR NEW SECTION -->
+                <div class="text-muted small mt-2">
+
+                    <div>
+                        <b>Start:</b>
+                        <field name="planned_start_date"/>
+                    </div>
+
+                    <div>
+                        <b>End:</b>
+                        <field name="planned_end_date"/>
+                    </div>
+
+                    <div>
+                        <b>Expected End:</b>
+                        <field name="expected_end_date"/>
+                    </div>
+
+                    <div class="text-primary fw-bold">
+                        <b>Estimate:</b>
+                        <field name="estimate"/>
+                        hrs
+                    </div>
+                    <div class="progress mt-2" style="height:8px;">
+                        <div t-att-class="'progress-bar ' + (record.progress_color.raw_value or 'bg-primary')"
+                             role="progressbar"
+                             t-att-style="'width:' + (record.project_progress.raw_value or 0) + '%;'">
+                        </div>
+                    </div>
+
+                    <div class="small text-muted mt-1">
+                        <t t-esc="record.project_progress.raw_value or 0"/>%
+                    </div>
+
+                </div>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="project_project_kanban_inherit_open_form" model="ir.ui.view">
+        <field name="name">project.project.kanban.open.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+        <field name="arch" type="xml">
+
+            <!-- Remove task action -->
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="action"></attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="action_task_type_master" model="ir.actions.act_window">
+        <field name="name">Task Types</field>
+        <field name="res_model">project.task.type.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!--    <record id="hide_allocated_hours_project_form" model="ir.ui.view">-->
+    <!--        <field name="name">project.project.hide.allocated.hours</field>-->
+    <!--        <field name="model">project.project</field>-->
+    <!--        <field name="inherit_id" ref="project.edit_project"/>-->
+    <!--        <field name="priority">300</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            <xpath expr="//field[@name='allocated_hours']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+    <!--    <record id="hide_allocated_hours_task_form" model="ir.ui.view">-->
+    <!--        <field name="name">project.task.hide.allocated.hours</field>-->
+    <!--        <field name="model">project.task</field>-->
+    <!--        <field name="inherit_id" ref="project.view_task_form2"/>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            <xpath expr="//field[@name='allocated_hours']" position="attributes">-->
+    <!--                <attribute name="invisible">1</attribute>-->
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="project_project_form_inherit_sprint_button" model="ir.ui.view">
+        <field name="name">project.project.form.sprint.button</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <button name="action_open_sprint"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-bolt">
+
+                    <field name="sprint_count"
+                           widget="statinfo"
+                           string="Sprints"/>
+
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+
+    <menuitem id="menu_task_type_master"
+              name="Task Types"
+              parent="project.menu_project_config"
+              action="action_task_type_master"
+              sequence="20"/>
+
+    <record id="action_task_label_master" model="ir.actions.act_window">
+        <field name="name">Task Label</field>
+        <field name="res_model">project.task.label.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_task_label_master"
+              name="Label Types"
+              parent="project.menu_project_config"
+              action="action_task_label_master"
+              sequence="21"/>
+
+</odoo>

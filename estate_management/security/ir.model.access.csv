@@ -1,0 +1,279 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_estate_manager_property,Estate Manager Property,model_estate_property,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_building,Estate Manager Building,model_estate_building,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_floor,Estate Manager Floor,model_estate_floor,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_unit,Estate Manager Unit,model_estate_unit,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_room,Estate Manager Room,model_estate_room,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_farm,Estate Manager Farm,model_estate_farm,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_livestock,Estate Manager Livestock,model_estate_livestock,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_farm_task,Estate Manager Farm Task,model_estate_farm_task,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_asset,Estate Manager Asset,model_estate_asset,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_maintenance_request,Estate Manager Maintenance Request,model_estate_maintenance_request,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_unit_payment,Estate Manager Unit Payment,model_estate_unit_payment,estate_management.group_estate_manager,1,1,1,1
+access_estate_manager_room_employee,Estate Manager Room Employee,model_estate_room_employee,estate_management.group_estate_manager,1,1,1,1
+access_estate_crop_master_manager,Estate Crop Master Manager,model_estate_crop_master,estate_management.group_estate_manager,1,1,1,1
+access_estate_crop_master_user,Estate Crop Master User,model_estate_crop_master,base.group_user,1,1,1,0
+access_estate_crop_name_manager,Estate Crop Name Manager,model_estate_crop_name,estate_management.group_estate_manager,1,1,1,1
+access_estate_crop_name_user,Estate Crop Name User,model_estate_crop_name,base.group_user,1,1,1,1
+access_estate_user_property,Estate User Property,model_estate_property,estate_management.group_estate_user,1,1,1,0
+access_estate_user_building,Estate User Building,model_estate_building,estate_management.group_estate_user,1,1,1,0
+access_estate_user_floor,Estate User Floor,model_estate_floor,estate_management.group_estate_user,1,1,1,0
+access_estate_user_unit,Estate User Unit,model_estate_unit,estate_management.group_estate_user,1,1,1,0
+access_estate_user_room,Estate User Room,model_estate_room,estate_management.group_estate_user,1,1,1,0
+access_estate_user_farm,Estate User Farm,model_estate_farm,estate_management.group_estate_user,1,1,1,0
+access_estate_user_livestock,Estate User Livestock,model_estate_livestock,estate_management.group_estate_user,1,1,1,0
+access_estate_user_farm_task,Estate User Farm Task,model_estate_farm_task,estate_management.group_estate_user,1,0,1,0
+access_estate_user_asset,Estate User Asset,model_estate_asset,estate_management.group_estate_user,1,0,1,0
+access_estate_user_maintenance_request,Estate User Maintenance Request,model_estate_maintenance_request,estate_management.group_estate_user,1,0,1,0
+access_estate_user_unit_payment,Estate User Unit Payment,model_estate_unit_payment,estate_management.group_estate_user,1,1,1,0
+access_estate_user_room_employee,Estate User Room Employee,model_estate_room_employee,estate_management.group_estate_user,1,1,1,0
+access_estate_manager_payment_type,Estate Manager Payment Type,model_estate_payment_type,estate_management.group_estate_manager,1,0,1,1
+access_estate_user_payment_type,Estate User Payment Type,model_estate_payment_type,estate_management.group_estate_user,1,0,1,0
+
+access_estate_manager_property_type,Estate Manager Property Type,model_estate_property_type,estate_management.group_estate_manager,1,0,1,1
+access_estate_user_property_type,Estate User Property Type,model_estate_property_type,estate_management.group_estate_user,1,0,0,0
+
+access_estate_manager_property_usage,Estate Manager Property Usage,model_estate_property_usage,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_property_usage,Estate User Property Usage,model_estate_property_usage,estate_management.group_estate_user,1,0,0,0
+
+access_estate_manager_property_owner,Estate Manager Property Owner,model_estate_property_owner,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_property_owner,Estate User Property Owner,model_estate_property_owner,estate_management.group_estate_user,1,0,0,0
+
+access_estate_manager_floor_access,Estate Manager Floor Access,model_estate_floor_access,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_floor_access,Estate User Floor Access,model_estate_floor_access,estate_management.group_estate_user,1,0,0,0
+
+access_estate_manager_room_type,Estate Manager Room Type,model_estate_room_type,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_room_type,Estate User Room Type,model_estate_room_type,estate_management.group_estate_user,1,0,0,0
+
+access_estate_room_table_user,estate.room.table.user,model_estate_room_table,base.group_user,1,1,1,0
+access_estate_room_table_admin,estate.room.table.admin,model_estate_room_table,base.group_system,1,1,1,1
+
+access_estate_payment_method_user,estate.payment.method user,model_estate_payment_method,base.group_user,1,0,0,0
+access_estate_payment_method_manager,estate.payment.method manager,model_estate_payment_method,base.group_system,1,1,1,1
+
+access_estate_manager_unit_type,Estate Manager Unit Type,model_estate_unit_type,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_unit_type,Estate User Unit Type,model_estate_unit_type,estate_management.group_estate_user,1,0,0,0
+
+access_estate_soil_type_user,estate.soil.type user,model_estate_soil_type,base.group_user,1,1,1,0
+access_estate_soil_type_user,estate.soil.type user,model_estate_soil_type,estate_management.group_estate_user,1,0,0,0
+
+access_estate_climate_zone_user,estate.climate.zone user,model_estate_climate_zone,base.group_user,1,1,1,0
+access_estate_climate_zone_user,estate.climate.zone user,model_estate_climate_zone,estate_management.group_estate_user,1,0,0,0
+
+access_estate_farm_type_user,estate.farm.type user,model_estate_farm_type,base.group_user,1,1,1,0
+access_estate_farm_type_user,estate.farm.type user,model_estate_farm_type,estate_management.group_estate_user,1,0,0,0
+
+
+access_estate_sub_farm_manager,estate.sub.farm manager,model_estate_sub_farm,base.group_system,1,1,1,1
+access_estate_sub_farm_user,estate.sub.farm user,model_estate_sub_farm,base.group_user,1,1,1,1
+access_estate_sub_farm_user,estate.sub.farm user,model_estate_sub_farm,base.group_user,1,1,1,1
+
+access_estate_cycle_type_user,estate.cycle.type user,model_estate_cycle_type,base.group_user,1,1,1,1
+access_estate_cycle_type_user,estate.cycle.type user,model_estate_cycle_type,estate_management.group_estate_user,1,0,0,0
+
+
+access_estate_well_user,estate.well user,model_estate_well,base.group_user,1,1,1,1
+access_estate_well_user,estate.well user,model_estate_well,estate_management.group_estate_user,1,0,0,0
+
+
+access_estate_motor_pump_user,estate.motor.pump user,model_estate_motor_pump,base.group_user,1,1,1,1
+access_estate_motor_pump_user,estate.motor.pump user,model_estate_motor_pump,estate_management.group_estate_user,1,0,0,0
+
+
+access_estate_disease_manager,Estate Disease Manager,model_estate_disease,estate_management.group_estate_manager,1,1,1,1
+access_estate_disease_user,Estate Disease User,model_estate_disease,estate_management.group_estate_user,1,0,1,0
+
+access_estate_fertilizer_manager,Estate Fertilizer Manager,model_estate_fertilizer,estate_management.group_estate_manager,1,1,1,1
+access_estate_fertilizer_user,Estate Fertilizer User,model_estate_fertilizer,estate_management.group_estate_user,0,0,1,0
+
+access_estate_chemical_manager,Estate Chemical Manager,model_estate_chemical,estate_management.group_estate_manager,1,1,1,1
+access_estate_chemical_user,Estate Chemical User,model_estate_chemical,estate_management.group_estate_user,1,0,1,0
+
+access_estate_disease_manager,Estate Disease Manager,model_estate_disease,estate_management.group_estate_manager,1,1,1,1
+access_estate_disease_user,Estate Disease User,model_estate_disease,estate_management.group_estate_user,1,0,1,0
+
+access_estate_crop_variety_manager,Estate Crop Variety Manager,model_estate_crop_variety,estate_management.group_estate_manager,1,1,1,1
+access_estate_crop_variety_user,Estate Crop Variety User,model_estate_crop_variety,estate_management.group_estate_user,1,0,1,0
+
+access_estate_pest_manager,Estate Pest Manager,model_estate_pest,estate_management.group_estate_manager,1,1,1,1
+access_estate_pest_user,Estate Pest User,model_estate_pest,estate_management.group_estate_user,1,0,1,0
+
+access_estate_chemical_type_manager,Estate Chemical Type Manager,model_estate_chemical_type,estate_management.group_estate_manager,1,1,1,1
+access_estate_chemical_type_user,Estate Chemical Type User,model_estate_chemical_type,estate_management.group_estate_user,1,1,1,0
+
+access_estate_manager_livestock_sub,Estate Manager Livestock Sub,model_estate_livestock_sub,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_livestock_sub,Estate User Livestock Sub,model_estate_livestock_sub,estate_management.group_estate_user,1,1,1,0
+access_estate_animal_type_manager,Estate Animal Type Manager,model_estate_animal_type,estate_management.group_estate_manager,1,1,1,1
+access_estate_animal_type_user,Estate Animal Type User,model_estate_animal_type,estate_management.group_estate_user,1,0,0,0
+access_estate_breed_manager,Estate Breed Manager,model_estate_breed,estate_management.group_estate_manager,1,1,1,1
+access_estate_breed_user,Estate Breed User,model_estate_breed,estate_management.group_estate_user,1,0,0,0
+access_estate_livestock_disease_manager,Estate Livestock Disease Manager,model_estate_livestock_disease,estate_management.group_estate_manager,1,1,1,1
+access_estate_livestock_disease_user,Estate Livestock Disease User,model_estate_livestock_disease,estate_management.group_estate_user,1,0,0,0
+access_estate_harvest_product_manager,Estate Harvest Product Manager,model_estate_harvest_product,estate_management.group_estate_manager,1,1,1,1
+access_estate_harvest_product_user,Estate Harvest Product User,model_estate_harvest_product,estate_management.group_estate_user,1,0,0,0
+access_estate_feed_manager,Estate Feed Manager,model_estate_feed,estate_management.group_estate_manager,1,1,1,1
+access_estate_feed_user,Estate Feed User,model_estate_feed,estate_management.group_estate_user,1,0,0,0
+access_estate_medical_treatment_manager,Estate Medical Treatment Manager,model_estate_medical_treatment,estate_management.group_estate_manager,1,1,1,1
+access_estate_medical_treatment_user,Estate Medical Treatment User,model_estate_medical_treatment,estate_management.group_estate_user,1,0,0,0
+access_estate_livestock_feeding_manager,Estate Livestock Feeding Manager,model_estate_livestock_feeding,estate_management.group_estate_manager,1,1,1,1
+access_estate_livestock_feeding_user,Estate Livestock Feeding User,model_estate_livestock_feeding,estate_management.group_estate_user,1,0,1,0
+access_estate_livestock_medical_manager,Estate Livestock Medical Manager,model_estate_livestock_medical,estate_management.group_estate_manager,1,1,1,1
+access_estate_livestock_medical_user,Estate Livestock Medical User,model_estate_livestock_medical,estate_management.group_estate_user,1,0,1,0
+access_estate_subfarm_harvest_manager,Estate Subfarm Harvest Manager,model_estate_subfarm_harvest,estate_management.group_estate_manager,1,1,1,1
+access_estate_subfarm_harvest_user,Estate Subfarm Harvest User,model_estate_subfarm_harvest,estate_management.group_estate_user,1,0,1,0
+access_estate_livestock_harvest_manager,Estate Livestock Harvest Manager,model_estate_livestock_harvest,estate_management.group_estate_manager,1,1,1,1
+access_estate_livestock_harvest_user,Estate Livestock Harvest User,model_estate_livestock_harvest,estate_management.group_estate_user,1,0,1,0
+
+access_estate_manager_building_payment,Estate Manager Building Payment,model_estate_building_payment,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_building_payment,Estate User Building Payment,model_estate_building_payment,estate_management.group_estate_user,1,1,1,0
+
+access_estate_manager_location,Estate Manager Location,model_estate_location,estate_management.group_estate_manager,1,1,1,1
+access_estate_user_location,Estate User Location,model_estate_location,estate_management.group_estate_user,1,1,1,0
+
+access_estate_farm_compliance,estate.farm.compliance,model_estate_farm_compliance,base.group_user,1,1,1,1
+access_estate_farm_sales,estate.farm.sales,model_estate_farm_sales,base.group_user,1,1,1,1
+access_estate_farm_plot,estate.farm.plot,model_estate_farm_plot,base.group_user,1,1,1,1
+access_estate_irrigation,estate.irrigation,model_estate_irrigation,base.group_user,1,1,1,1
+
+access_estate_asset_type_user,estate.asset.type.user,model_estate_asset_type,base.group_user,1,1,1,1
+access_estate_asset_type_user,estate.asset.type.user,model_estate_asset_type,base.group_user,1,0,1,0
+
+
+
+
+
+access_estate_property_admin,estate.property admin,model_estate_property,base.group_system,1,1,1,1
+access_estate_building_admin,estate.building admin,model_estate_building,base.group_system,1,1,1,1
+access_estate_floor_admin,estate.floor admin,model_estate_floor,base.group_system,1,1,1,1
+access_estate_unit_admin,estate.unit admin,model_estate_unit,base.group_system,1,1,1,1
+access_estate_room_admin,estate.room admin,model_estate_room,base.group_system,1,1,1,1
+access_estate_farm_admin,estate.farm admin,model_estate_farm,base.group_system,1,1,1,1
+access_estate_livestock_admin,estate.livestock admin,model_estate_livestock,base.group_system,1,1,1,1
+access_estate_farm_task_admin,estate.farm.task admin,model_estate_farm_task,base.group_system,1,1,1,1
+access_estate_asset_admin,estate.asset admin,model_estate_asset,base.group_system,1,1,1,1
+access_estate_maintenance_request_admin,estate.maintenance.request admin,model_estate_maintenance_request,base.group_system,1,1,1,1
+access_estate_unit_payment_admin,estate.unit.payment admin,model_estate_unit_payment,base.group_system,1,1,1,1
+access_estate_room_employee_admin,estate.room.employee admin,model_estate_room_employee,base.group_system,1,1,1,1
+access_estate_crop_master_admin,estate.crop.master admin,model_estate_crop_master,base.group_system,1,1,1,1
+access_estate_crop_name_admin,estate.crop.name admin,model_estate_crop_name,base.group_system,1,1,1,1
+access_estate_payment_type_admin,estate.payment.type admin,model_estate_payment_type,base.group_system,1,1,1,1
+access_estate_property_type_admin,estate.property.type admin,model_estate_property_type,base.group_system,1,1,1,1
+access_estate_property_usage_admin,estate.property.usage admin,model_estate_property_usage,base.group_system,1,1,1,1
+access_estate_property_owner_admin,estate.property.owner admin,model_estate_property_owner,base.group_system,1,1,1,1
+access_estate_floor_access_admin,estate.floor.access admin,model_estate_floor_access,base.group_system,1,1,1,1
+access_estate_room_type_admin,estate.room.type admin,model_estate_room_type,base.group_system,1,1,1,1
+access_estate_room_table_admin_full,estate.room.table admin full,model_estate_room_table,base.group_system,1,1,1,1
+access_estate_payment_method_admin,estate.payment.method admin,model_estate_payment_method,base.group_system,1,1,1,1
+access_estate_unit_type_admin,estate.unit.type admin,model_estate_unit_type,base.group_system,1,1,1,1
+access_estate_soil_type_admin,estate.soil.type admin,model_estate_soil_type,base.group_system,1,1,1,1
+access_estate_climate_zone_admin,estate.climate.zone admin,model_estate_climate_zone,base.group_system,1,1,1,1
+access_estate_farm_type_admin,estate.farm.type admin,model_estate_farm_type,base.group_system,1,1,1,1
+access_estate_sub_farm_admin,estate.sub.farm admin,model_estate_sub_farm,base.group_system,1,1,1,1
+access_estate_cycle_type_admin,estate.cycle.type admin,model_estate_cycle_type,base.group_system,1,1,1,1
+access_estate_well_admin,estate.well admin,model_estate_well,base.group_system,1,1,1,1
+access_estate_motor_pump_admin,estate.motor.pump admin,model_estate_motor_pump,base.group_system,1,1,1,1
+access_estate_disease_admin,estate.disease admin,model_estate_disease,base.group_system,1,1,1,1
+access_estate_fertilizer_admin,estate.fertilizer admin,model_estate_fertilizer,base.group_system,1,1,1,1
+access_estate_chemical_admin,estate.chemical admin,model_estate_chemical,base.group_system,1,1,1,1
+access_estate_crop_variety_admin,estate.crop.variety admin,model_estate_crop_variety,base.group_system,1,1,1,1
+access_estate_pest_admin,estate.pest admin,model_estate_pest,base.group_system,1,1,1,1
+access_estate_chemical_type_admin,estate.chemical.type admin,model_estate_chemical_type,base.group_system,1,1,1,1
+access_estate_livestock_sub_admin,estate.livestock.sub admin,model_estate_livestock_sub,base.group_system,1,1,1,1
+access_estate_animal_type_admin,estate.animal.type admin,model_estate_animal_type,base.group_system,1,1,1,1
+access_estate_breed_admin,estate.breed admin,model_estate_breed,base.group_system,1,1,1,1
+access_estate_livestock_disease_admin,estate.livestock.disease admin,model_estate_livestock_disease,base.group_system,1,1,1,1
+access_estate_harvest_product_admin,estate.harvest.product admin,model_estate_harvest_product,base.group_system,1,1,1,1
+access_estate_feed_admin,estate.feed admin,model_estate_feed,base.group_system,1,1,1,1
+access_estate_medical_treatment_admin,estate.medical.treatment admin,model_estate_medical_treatment,base.group_system,1,1,1,1
+access_estate_livestock_feeding_admin,estate.livestock.feeding admin,model_estate_livestock_feeding,base.group_system,1,1,1,1
+access_estate_livestock_medical_admin,estate.livestock.medical admin,model_estate_livestock_medical,base.group_system,1,1,1,1
+access_estate_subfarm_harvest_admin,estate.subfarm.harvest admin,model_estate_subfarm_harvest,base.group_system,1,1,1,1
+access_estate_livestock_harvest_admin,estate.livestock.harvest admin,model_estate_livestock_harvest,base.group_system,1,1,1,1
+access_estate_building_payment_admin,estate.building.payment admin,model_estate_building_payment,base.group_system,1,1,1,1
+access_estate_location_admin,estate.location admin,model_estate_location,base.group_system,1,1,1,1
+access_estate_farm_compliance_admin,estate.farm.compliance admin,model_estate_farm_compliance,base.group_system,1,1,1,1
+access_estate_farm_sales_admin,estate.farm.sales admin,model_estate_farm_sales,base.group_system,1,1,1,1
+access_estate_farm_plot_admin,estate.farm.plot admin,model_estate_farm_plot,base.group_system,1,1,1,1
+access_estate_irrigation_admin,estate.irrigation admin,model_estate_irrigation,base.group_system,1,1,1,1
+access_estate_asset_type_admin,estate.asset.type admin,model_estate_asset_type,base.group_system,1,1,1,1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+access_estate_farm_user_override_final,estate.farm.user.override.final,model_estate_farm,estate_management.group_estate_user,1,1,1,1
+access_estate_subfarm_user_override_final,estate.subfarm.user.override.final,model_estate_sub_farm,estate_management.group_estate_user,1,1,1,1
+access_estate_livestock_user_override_final,estate.livestock.user.override.final,model_estate_livestock,estate_management.group_estate_user,1,1,1,1
+
+access_estate_location_user_override_final,estate.location.user.override.final,model_estate_location,estate_management.group_estate_user,1,1,1,0
+access_estate_crop_name_user_override_final,estate.crop.name.user.override.final,model_estate_crop_name,estate_management.group_estate_user,1,1,1,0
+
+access_estate_soil_type_user_override_final,estate.soil.type.user.override.final,model_estate_soil_type,estate_management.group_estate_user,1,1,1,0
+access_estate_climate_zone_user_override_final,estate.climate.zone.user.override.final,model_estate_climate_zone,estate_management.group_estate_user,1,1,1,0
+access_estate_farm_type_user_override_final,estate.farm.type.user.override.final,model_estate_farm_type,estate_management.group_estate_user,1,1,1,0
+
+access_estate_livestock_sub_user_override_final,estate.livestock.sub.user.override.final,model_estate_livestock_sub,estate_management.group_estate_user,1,1,1,0
+access_estate_breed_user_override_final,estate.breed.user.override.final,model_estate_breed,estate_management.group_estate_user,1,1,1,0
+access_estate_feed_user_override_final,estate.feed.user.override.final,model_estate_feed,estate_management.group_estate_user,1,1,1,0
+access_estate_livestock_disease_user_override_final,estate.livestock.disease.user.override.final,model_estate_livestock_disease,estate_management.group_estate_user,1,1,1,0
+
+
+
+access_estate_fertilizer_base,estate.fertilizer.base,model_estate_fertilizer,base.group_user,1,1,1,0
+access_estate_chemical_base,estate.chemical.base,model_estate_chemical,base.group_user,1,1,1,0
+access_estate_disease_base,estate.disease.base,model_estate_disease,base.group_user,1,1,1,0
+access_estate_crop_variety_base,estate.crop.variety.base,model_estate_crop_variety,base.group_user,1,1,1,0
+access_estate_pest_base,estate.pest.base,model_estate_pest,base.group_user,1,1,1,0
+
+access_estate_soil_type_base,estate.soil.type.base,model_estate_soil_type,base.group_user,1,1,1,0
+access_estate_climate_zone_base,estate.climate.zone.base,model_estate_climate_zone,base.group_user,1,1,1,0
+access_estate_farm_type_base,estate.farm.type.base,model_estate_farm_type,base.group_user,1,1,1,0
+
+access_estate_breed_base,estate.breed.base,model_estate_breed,base.group_user,1,1,1,0
+access_estate_feed_base,estate.feed.base,model_estate_feed,base.group_user,1,1,1,0
+access_estate_livestock_disease_base,estate.livestock.disease.base,model_estate_livestock_disease,base.group_user,1,1,1,0
+access_estate_animal_type_base,estate.animal.type.base,model_estate_animal_type,base.group_user,1,1,1,0
+
+
+access_estate_animal_type_base,estate.animal.type.base,model_estate_animal_type,base.group_user,1,1,1,0
+access_estate_breed_base,estate.breed.base,model_estate_breed,base.group_user,1,1,1,0
+access_estate_feed_base,estate.feed.base,model_estate_feed,base.group_user,1,1,1,0
+access_estate_livestock_disease_base,estate.livestock.disease.base,model_estate_livestock_disease,base.group_user,1,1,1,0
+access_estate_medical_treatment_base,estate.medical.treatment.base,model_estate_medical_treatment,base.group_user,1,1,1,0
+access_estate_harvest_product_base,estate.harvest.product.base,model_estate_harvest_product,base.group_user,1,1,1,0
+access_estate_livestock_sub_base,estate.livestock.sub.base,model_estate_livestock_sub,base.group_user,1,1,1,0
+
+
+
+access_hr_employee_estate_user,hr.employee.estate.user,hr.model_hr_employee,base.group_user,1,0,0,0

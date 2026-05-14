@@ -1,0 +1,30 @@
+{
+    'name': 'Employee Personal Fields',
+    'version': '1.0.0',
+    'summary': 'Adds personal identity fields to Employee',
+    'description': """
+        Adds First Name, Middle Name, Last Name, Full Name,
+        Gender, Aadhar Number, Blood Group to Employees.
+    """,
+    'category': 'Human Resources',
+    'author': 'Your Company',
+    'depends': ['hr', 'hr_skills','gamification'],
+    'data': [
+        'views/hr_employee_view.xml',
+        'views/hr_employee_education_views.xml',
+        'views/employee_previous_employment.xml',
+        'views/hr_employee_social_media.xml',
+        'views/hr_employee_tax_benefits_view.xml',
+        'views/hr_employee_rating_view.xml',
+        'views/employee_menu.xml',
+        'views/employee_performance_development.xml',
+        'views/hr_employee_contract_view.xml',
+        'views/changing_field_name.xml',
+        'views/hide_legal_name_views.xml',
+        'views/personal_tab_view.xml',
+        # 'views/user_group.xml',
+        'security/ir.model.access.csv',
+    ],
+    'installable': True,
+    'application': False,
+}

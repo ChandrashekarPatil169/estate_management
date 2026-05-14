@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================= -->
+    <!-- LIST VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_user_story_list" model="ir.ui.view">
+        <field name="name">project.user.story.list</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <!--                <field name="epic_id"/>-->
+                <field name="epic_id" invisible="enable_backlog_flow"/>
+                <field name="priority"/>
+                <field name="story_points"/>
+                <field name="status"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <!-- 🔥 ADD THIS -->
+                <field name="task_avg_progress"
+                       widget="progressbar"
+                       options="{'max_value':100}"/>
+
+                <!--                <field name="sla_due_date"/>-->
+                <field name="sla_status"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- FORM VIEW (Your Existing) -->
+    <!-- ================================= -->
+    <record id="view_project_user_story_form" model="ir.ui.view">
+        <field name="name">project.user.story.form</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+            <form string="User Story">
+                <sheet>
+                    <!-- Smart Button Box -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_story_tasks"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tasks">
+                            <field name="task_count" string="Tasks" widget="statinfo"/>
+                        </button>
+                        <button name="action_view_story_documents" type="object" class="oe_stat_button"
+                                icon="fa-paperclip">
+                            <field name="document_count" string="Documents" widget="statinfo"/>
+                        </button>
+                    </div>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="project_id"/>
+                        <field name="enable_backlog_flow" invisible="1"/>
+                        <field name="epic_id" invisible="enable_backlog_flow != 1"/>
+                        <!--                        <field name="epic_id"/>-->
+                        <field name="priority"/>
+                        <field name="story_points"/>
+                        <field name="ready"/>
+                        <field name="status"/>
+                        <field name="planned_start_date"/>
+                        <field name="planned_end_date"/>
+                        <field name="expected_end_date"/>
+                        <field name="completed_date" readonly="1"/>
+
+
+                    </group>
+                    <group>
+                        <field name="task_avg_progress"
+                               widget="progressbar"
+                               options="{'max_value':100}"/>
+                    </group>
+
+
+                    <notebook>
+
+                        <page string="Description">
+                            <field name="connextra_story"/>
+                        </page>
+
+                        <page string="Acceptance Criteria">
+                            <group>
+                                <field name="given"/>
+                                <field name="when"/>
+                                <field name="then"/>
+                                <field name="dod_checklist"/>
+                            </group>
+                        </page>
+
+                        <page string="Tasks" name="tasks_page">
+                            <field name="task_ids"
+                                   mode="list,form"
+                                   context="{
+               'default_story_id': id,
+               'default_project_id': project_id
+           }">
+
+                                <!-- 1. THE LIST VIEW (What you see on the page) -->
+                                <list create="true" delete="true" edit="true">
+                                    <field name="name"/>
+                                    <field name="user_ids" widget="many2many_avatar_user"/>
+                                    <field name="allocated_hours" widget="float_time"/>
+                                    <field name="state" widget="badge" decoration-info="state == 'draft'"
+                                           decoration-success="state == 'done'"/>
+                                    <!-- 🔥 THIS YOU ADD -->
+                                    <field name="task_progress" widget="progressbar"/>
+                                    <field name="weightage"/>
+                                    <field name="estimate"/>
+                                    <field name="expected_end_date"/>
+                                    <field name="sla_due_date"/>
+                                </list>
+
+                                <!-- 2. THE FORM VIEW (The popup when you click 'Add a line' or a row) -->
+                                <form string="Task Detail">
+                                    <sheet>
+                                        <group>
+                                            <group string="Basic Information">
+                                                <field name="name"/>
+                                                <field name="project_id" readonly="1"/>
+                                                <field name="story_id" readonly="1"/>
+                                                <field name="user_ids" widget="many2many_avatar_user"/>
+                                            </group>
+                                            <group string="Status &amp; Planning">
+                                                <!--                                                <field name="state"/>-->
+                                                <field name="stage_id"
+                                                       options="{'no_open': True, 'no_create': True}"/>
+
+                                                <field name="allocated_hours" widget="float_time"/>
+                                                <field name="weightage"/>
+                                                <field name="estimate"/>
+                                            </group>
+                                        </group>
+                                        <group>
+                                            <group string="Dates">
+                                                <field name="expected_end_date"/>
+                                                <field name="sla_due_date"/>
+                                            </group>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Governance">
+
+                            <group>
+                                <!-- Select who can approve -->
+                                <field name="approver_ids"
+                                       widget="many2many_tags"
+                                       options="{'no_create': True}"/>
+
+                                <field name="evidence_required"
+                                       options="{'resizable': false}"
+                                       placeholder="Add evidence here..."/>
+
+                                <!-- Audit info -->
+                                <field name="approved_by_id" readonly="1"/>
+
+                                <!-- Internal flag -->
+                                <field name="is_done" invisible="1"/>
+
+
+                            </group>
+
+                            <group>
+                                <button name="action_governance_approve"
+                                        type="object"
+                                        string="Approve &amp; Mark Done"
+                                        class="btn-primary"
+                                        invisible="is_done"/>
+                            </group>
+
+                        </page>
+                        <page name="sla" string="SLA">
+
+                            <!-- SLA Overview -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Overview
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_risk"
+                                           widget="badge"
+                                           decoration-success="sla_risk == 'green'"
+                                           decoration-warning="sla_risk == 'amber'"
+                                           decoration-danger="sla_risk == 'red'"/>
+                                    <field name="sla_days_label" widget="badge"/>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Monitoring -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Monitoring
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <button name="action_open_sla_monitoring"
+                                            type="object"
+                                            class="btn btn-link p-0"
+                                            icon="fa-shield">
+                                        Open SLA Monitoring
+                                    </button>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Deadlines -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Deadlines (Tasks)
+                                </div>
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_task_sla_7_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming Tasks (Next 7 Days)
+                                    </button>
+                                </setting>
+
+                                <setting class="col-lg-6">
+                                    <button name="action_open_task_sla_30_days"
+                                            type="object"
+                                            class="btn btn-outline-primary w-100"
+                                            icon="fa-calendar">
+                                        Upcoming Tasks (Next 30 Days)
+                                    </button>
+                                </setting>
+                            </group>
+
+                            <!-- SLA Escalation Rules -->
+                            <group class="row mt16 o_settings_container">
+                                <div class="o_horizontal_separator text-uppercase fw-bolder small mb-3">
+                                    SLA Escalation Rules
+                                </div>
+
+                                <setting class="col-lg-12">
+                                    <field name="sla_escalation_rules"
+                                           placeholder="Define story-level SLA escalation rules..."
+                                           nolabel="1"/>
+                                </setting>
+                            </group>
+
+                            <!-- Escalation Owners -->
+                            <group string="Escalation Owners">
+                                <group col="2">
+
+                                    <div class="o_form_label">Amber (&lt;= 3 Days Remaining)</div>
+                                    <field name="sla_amber_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Red (Overdue)</div>
+                                    <field name="sla_red_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Overdue +3 Days</div>
+                                    <field name="sla_overdue_3_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                    <div class="o_form_label">Overdue +6 Days</div>
+                                    <field name="sla_overdue_6_user_ids"
+                                           widget="many2many_tags"
+                                           nolabel="1"/>
+
+                                </group>
+                            </group>
+
+                        </page>
+
+
+                        <page string="Documents" name="documents_page">
+                            <field name="document_ids" widget="many2many_binary" string="Attach Specification Files"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="inherited_notes" readonly="1" widget="html"/>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- KANBAN VIEW (Odoo 19 OWL Safe) -->
+    <!-- ================================= -->
+    <record id="view_project_user_story_kanban" model="ir.ui.view">
+        <field name="name">project.user.story.kanban</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+
+            <kanban default_group_by="status" class="o_kanban_small_column">
+
+                <!-- FIELDS LOAD -->
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="epic_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="estimated"/>
+                <field name="task_avg_progress"/>
+                <field name="progress_color"/>
+
+                <templates>
+                    <t t-name="card">
+
+                        <div class="o_kanban_record p-3">
+
+                            <!-- 🔵 PROJECT NAME -->
+                            <div class="text-info fw-bold small">
+                                <field name="project_id"/>
+                            </div>
+
+                            <!-- 🟣 EPIC + STORY -->
+                            <div class="fw-bold text-primary fs-5 mb-1">
+                                <field name="epic_id"/>
+                                →
+                                <field name="name"/>
+                            </div>
+
+                            <!-- 📅 DATES -->
+                            <div class="text-muted small">
+                                Start:
+                                <field name="planned_start_date"/>
+                            </div>
+
+                            <div class="text-muted small">
+                                End:
+                                <field name="planned_end_date"/>
+                            </div>
+                            <div>
+                                <b>Expected End:</b>
+                                <field name="expected_end_date"/>
+                            </div>
+
+                            <!-- ⏱ ESTIMATE -->
+                            <div class="text-primary fw-bold mt-1">
+                                Estimate:
+                                <field name="estimated"/>
+                                hrs
+                            </div>
+
+                            <!-- PROGRESS BAR -->
+                            <div class="progress mt-2" style="height:8px;">
+                                <div t-att-class="'progress-bar ' + (record.progress_color.raw_value or 'bg-primary')"
+                                     role="progressbar"
+                                     t-att-style="'width:' + (record.task_avg_progress.raw_value or 0) + '%;'">
+                                </div>
+                            </div>
+
+                            <div class="small text-muted mt-1">
+                                <t t-esc="record.task_avg_progress.raw_value or 0"/>%
+                            </div>
+                            <div class="o_kanban_footer d-flex justify-content-end">
+                                <div class="kanban_status_big">
+                                    <field name="status"
+                                           widget="state_selection"
+                                           options="{'clickable': True}"/>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+    <record id="view_story_sla_kanban" model="ir.ui.view">
+        <field name="name">project.user.story.sla.kanban</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="sla_stage"
+                    class="o_kanban_small_column">
+
+                <field name="name"/>
+                <field name="sla_stage"/>
+                <field name="epic_id"/>
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click oe_kanban_card">
+                            <div class="oe_kanban_content">
+
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+
+                                <div t-if="record.epic_id.raw_value">
+                                    <small class="text-muted">
+                                        <field name="epic_id"/>
+                                    </small>
+                                </div>
+
+                                <div class="mt-2">
+                                    <span t-if="record.sla_stage.raw_value == 'green'"
+                                          class="badge rounded-pill bg-success">
+                                        Green
+                                    </span>
+
+                                    <span t-if="record.sla_stage.raw_value == 'amber'"
+                                          class="badge rounded-pill bg-warning text-dark">
+                                        Amber
+                                    </span>
+
+                                    <span t-if="record.sla_stage.raw_value == 'red'"
+                                          class="badge rounded-pill bg-danger">
+                                        Red
+                                    </span>
+
+                                    <span t-if="record.sla_stage.raw_value == 'red_3'"
+                                          class="badge rounded-pill bg-danger">
+                                        Overdue +3
+                                    </span>
+
+                                    <span t-if="record.sla_stage.raw_value == 'red_6'"
+                                          class="badge rounded-pill bg-danger">
+                                        Overdue +6
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+
+            </kanban>
+        </field>
+    </record>
+
+
+    <!-- ================================= -->
+    <!-- ACTIVITY VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_user_story_activity" model="ir.ui.view">
+        <field name="name">project.user.story.activity</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+            <activity string="User Story Activities">
+                <field name="name"/>
+                <field name="project_id"/>
+            </activity>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- PIVOT VIEW -->
+    <!-- ================================= -->
+    <record id="view_project_user_story_pivot" model="ir.ui.view">
+        <field name="name">project.user.story.pivot</field>
+        <field name="model">project.user.story</field>
+        <field name="arch" type="xml">
+            <pivot string="User Story Analysis">
+                <field name="project_id" type="row"/>
+                <field name="status" type="col"/>
+                <field name="story_points" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- SEARCH VIEW -->
+    <!-- ================================= -->
+    <!--    <record id="view_project_user_story_search" model="ir.ui.view">-->
+    <!--        <field name="name">project.user.story.search</field>-->
+    <!--        <field name="model">project.user.story</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <search>-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="project_id"/>-->
+    <!--                <field name="epic_id"/>-->
+
+    <!--                <filter name="filter_ready"-->
+    <!--                        string="Ready"-->
+    <!--                        domain="[('status','=','ready')]"/>-->
+
+    <!--                <filter naOff Trackme="filter_blocked"-->
+    <!--                        string="Blocked"-->
+    <!--                        domain="[('status','=','blocked')]"/>-->
+
+    <!--                <group string="Group By">-->
+    <!--                    <filter name="group_project"-->
+    <!--                            string="Project"-->
+    <!--                            context="{'group_by':'project_id'}"/>-->
+
+    <!--                    <filter name="group_status"-->
+    <!--                            string="Status"-->
+    <!--                            context="{'group_by':'status'}"/>-->
+
+    <!--                    <filter name="group_priority"-->
+    <!--                            string="Priority"-->
+    <!--                            context="{'group_by':'priority'}"/>-->
+    <!--                </group>-->
+    <!--            </search>-->
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_project_user_story_timeline" model="ir.ui.view">
+        <field name="name">project.user.story.timeline</field>
+        <field name="model">project.user.story</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                    string="User Story Timeline"
+                    date_start="planned_start_date"
+                    date_stop="planned_end_date"
+                    default_group_by="project_id"
+                    event_open_popup="true"
+                    colors="#2ecb71: status == 'done';
+#ec7063: status == 'cancelled';
+#f4d03f: status == 'at_risk';
+#5dade2: status == 'on_track'"
+            >
+
+                <!-- Load Fields -->
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="epic_id"/>
+                <field name="priority"/>
+                <field name="story_points"/>
+                <field name="ready"/>
+                <field name="status"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="completed_date"/>
+                <field name="task_avg_progress"/>
+
+                <templates>
+                    <t t-name="timeline-item">
+                        <div style="white-space: nowrap; font-size: 13px;">
+
+                            <!-- Story Name -->
+
+                            <t t-out="record.name"/>
+
+                            <!-- Planned Dates -->
+                            <t t-if="record.planned_start_date and record.planned_end_date">
+                                | Planned:
+                                <t t-out="record.planned_start_date"/>
+                                -
+                                <t t-out="record.planned_end_date"/>
+                            </t>
+
+                            <!-- Expected -->
+                            <t t-if="record.expected_end_date">
+                                |
+                                <span style="color:#dc3545;">
+                                    Exp:
+                                    <t t-out="record.expected_end_date"/>
+                                </span>
+                            </t>
+
+                            <!-- Completed -->
+                            <t t-if="record.completed_date">
+                                |
+                                <span style="color:#2ecb71;">
+                                    Done:
+                                    <t t-out="record.completed_date"/>
+                                </span>
+                            </t>
+                            <!-- PROJECT PROGRESS BAR -->
+
+                            <t t-set="progress" t-value="record.task_avg_progress || 0"/>
+
+                            <t t-set="bar_color"
+                               t-value="progress &lt; 30
+                                        ? '#dc3545'
+                                        : (progress &lt; 70
+                                        ? '#f4d03f'
+                                        : '#2ecb71')"/>
+
+                            <div style="margin-top:5px; width:200px;">
+                                <div style="background:#e9ecef; height:6px; border-radius:4px;">
+                                    <div t-att-style="'width:' + progress + '%; height:6px; border-radius:4px; background:' + bar_color + ';'">
+                                    </div>
+                                </div>
+                                <small style="font-size:11px;">
+                                    <t t-esc="progress.toFixed(1)"/>%
+                                </small>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </timeline>
+        </field>
+    </record>
+
+    <!-- ================================= -->
+    <!-- ACTION -->
+    <!-- ================================= -->
+    <record id="action_project_user_story" model="ir.actions.act_window">
+        <field name="name">User Stories</field>
+        <field name="res_model">project.user.story</field>
+        <field name="view_mode">kanban,list,form,timeline,activity,pivot</field>
+    </record>
+
+</odoo>

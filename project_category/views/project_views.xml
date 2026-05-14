@@ -1,0 +1,57 @@
+<odoo>
+
+    <record id="project_project_view_form_simplified_inherit_category" model="ir.ui.view">
+        <field name="name">project.project.view.form.simplified.inherit.category</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+        <field name="arch" type="xml">
+
+            <!-- Add category after name -->
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="category"/>
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- Software Projects Action -->
+    <record id="action_software_projects" model="ir.actions.act_window">
+    <field name="name">Software Projects</field>
+    <field name="res_model">project.project</field>
+    <field name="view_mode">kanban,list,form,pivot,graph,activity</field>
+    <field name="domain">[('category','=','software')]</field>
+    <field name="context">
+        {
+            'default_category':'software',
+            'is_software_project': True
+        }
+    </field>
+</record>
+
+
+    <!-- Hardware Projects Action -->
+    <record id="action_hardware_projects" model="ir.actions.act_window">
+        <field name="name">Hardware Projects</field>
+        <field name="res_model">project.project</field>
+        <field name="view_mode">kanban,list,form,pivot,graph,activity</field>
+        <field name="domain">[('category','=','hardware')]</field>
+        <field name="context">{'default_category':'hardware'}</field>
+    </record>
+
+    <!-- Software Projects -->
+    <menuitem id="menu_software_projects"
+              name="Software Projects"
+              parent="project.menu_projects_group_stage"
+              action="action_software_projects"
+              sequence="10"/>
+
+    <!-- Hardware Projects -->
+    <menuitem id="menu_hardware_projects"
+              name="Hardware Projects"
+              parent="project.menu_projects_group_stage"
+              action="action_hardware_projects"
+              sequence="20"/>
+
+
+</odoo>

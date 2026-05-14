@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_purchase_order_acknowledge" inherit_id="purchase.portal_my_purchase_order">
+        <xpath expr="//div[@id='portal_purchase_content']" position="before">
+
+            <!-- Show buttons only if the RFQ is in the correct state -->
+            <div t-if="order.state == 'sent' and not order.vendor_decision"
+                 class="row justify-content-center mb-4 no_print">
+                <div class="col-12 col-md-8 d-flex justify-content-center gap-3">
+
+                    <!-- Accept Button Form -->
+                    <form t-attf-action="/my/purchase/#{order.id}/acknowledge" method="post">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="decision" value="accept"/>
+                        <button type="submit" class="btn btn-success px-4">
+                            <i class="fa fa-check me-1"/>
+                            Accept RFQ
+                        </button>
+                    </form>
+
+                    <!-- Reject Button (Triggers BS5 Modal) -->
+                    <button type="button" class="btn btn-danger px-4" data-bs-toggle="modal"
+                            data-bs-target="#modal_reject">
+                        <i class="fa fa-times me-1"/>
+                        Reject RFQ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rejection Modal (Bootstrap 5) -->
+            <div class="modal fade" id="modal_reject" tabindex="-1" aria-labelledby="modal_reject_label"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <form t-attf-action="/my/purchase/#{order.id}/acknowledge" method="post" class="modal-content">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="decision" value="reject"/>
+
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal_reject_label">Reason for Rejection</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <p class="text-muted">Please provide a reason for rejecting this Request for Quotation.</p>
+                            <textarea name="reject_reason" class="form-control" required="required" rows="4"
+                                      placeholder="e.g. Out of stock, price mismatch, etc."/>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger">Confirm Rejection</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

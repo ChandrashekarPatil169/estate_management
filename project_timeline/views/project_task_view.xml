@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- Project Task Timeline View                            -->
+    <!-- ===================================================== -->
+
+    <record id="project_task_timeline" model="ir.ui.view">
+        <field name="name">project.task.timeline</field>
+        <field name="model">project.task</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+
+            <timeline
+                    string="Task Timeline"
+                    date_start="planned_date_start"
+                    date_stop="planned_date_end"
+                    default_group_by="user_ids"
+                    group_by="user_ids"
+                    event_open_popup="true"
+                    colors="
+                white: user_ids == [];
+                #2ecb71: state == '1_done';
+                #ec7063: state == '1_canceled';
+                #f4d03f: state == '1_in_progress'
+            "
+            >
+
+                <!-- Load required fields -->
+                <field name="parent_id"/>
+                <field name="name"/>
+                <field name="user_ids"/>
+                <field name="allocated_hours"/>
+                <field name="planned_date_start"/>
+                <field name="planned_date_end"/>
+                <field name="expected_end_date"/>
+                <field name="state"/>
+                <field name="task_progress"/>
+
+                <templates>
+                    <t t-name="timeline-item">
+                        <div class="o_project_timeline_item" style="white-space:nowrap; font-size:13px;">
+
+                            <!-- User Avatars -->
+                            <t t-if="record.user_ids">
+                                <img
+                                        t-att-src="'/web/image/res.users/%s/avatar_128' % record.user_ids[0]"
+                                        width="16"
+                                        height="16"
+                                        class="me-1 rounded-circle"
+                                        t-att-alt="record.user_ids[1]"
+                                />
+                            </t>
+
+                            <!-- Task Name -->
+
+                            <t t-esc="record.display_name"/>
+
+
+                            <!-- Planned Dates -->
+                            <t t-if="record.planned_date_start and record.planned_date_end">
+                                |
+                                <t t-esc="record.planned_date_start"/>
+                                →
+                                <t t-esc="record.planned_date_end"/>
+                            </t>
+
+                            <!-- Expected Date -->
+                            <t t-if="record.expected_end_date">
+                                |
+                                <span style="color:#dc3545; font-weight:600;">
+                                    Exp:
+                                    <t t-esc="record.expected_end_date"/>
+                                </span>
+                            </t>
+                            <!-- PROJECT PROGRESS BAR -->
+
+                            <t t-set="progress" t-value="record.task_progress || 0"/>
+
+                            <t t-set="bar_color"
+                               t-value="progress &lt; 30
+                                        ? '#dc3545'
+                                        : (progress &lt; 70
+                                        ? '#f4d03f'
+                                        : '#2ecb71')"/>
+
+                            <div style="margin-top:5px; width:200px;">
+                                <div style="background:#e9ecef; height:6px; border-radius:4px;">
+                                    <div t-att-style="'width:' + progress + '%; height:6px; border-radius:4px; background:' + bar_color + ';'">
+                                    </div>
+                                </div>
+                                <small style="font-size:11px;">
+                                    <t t-esc="progress.toFixed(1)"/>%
+                                </small>
+                            </div>
+
+                            <!-- Allocated Hours -->
+                            <small
+                                    class="text-info ms-1"
+                                    t-if="record.allocated_hours"
+                            >
+                                (<t t-out="formatters.get('float_time')(record.allocated_hours)"/>)
+                            </small>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </timeline>
+
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- Attach Timeline to Existing Actions SAFELY            -->
+    <!-- ===================================================== -->
+
+    <!-- Main Task Action -->
+    <record id="project_task_timeline_action"
+            model="ir.actions.act_window.view">
+        <field name="sequence" eval="95"/>
+        <field name="view_mode">timeline</field>
+        <field name="view_id" ref="project_task_timeline"/>
+        <field name="act_window_id" ref="project.action_view_all_task"/>
+    </record>
+
+    <!-- Report Task User -->
+    <record id="view_task_project_user_timeline"
+            model="ir.ui.view">
+        <field name="name">report.project.task.user.timeline</field>
+        <field name="model">report.project.task.user</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                    date_start="planned_date_start"
+                    date_stop="planned_date_end"
+                    default_group_by="project_id"
+                    event_open_popup="true"
+            />
+        </field>
+    </record>
+
+    <record id="project_task_user_timeline_action"
+            model="ir.actions.act_window.view">
+        <field name="sequence" eval="95"/>
+        <field name="view_mode">timeline</field>
+        <field name="view_id" ref="view_task_project_user_timeline"/>
+        <field name="act_window_id" ref="project.action_project_task_user_tree"/>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- Planned Dates Fields (Form Inherit)                   -->
+    <!-- ===================================================== -->
+
+    <record id="view_task_form2_timeline_inherit"
+            model="ir.ui.view">
+        <field name="name">project.task.form.timeline</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='date_deadline']" position="before">
+                <field name="planned_date_start"
+                       widget="daterange"
+                       options="{'end_date_field': 'planned_date_end'}"
+                       string="Planned Dates"/>
+                <field name="planned_date_end" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- Tree View Inherit                                     -->
+    <!-- ===================================================== -->
+
+    <record id="view_task_tree2_timeline_inherit"
+            model="ir.ui.view">
+        <field name="name">project.task.tree.timeline</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_tree2"/>
+        <field name="arch" type="xml">
+            <field name="date_deadline" position="after">
+                <field name="planned_date_start" optional="hide"/>
+                <field name="planned_date_end" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,25 @@
+<odoo>
+
+    <!-- Action -->
+    <record id="action_purchase_approval_matrix" model="ir.actions.act_window">
+        <field name="name">Approval Matrix</field>
+        <field name="res_model">purchase.approval.matrix</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Root menu (ADMIN ONLY) -->
+    <menuitem
+        id="menu_purchase_approval_root"
+        name="Approval Configuration"
+        parent="purchase.menu_purchase_config"
+        groups="base.group_system"/>
+
+    <!-- Matrix menu (ADMIN ONLY) -->
+    <menuitem
+        id="menu_purchase_approval_matrix"
+        name="PR Approval Matrix"
+        parent="menu_purchase_approval_root"
+        action="action_purchase_approval_matrix"
+        groups="base.group_system"/>
+
+</odoo>

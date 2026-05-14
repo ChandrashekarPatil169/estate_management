@@ -1,0 +1,1235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <menuitem id="menu_estate_root" name="Estate Management" sequence="1"/>
+
+    <!-- ========================= -->
+    <!-- MISCELLANEOUS MENU -->
+    <!-- ========================= -->
+    <!--    <menuitem id="menu_estate_miscellaneous"-->
+    <!--              name="Miscellaneous"-->
+    <!--              parent="menu_estate_root"-->
+    <!--              sequence="80"/>-->
+
+    <menuitem id="menu_estate_miscellaneous"
+              name="Miscellaneous"
+              parent="menu_estate_root"
+              sequence="80"
+              groups="estate_management.group_estate_manager,estate_management.group_estate_general_manager,base.group_system"/>
+
+    <menuitem id="menu_property_configuration_section"
+              name="Property Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="10"/>
+
+
+    <record id="view_property_type_list" model="ir.ui.view">
+        <field name="name">estate.property.type.list</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_property_type_form" model="ir.ui.view">
+        <field name="name">estate.property.type.form</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ========================= -->
+    <!-- PROPERTY TYPE -->
+    <!-- ========================= -->
+    <record id="action_estate_property_type" model="ir.actions.act_window">
+        <field name="name">Property Types</field>
+        <field name="res_model">estate.property.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_estate_property_type"
+              name="Property Types"
+              parent="menu_property_configuration_section"
+              action="action_estate_property_type"
+              sequence="1"/>
+
+    <record id="view_property_usage_list" model="ir.ui.view">
+        <field name="name">estate.property.usage.list</field>
+        <field name="model">estate.property.usage</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_property_usage_form" model="ir.ui.view">
+        <field name="name">estate.property.usage.form</field>
+        <field name="model">estate.property.usage</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- PROPERTY USAGE -->
+    <!-- ========================= -->
+    <record id="action_estate_property_usage" model="ir.actions.act_window">
+        <field name="name">Property Usage</field>
+        <field name="res_model">estate.property.usage</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_estate_property_usage"
+              name="Property Usage"
+              parent="menu_property_configuration_section"
+              action="action_estate_property_usage"
+              sequence="2"/>
+
+    <record id="view_property_owner_list" model="ir.ui.view">
+        <field name="name">estate.property.owner.list</field>
+        <field name="model">estate.property.owner</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_property_owner_form" model="ir.ui.view">
+        <field name="name">estate.property.owner.form</field>
+        <field name="model">estate.property.owner</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="mobile"/>
+                        <field name="email"/>
+                        <field name="address"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ========================= -->
+    <!-- PROPERTY OWNER -->
+    <!-- ========================= -->
+    <record id="action_estate_property_owner" model="ir.actions.act_window">
+        <field name="name">Property Owners</field>
+        <field name="res_model">estate.property.owner</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_estate_property_owner"
+              name="Property Owners"
+              parent="menu_property_configuration_section"
+              action="action_estate_property_owner"
+              sequence="3"/>
+
+
+    <!-- ================================================= -->
+    <!-- CROP MASTER VIEWS -->
+    <!-- ================================================= -->
+
+    <record id="view_crop_master_list" model="ir.ui.view">
+        <field name="name">estate.crop.master.list</field>
+        <field name="model">estate.crop.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crop_master_form" model="ir.ui.view">
+        <field name="name">estate.crop.master.form</field>
+        <field name="model">estate.crop.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crop_master" model="ir.actions.act_window">
+        <field name="name">Crop Masters</field>
+        <field name="res_model">estate.crop.master</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ================================================= -->
+    <!-- CROP VARIETY VIEWS -->
+    <!-- ================================================= -->
+
+    <record id="view_crop_variety_list" model="ir.ui.view">
+        <field name="name">estate.crop.variety.list</field>
+        <field name="model">estate.crop.variety</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="crop_name_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_crop_variety_form" model="ir.ui.view">
+        <field name="name">estate.crop.variety.form</field>
+        <field name="model">estate.crop.variety</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="crop_name_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_crop_variety" model="ir.actions.act_window">
+        <field name="name">Crop Varieties</field>
+        <field name="res_model">estate.crop.variety</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ================================================= -->
+    <!-- MISCELLANEOUS ROOT -->
+    <!-- ================================================= -->
+
+
+    <!-- SUB GROUP FOR CROPS -->
+    <menuitem id="menu_crop_configuration"
+              name="Crop Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="60"/>
+
+    <!-- MENUS -->
+    <!--    <menuitem id="menu_crop_master"-->
+    <!--              name="Crop Masters"-->
+    <!--              parent="menu_crop_configuration"-->
+    <!--              action="action_crop_master"-->
+    <!--              sequence="1"/>-->
+
+    <menuitem id="menu_crop_variety"
+              name="Crop Varieties"
+              parent="menu_crop_configuration"
+              action="action_crop_variety"
+              sequence="2"/>
+
+
+    <menuitem id="menu_farm_configuration_section"
+              name="Farm Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="50"/>
+
+
+    <!-- ================================================= -->
+    <!-- SOIL TYPE -->
+    <!-- ================================================= -->
+
+    <record id="view_soil_type_list" model="ir.ui.view">
+        <field name="name">estate.soil.type.list</field>
+        <field name="model">estate.soil.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_soil_type_form" model="ir.ui.view">
+        <field name="name">estate.soil.type.form</field>
+        <field name="model">estate.soil.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_soil_type" model="ir.actions.act_window">
+        <field name="name">Soil Types</field>
+        <field name="res_model">estate.soil.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_soil_type"
+              name="Soil Types"
+              parent="menu_farm_configuration_section"
+              action="action_soil_type"
+              sequence="1"/>
+
+    <!-- ================================================= -->
+    <!-- CLIMATE ZONE -->
+    <!-- ================================================= -->
+
+    <record id="view_climate_zone_list" model="ir.ui.view">
+        <field name="name">estate.climate.zone.list</field>
+        <field name="model">estate.climate.zone</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_climate_zone_form" model="ir.ui.view">
+        <field name="name">estate.climate.zone.form</field>
+        <field name="model">estate.climate.zone</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_climate_zone" model="ir.actions.act_window">
+        <field name="name">Climate Zones</field>
+        <field name="res_model">estate.climate.zone</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_climate_zone"
+              name="Climate Zones"
+              parent="menu_farm_configuration_section"
+              action="action_climate_zone"
+              sequence="2"/>
+
+    <!-- ================================================= -->
+    <!-- FARM TYPE -->
+    <!-- ================================================= -->
+
+    <record id="view_farm_type_list" model="ir.ui.view">
+        <field name="name">estate.farm.type.list</field>
+        <field name="model">estate.farm.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_farm_type_form" model="ir.ui.view">
+        <field name="name">estate.farm.type.form</field>
+        <field name="model">estate.farm.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_farm_type" model="ir.actions.act_window">
+        <field name="name">Farm Types</field>
+        <field name="res_model">estate.farm.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_farm_type"
+              name="Farm Types"
+              parent="menu_farm_configuration_section"
+              action="action_farm_type"
+              sequence="3"/>
+
+
+    <menuitem id="menu_livestock_configuration_section"
+              name="Livestock Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="70"/>
+
+    <!-- ================================================= -->
+    <!-- ANIMAL TYPE -->
+    <!-- ================================================= -->
+
+    <record id="view_animal_type_list" model="ir.ui.view">
+        <field name="name">estate.animal.type.list</field>
+        <field name="model">estate.animal.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_animal_type_form" model="ir.ui.view">
+        <field name="name">estate.animal.type.form</field>
+        <field name="model">estate.animal.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_animal_type" model="ir.actions.act_window">
+        <field name="name">Animal Types</field>
+        <field name="res_model">estate.animal.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_animal_type"
+              name="Animal Types"
+              parent="menu_livestock_configuration_section"
+              action="action_animal_type"
+              sequence="1"/>
+
+    <!-- ================================================= -->
+    <!-- BREED -->
+    <!-- ================================================= -->
+
+    <record id="view_breed_list" model="ir.ui.view">
+        <field name="name">estate.breed.list</field>
+        <field name="model">estate.breed</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="animal_type_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_breed_form" model="ir.ui.view">
+        <field name="name">estate.breed.form</field>
+        <field name="model">estate.breed</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="animal_type_id"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_breed" model="ir.actions.act_window">
+        <field name="name">Breeds</field>
+        <field name="res_model">estate.breed</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_breed"
+              name="Breeds"
+              parent="menu_livestock_configuration_section"
+              action="action_breed"
+              sequence="2"/>
+
+    <!-- ================================================= -->
+    <!-- LIVESTOCK DISEASE -->
+    <!-- ================================================= -->
+
+    <record id="view_livestock_disease_list" model="ir.ui.view">
+        <field name="name">estate.livestock.disease.list</field>
+        <field name="model">estate.livestock.disease</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="severity"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_livestock_disease_form" model="ir.ui.view">
+        <field name="name">estate.livestock.disease.form</field>
+        <field name="model">estate.livestock.disease</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="severity"/>
+                        <field name="notes"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_livestock_disease" model="ir.actions.act_window">
+        <field name="name">Livestock Diseases</field>
+        <field name="res_model">estate.livestock.disease</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_livestock_disease"
+              name="Livestock Diseases"
+              parent="menu_livestock_configuration_section"
+              action="action_livestock_disease"
+              sequence="3"/>
+
+
+    <!-- ================= LIST VIEW ================= -->
+    <record id="view_estate_medical_treatment_list" model="ir.ui.view">
+        <field name="name">estate.medical.treatment.list</field>
+        <field name="model">estate.medical.treatment</field>
+        <field name="arch" type="xml">
+            <list string="Medical Treatments">
+                <field name="name"/>
+                <field name="treatment_type"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ================= FORM VIEW ================= -->
+    <record id="view_estate_medical_treatment_form" model="ir.ui.view">
+        <field name="name">estate.medical.treatment.form</field>
+        <field name="model">estate.medical.treatment</field>
+        <field name="arch" type="xml">
+            <form string="Medical Treatment">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="treatment_type"/>
+                        <field name="active"/>
+                    </group>
+
+                    <group>
+                        <field name="notes" placeholder="Add notes here..."/>
+                    </group>
+                </sheet>
+
+                <!-- ✅ Odoo 19 chatter -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ================= ACTION ================= -->
+    <record id="action_estate_medical_treatment" model="ir.actions.act_window">
+        <field name="name">Medical Treatments</field>
+        <field name="res_model">estate.medical.treatment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ================= MENU ================= -->
+
+    <!-- Root Menu (use existing if you already have one) -->
+
+
+    <!-- Sub Menu -->
+    <menuitem id="menu_estate_medical_treatment"
+              name="Medical Treatments"
+              parent="menu_livestock_configuration_section"
+              action="action_estate_medical_treatment"
+              sequence="4"/>
+
+
+    <menuitem id="menu_floor_configuration_section"
+              name="Floor Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="20"/>
+    <record id="view_floor_access_list" model="ir.ui.view">
+        <field name="name">estate.floor.access.list</field>
+        <field name="model">estate.floor.access</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_floor_access_form" model="ir.ui.view">
+        <field name="name">estate.floor.access.form</field>
+        <field name="model">estate.floor.access</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_floor_access" model="ir.actions.act_window">
+        <field name="name">Floor Access Types</field>
+        <field name="res_model">estate.floor.access</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_floor_access"
+              name="Floor Access Types"
+              parent="menu_floor_configuration_section"
+              action="action_floor_access"
+              sequence="1"/>
+
+
+    <menuitem id="menu_room_configuration_section"
+              name="Room Configuration"
+              parent="menu_estate_miscellaneous"
+              sequence="40"/>
+
+    <!-- ================================================= -->
+    <!-- ROOM TYPE MASTER -->
+    <!-- ================================================= -->
+
+    <record id="view_room_type_list" model="ir.ui.view">
+        <field name="name">estate.room.type.list</field>
+        <field name="model">estate.room.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_room_type_form" model="ir.ui.view">
+        <field name="name">estate.room.type.form</field>
+        <field name="model">estate.room.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_room_type" model="ir.actions.act_window">
+        <field name="name">Room Types</field>
+        <field name="res_model">estate.room.type</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_room_type"
+              name="Room Types"
+              parent="menu_room_configuration_section"
+              action="action_room_type"
+              sequence="1"/>
+
+
+    <!--                  parent="menu_estate_miscellaneous"-->
+
+
+    <!-- LIST VIEW -->
+    <record id="view_payment_method_list" model="ir.ui.view">
+        <field name="name">estate.payment.method.list</field>
+        <field name="model">estate.payment.method</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_payment_method_form" model="ir.ui.view">
+        <field name="name">estate.payment.method.form</field>
+        <field name="model">estate.payment.method</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_payment_method" model="ir.actions.act_window">
+        <field name="name">Payment Methods</field>
+        <field name="res_model">estate.payment.method</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- MENU -->
+
+
+    <!--    <record id="view_payment_type_list" model="ir.ui.view">-->
+    <!--        <field name="name">estate.payment.type.list</field>-->
+    <!--        <field name="model">estate.payment.type</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <list>-->
+    <!--                <field name="name"/>-->
+    <!--                <field name="active"/>-->
+    <!--            </list>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!--    <record id="view_payment_type_form" model="ir.ui.view">-->
+    <!--        <field name="name">estate.payment.type.form</field>-->
+    <!--        <field name="model">estate.payment.type</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form>-->
+    <!--                <sheet>-->
+    <!--                    <group>-->
+    <!--                        <field name="name"/>-->
+    <!--                        <field name="active"/>-->
+    <!--                    </group>-->
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!--    <record id="action_payment_type" model="ir.actions.act_window">-->
+    <!--        <field name="name">Payment Types</field>-->
+    <!--        <field name="res_model">estate.payment.type</field>-->
+    <!--        <field name="view_mode">list,form,pivot,graph</field>-->
+    <!--    </record>-->
+
+    <!--    <menuitem id="menu_payment_type"-->
+    <!--              name="Payment Types"-->
+    <!--              parent="menu_unit_configuration_section"-->
+    <!--              action="action_payment_type"-->
+    <!--              sequence="3"/>-->
+
+
+    <record id="view_estate_feed_list" model="ir.ui.view">
+        <field name="name">estate.feed.list</field>
+        <field name="model">estate.feed</field>
+        <field name="arch" type="xml">
+            <list string="Feeds">
+                <field name="name"/>
+                <field name="feed_type"/>
+                <field name="notes"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================= -->
+    <!-- Feed Form View -->
+    <!-- ============================= -->
+    <record id="view_estate_feed_form" model="ir.ui.view">
+        <field name="name">estate.feed.form</field>
+        <field name="model">estate.feed</field>
+        <field name="arch" type="xml">
+            <form string="Feed">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="feed_type"/>
+                        <field name="notes"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================= -->
+    <!-- Feed Action -->
+    <!-- ============================= -->
+    <record id="action_estate_feed" model="ir.actions.act_window">
+        <field name="name">Feeds</field>
+        <field name="res_model">estate.feed</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <record id="view_estate_harvest_product_list" model="ir.ui.view">
+        <field name="name">estate.harvest.product.list</field>
+        <field name="model">estate.harvest.product</field>
+        <field name="arch" type="xml">
+            <list string="Harvest Products">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="uom_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ============================= -->
+    <!-- Harvest Product Form View -->
+    <!-- ============================= -->
+    <record id="view_estate_harvest_product_form" model="ir.ui.view">
+        <field name="name">estate.harvest.product.form</field>
+        <field name="model">estate.harvest.product</field>
+        <field name="arch" type="xml">
+            <form string="Harvest Product">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="uom_id"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================= -->
+    <!-- Harvest Product Action -->
+    <!-- ============================= -->
+    <record id="action_estate_harvest_product" model="ir.actions.act_window">
+        <field name="name">Harvest Products</field>
+        <field name="res_model">estate.harvest.product</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <menuitem
+            id="menu_estate_harvest_product"
+            name="Harvest Products"
+            parent="menu_livestock_configuration_section"
+            action="action_estate_harvest_product"
+            sequence="1"/>
+
+    <!-- Feed Menu -->
+    <menuitem
+            id="menu_estate_feed"
+            name="Feeds"
+            parent="menu_livestock_configuration_section"
+            action="action_estate_feed"
+            sequence="2"/>
+
+    <record id="view_crop_name_list" model="ir.ui.view">
+        <field name="name">estate.crop.name.list</field>
+        <field name="model">estate.crop.name</field>
+        <field name="arch" type="xml">
+            <list string="Crop Names">
+                <field name="name"/>
+                <field name="variety_ids" widget="many2many_tags"/>
+                <field name="disease_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_crop_name_form" model="ir.ui.view">
+        <field name="name">estate.crop.name.form</field>
+        <field name="model">estate.crop.name</field>
+        <field name="arch" type="xml">
+            <form string="Crop Name">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="haction_open_fertilizers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="fertilizer_count" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_chemicals"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-flask">
+                            <field name="chemical_count" widget="statinfo"/>
+                        </button>
+
+
+                        <button name="haction_open_varieties"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="variety_count" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_diseases"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-bug">
+                            <field name="disease_count" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
+                    <group>
+                        <field name="name"/>
+                        <!--                        <field name="variety"/>-->
+                        <field name="code"/>
+                        <field name="cycle_type"/>
+                        <field name="irrigation_required"/>
+                        <field name="well_id" invisible="not irrigation_required"/>
+                        <field name="motor_pump_id" invisible="not irrigation_required"/>
+
+                        <field name="expected_yield"/>
+                        <field name="actual_yield"/>
+                        <field name="quality_grade"/>
+                        <field name="storage_location_id"/>
+                        <field name="disease_history"/>
+                    </group>
+                    <notebook>
+                        <page string="Related Details">
+                            <group>
+                                <field name="variety_ids"
+                                       widget="many2many_tags"
+                                       context="{'default_crop_name_id': id}"/>
+                            </group>
+                            <group>
+
+                                <field name="disease_ids"
+                                       widget="many2many_tags"
+                                       context="{'default_crop_name_id': id}"/>
+
+                            </group>
+                            <group>
+
+                                <field name="fertilizer_ids" widget="many2many_tags"
+                                       context="{'default_crop_name_id': id}"/>
+                            </group>
+                            <group>
+
+                                <field name="chemical_ids" widget="many2many_tags"
+                                       context="{'default_crop_name_id': id}"/>
+                            </group>
+
+                        </page>
+
+
+                    </notebook>
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_crop_name" model="ir.actions.act_window">
+        <field name="name">Crop Names</field>
+        <field name="res_model">estate.crop.name</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <!-- Menu Item -->
+    <menuitem id="menu_crop_name" name="Crop Name Master" parent="menu_crop_configuration" action="action_crop_name"
+              sequence="1"/>
+
+
+    <record id="view_estate_cycle_type_list" model="ir.ui.view">
+        <field name="name">estate.cycle.type.list</field>
+        <field name="model">estate.cycle.type</field>
+        <field name="arch" type="xml">
+            <list string="Cycle Types">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- =========================
+         FORM VIEW
+    ========================== -->
+    <record id="view_estate_cycle_type_form" model="ir.ui.view">
+        <field name="name">estate.cycle.type.form</field>
+        <field name="model">estate.cycle.type</field>
+        <field name="arch" type="xml">
+            <form string="Cycle Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_estate_chemical_type_list" model="ir.ui.view">
+        <field name="name">estate.chemical.type.list</field>
+        <field name="model">estate.chemical.type</field>
+        <field name="arch" type="xml">
+            <list string="Chemical Types">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- =========================
+         FORM VIEW
+    ========================== -->
+    <record id="view_estate_chemical_type_form" model="ir.ui.view">
+        <field name="name">estate.chemical.type.form</field>
+        <field name="model">estate.chemical.type</field>
+        <field name="arch" type="xml">
+            <form string="Chemical Type">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ================================================= -->
+    <!-- CYCLE TYPE ACTION + MENU -->
+    <!-- ================================================= -->
+
+    <record id="action_estate_cycle_type" model="ir.actions.act_window">
+        <field name="name">Cycle Types</field>
+        <field name="res_model">estate.cycle.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_estate_cycle_type"
+              name="Cycle Types"
+              parent="menu_farm_configuration_section"
+              action="action_estate_cycle_type"
+              sequence="10"/>
+
+
+    <!-- ================================================= -->
+    <!-- CHEMICAL TYPE ACTION + MENU -->
+    <!-- ================================================= -->
+
+    <record id="action_estate_chemical_type" model="ir.actions.act_window">
+        <field name="name">Chemical Types</field>
+        <field name="res_model">estate.chemical.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_estate_chemical_type"
+              name="Chemical Types"
+              parent="menu_farm_configuration_section"
+              action="action_estate_chemical_type"
+              sequence="11"/>
+
+
+
+
+    <!-- ================================================= -->
+<!-- ASSET TYPE VIEWS -->
+<!-- ================================================= -->
+
+<record id="view_estate_asset_type_list" model="ir.ui.view">
+    <field name="name">estate.asset.type.list</field>
+    <field name="model">estate.asset.type</field>
+    <field name="arch" type="xml">
+        <list string="Asset Types">
+            <field name="name"/>
+            <field name="code"/>
+            <field name="description"/>
+            <field name="active"/>
+        </list>
+    </field>
+</record>
+
+<record id="view_estate_asset_type_form" model="ir.ui.view">
+    <field name="name">estate.asset.type.form</field>
+    <field name="model">estate.asset.type</field>
+    <field name="arch" type="xml">
+        <form string="Asset Type">
+            <sheet>
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<!-- ACTION -->
+<record id="action_estate_asset_type" model="ir.actions.act_window">
+    <field name="name">Asset Types</field>
+    <field name="res_model">estate.asset.type</field>
+    <field name="view_mode">list,form</field>
+</record>
+
+<!-- MENU -->
+<menuitem id="menu_estate_asset_type"
+          name="Asset Types"
+          parent="menu_farm_configuration_section"
+          action="action_estate_asset_type"
+          sequence="20"/>
+
+
+    <!-- ================================================= -->
+<!-- ASSET LIST VIEW -->
+<!-- ================================================= -->
+
+<record id="view_estate_asset_list" model="ir.ui.view">
+    <field name="name">estate.asset.list</field>
+    <field name="model">estate.asset</field>
+    <field name="arch" type="xml">
+        <list string="Assets">
+            <field name="name"/>
+            <field name="code"/>
+            <field name="asset_type_id"/>
+            <field name="condition"/>
+            <field name="assigned_farm_id"/>
+            <field name="purchase_date"/>
+        </list>
+    </field>
+</record>
+
+
+<!-- ================================================= -->
+<!-- ASSET FORM VIEW -->
+<!-- ================================================= -->
+
+<record id="view_estate_asset_form" model="ir.ui.view">
+    <field name="name">estate.asset.form</field>
+    <field name="model">estate.asset</field>
+    <field name="arch" type="xml">
+        <form string="Asset">
+            <sheet>
+
+                <group>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="asset_type_id"/>
+                        <field name="asset_type"/>
+                    </group>
+
+                    <group>
+                        <field name="purchase_date"/>
+                        <field name="condition"/>
+                        <field name="assigned_farm_id"/>
+                        <field name="assigned_plot_id"/>
+                        <field name="assigned_task_id"/>
+                    </group>
+                </group>
+
+                <group string="Advanced Info">
+                    <field name="maintenance_logs"/>
+                    <field name="fuel_consumables"/>
+                    <field name="depreciation_info"/>
+                </group>
+
+            </sheet>
+
+            <chatter/>
+        </form>
+    </field>
+</record>
+
+
+<!-- ================================================= -->
+<!-- ACTION -->
+<!-- ================================================= -->
+
+<record id="action_estate_asset" model="ir.actions.act_window">
+    <field name="name">Assets</field>
+    <field name="res_model">estate.asset</field>
+    <field name="view_mode">list,form</field>
+</record>
+
+
+<!-- ================================================= -->
+<!-- MENU -->
+<!-- ================================================= -->
+
+<menuitem id="menu_estate_asset"
+          name="Assets"
+           parent="menu_farm_configuration_section"
+          action="action_estate_asset"
+          sequence="21"/>
+
+
+</odoo>

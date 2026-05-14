@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ✅ Menus -->
+    <menuitem id="custom_inventory_menu_root" name="Inventory And Warehouse"/>
+    <menuitem id="custom_inventory_menu" name="Inventory" parent="custom_inventory_menu_root"/>
+
+    <!-- ✅ list View -->
+    <record id="view_custom_inventory_list" model="ir.ui.view">
+        <field name="name">custom.inventory.list</field>
+        <field name="model">custom.inventory</field>
+        <field name="arch" type="xml">
+            <list string="Inventory Items">
+                <field name="asset_tag"/>
+                <field name="warehouse_id"/>
+
+                <field name="product_name_id"/>
+                <field name="brand_id"/>
+                <field name="model_id"/>
+                <field name="serial_no"/>
+                <field name="quantity"/>
+                <field name="location_id"/>
+                <field name="in_charge"/>
+                <field name="qr_code" widget="image" class="oe_avatar" optional="hide"/>
+
+                <field name="project_id" optional="hide"/>
+
+                <!-- ✅ NEW FIELDS -->
+                <field name="rack" optional="hide"/>
+                <field name="shelf" optional="hide"/>
+                <field name="cabinet" optional="hide"/>
+                <field name="lifecycle_state"/>
+                <button name="action_print_inventory_report"
+                        type="object"
+                        string="Print"
+                        class="btn-primary"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ✅ Form View -->
+    <record id="view_custom_inventory_form" model="ir.ui.view">
+        <field name="name">custom.inventory.form</field>
+        <field name="model">custom.inventory</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Item">
+                <header>
+                    <button name="action_print_inventory_report"
+                            type="object"
+                            string="Print"
+                            class="btn-primary"
+                            icon="fa-print"/>
+                </header>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_maintenance"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-wrench">
+                            <field name="maintenance_count"
+                                   widget="statinfo"
+                                   string="Maintenance"/>
+                        </button>
+                        <button name="action_view_sub_assets"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-sitemap">
+
+                            <field name="sub_asset_count"
+                                   widget="statinfo"
+                                   string="Sub Assets"/>
+
+                        </button>
+                    </div>
+                    <group>
+                        <!-- Row 1: Three columns -->
+                        <group col="2">
+                            <!-- Column 1 -->
+                            <group string="Asset Details">
+                                <field name="warehouse_id" options="{'no_create': True}"/>
+                                <field name="asset_type_id"/>
+                                <field name="asset_category_id"/>
+                                <field name="lifecycle_state"/>
+                            </group>
+
+                            <!-- Column 2 -->
+                            <group string="Product Details">
+                                <field name="product_name_id"/>
+                                <field name="brand_id"/>
+                                <field name="model_id"/>
+                                <field name="part_number"/>
+                                <field name="serial_no"/>
+                                <field name="quantity"/>
+                                <field name="part"/>
+                            </group>
+                        </group>
+
+                        <!-- Column 3 -->
+                        <group string="Dates">
+                            <field name="purchase_date"/>
+                            <field name="manufacture_date"/>
+                            <field name="warranty_start"/>
+                            <field name="warranty_end"/>
+                            <field name="expiry_date"/>
+                            <field name="awb_or_bill_no"/>
+                        </group>
+
+                        <group string="Asset Tag">
+                            <field name="asset_tag" readonly="1"/>
+                            <field name="qr_code" widget="image"/>
+                            <field name="is_trackable" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Asset Hierarchy">
+
+                            <field name="parent_asset_id"/>
+
+                            <field name="sub_asset_ids" widget="many2many_tags"
+                                   options="{'no_create': True}"/>
+
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Responsible People &amp; Locations" invisible="not is_trackable">
+                            <group>
+                                <!-- Column 1 -->
+                                <group>
+                                    <group string="Asset Owner">
+                                        <field name="asset_owner"/>
+                                    </group>
+                                    <group string="Asset Incharge">
+                                        <field name="in_charge"/>
+                                    </group>
+                                </group>
+
+                                <!-- Column 2 -->
+                                <group string="Location">
+                                    <field name="property_id"/>
+                                    <field name="building_id"/>
+                                    <field name="unit_id"/>
+
+                                    <field name="floor_id"/>
+                                    <field name="room_id"/>
+                                    <field name="rack"/>
+                                    <field name="shelf"/>
+                                    <field name="cabinet"/>
+                                    <field name="project_id"/>
+
+                                    <!-- ✅ NEW FIELDS -->
+
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Maintenance History" invisible="not is_trackable">
+                            <field name="maintenance_ids">
+                                <list editable="bottom">
+                                    <field name="date"/>
+                                    <field name="maintenance_type"/>
+                                    <field name="description"/>
+                                    <field name="technician"/>
+                                    <field name="cost"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_custom_inventory_pivot" model="ir.ui.view">
+        <field name="name">custom.inventory.pivot</field>
+        <field name="model">custom.inventory</field>
+        <field name="arch" type="xml">
+            <pivot string="Inventory Analysis">
+
+                <!-- 🔥 DO NOT ADD id (you learned this already) -->
+
+                <!-- Rows -->
+                <field name="warehouse_id" type="row"/>
+                <field name="asset_type_id" type="row"/>
+                <field name="asset_category_id" type="row"/>
+
+                <!-- Columns -->
+                <field name="lifecycle_state" type="col"/>
+
+            </pivot>
+        </field>
+    </record>
+    <record id="view_custom_inventory_graph" model="ir.ui.view">
+        <field name="name">custom.inventory.graph</field>
+        <field name="model">custom.inventory</field>
+        <field name="arch" type="xml">
+            <graph string="Inventory Overview" type="bar">
+
+                <field name="warehouse_id"/>
+                <field name="id" type="measure"/>
+
+            </graph>
+        </field>
+    </record>
+    <record id="view_inventory_model_form" model="ir.ui.view">
+        <field name="name">inventory.model.form</field>
+        <field name="model">inventory.model</field>
+        <field name="arch" type="xml">
+            <form string="Inventory Model">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="product_name_id"/>
+                        <field name="brand_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_inventory_model_list" model="ir.ui.view">
+        <field name="name">inventory.model.list</field>
+        <field name="model">inventory.model</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="product_name_id"/>
+                <field name="brand_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_inventory_model_pivot" model="ir.ui.view">
+        <field name="name">inventory.model.pivot</field>
+        <field name="model">inventory.model</field>
+        <field name="arch" type="xml">
+            <pivot string="Inventory Model Analysis">
+
+                <!-- ❌ NO measure (let Odoo use count) -->
+
+                <!-- Rows -->
+                <field name="product_name_id" type="row"/>
+                <field name="brand_id" type="row"/>
+
+                <!-- Columns -->
+                <field name="warehouse_id" type="col"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_inventory_model_graph" model="ir.ui.view">
+        <field name="name">inventory.model.graph</field>
+        <field name="model">inventory.model</field>
+        <field name="arch" type="xml">
+            <graph string="Model Distribution" type="bar">
+
+                <field name="product_name_id"/>
+                <field name="id" type="measure"/>
+
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_inventory_model" model="ir.actions.act_window">
+        <field name="name">Inventory Models</field>
+        <field name="res_model">inventory.model</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <!-- ✅ Actions -->
+    <record id="action_custom_inventory" model="ir.actions.act_window">
+        <field name="name">Inventory</field>
+        <field name="res_model">custom.inventory</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <!-- ✅ Menu Items -->
+    <menuitem id="custom_inventory_menu_items"
+              name="Items"
+              parent="custom_inventory_menu"
+              action="action_custom_inventory"/>
+    <menuitem id="menu_inventory_model_1"
+              name="Model Mappings"
+              parent="custom_inventory_menu"
+              action="action_inventory_model"
+              groups="base.group_system,custom_inventory.group_warehouse_manager"
+    />
+
+    <record id="paperformat_inventory_24mm" model="report.paperformat">
+        <field name="name">Inventory 24mm Label</field>
+        <field name="default" eval="False"/>
+        <field name="format">custom</field>
+        <!--        <field name="page_height">24</field>-->
+        <!--        <field name="page_width">35</field>-->
+        <field name="page_height">40</field>
+        <field name="page_width">35</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">300</field>
+    </record>
+
+    <!-- ===================================================== -->
+    <!-- PROFESSIONAL INVENTORY REPORT ACTION -->
+    <!-- ===================================================== -->
+    <record id="action_report_custom_inventory" model="ir.actions.report">
+        <field name="name">Inventory Asset Report</field>
+        <field name="model">custom.inventory</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_inventory.report_custom_inventory_template</field>
+        <field name="report_file">custom_inventory.report_custom_inventory_template</field>
+        <field name="binding_model_id" ref="model_custom_inventory"/>
+        <field name="binding_type">report</field>
+        <!--        <field name="print_report_name">'Inventory - %s' % (object.asset_tag or '')</field>-->
+        <field name="paperformat_id" ref="custom_inventory.paperformat_inventory_24mm"/>
+    </record>
+
+
+    <!--     ===================================================== -->
+    <!--     PROFESSIONAL INVENTORY REPORT TEMPLATE -->
+    <!--     ===================================================== -->
+    <!--    <template id="report_custom_inventory_template"-->
+    <!--              t-name="custom_inventory.report_custom_inventory_template">-->
+
+    <!--        <t t-call="web.basic_layout">-->
+    <!--            <t t-foreach="docs" t-as="o">-->
+    <!--                <div class="page"-->
+    <!--                     style="-->
+    <!--        text-align:center;-->
+    <!--        padding:10px;-->
+    <!--     ">-->
+    <!--                    <div style="-->
+    <!--        font-size:15px;-->
+    <!--        font-weight:900;-->
+    <!--        margin-bottom:1px;-->
+    <!--        letter-spacing:0.5px;-->
+    <!--    ">-->
+    <!--                        <b>ASSET TAG :</b>-->
+    <!--                    </div>-->
+
+    <!--                    &lt;!&ndash; ASSET TAG &ndash;&gt;-->
+    <!--                    <div style="-->
+    <!--        font-size:15px;-->
+    <!--        font-weight:bold;-->
+    <!--        margin-bottom:5px;-->
+    <!--        word-break:break-all;-->
+    <!--    ">-->
+    <!--                        <span t-field="o.asset_tag"/>-->
+    <!--                    </div>-->
+
+    <!--                    &lt;!&ndash; SMALL QR &ndash;&gt;-->
+    <!--                    <div>-->
+    <!--                        <img t-if="o.qr_code"-->
+    <!--                             t-att-src="'data:image/png;base64,%s' % (o.qr_code.decode() if isinstance(o.qr_code, bytes) else o.qr_code)"-->
+    <!--                             style="display:block; margin:auto;"/>-->
+    <!--                    </div>-->
+
+    <!--                </div>-->
+    <!--            </t>-->
+    <!--        </t>-->
+    <!--    </template>-->
+    <!--    <template id="report_custom_inventory_template"-->
+    <!--              t-name="custom_inventory.report_custom_inventory_template">-->
+
+    <!--        <t t-call="web.html_container">-->
+
+    <!--            <t t-foreach="docs" t-as="o">-->
+    <!--                <div style="-->
+    <!--                width:24mm;-->
+    <!--                height:24mm;-->
+    <!--                text-align:center;-->
+    <!--                padding:1mm;-->
+    <!--                box-sizing:border-box;-->
+    <!--                overflow:hidden;-->
+    <!--            ">-->
+
+    <!--                    &lt;!&ndash; ASSET TAG &ndash;&gt;-->
+    <!--                    <div style="-->
+    <!--                    font-size:5px;-->
+    <!--                    font-weight:bold;-->
+    <!--                    line-height:1;-->
+    <!--                    word-break:break-all;-->
+    <!--                    margin-bottom:0.5mm;-->
+    <!--                ">-->
+    <!--                        <span t-field="o.asset_tag"/>-->
+    <!--                    </div>-->
+
+    <!--                    &lt;!&ndash; QR &ndash;&gt;-->
+    <!--                    <img t-if="o.qr_code"-->
+    <!--                         t-att-src="'data:image/png;base64,%s' % (o.qr_code.decode() if isinstance(o.qr_code, bytes) else o.qr_code)"-->
+    <!--                         style="-->
+    <!--                        width:21mm;-->
+    <!--                        height:21mm;-->
+    <!--                        display:block;-->
+    <!--                        margin:auto;-->
+    <!--                     "/>-->
+
+    <!--                </div>-->
+    <!--            </t>-->
+
+    <!--        </t>-->
+
+    <!--    </template>-->
+    <template id="report_custom_inventory_template"
+              t-name="custom_inventory.report_custom_inventory_template">
+
+        <t t-call="web.html_container">
+
+            <!-- SINGLE PAGE -->
+            <div style="
+            width:100%;
+            page-break-after:avoid;
+            page-break-before:avoid;
+        ">
+
+                <t t-foreach="docs" t-as="o">
+
+                    <!-- EACH ITEM -->
+                    <div style="
+                    width:35mm;
+                    height:40mm;
+                    margin:5mm auto;
+                    padding:0;
+                    box-sizing:border-box;
+                    display:block;
+                ">
+
+                        <!-- ASSET TAG -->
+                        <div style="
+                        height:5mm;
+                        font-size:7px;
+                        font-weight:bold;
+                        text-align:center;
+                        margin:0;
+                        padding:0;
+                    ">
+                            <span t-field="o.asset_tag"/>
+                        </div>
+
+                        <!-- QR -->
+                        <img t-if="o.qr_code"
+                             t-att-src="'data:image/png;base64,%s' % (o.qr_code.decode() if isinstance(o.qr_code, bytes) else o.qr_code)"
+                             style="
+                            width:35mm;
+                            height:35mm;
+                            display:block;
+                            margin:0;
+                            padding:0;
+                         "/>
+
+                    </div>
+
+                </t>
+
+            </div>
+
+        </t>
+
+    </template>
+    <record id="view_users_form_inherit_warehouse" model="ir.ui.view">
+        <field name="name">res.users.form.warehouse.tab</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add new tab inside notebook -->
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Warehouses Access">
+
+                    <group>
+                        <field name="warehouse_exec_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <group>
+                        <field name="warehouse_manager_ids" widget="many2many_tags"/>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+
+</odoo>

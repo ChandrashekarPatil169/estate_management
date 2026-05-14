@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="project_project_kanban_visibility_selector" model="ir.ui.view">
+        <field name="name">project.project.kanban.visibility.selector</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project_kanban"/>
+
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[contains(@class,'o_project_kanban_body')]" position="inside">
+
+                <div class="mt-2">
+
+                    <div class="o_form_label small text-muted fw-bold">
+                        Visibility
+                    </div>
+
+                    <!-- EDITABLE dropdown -->
+                    <field name="privacy_visibility"
+                           widget="selection"
+                           class="w-100"/>
+
+                </div>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

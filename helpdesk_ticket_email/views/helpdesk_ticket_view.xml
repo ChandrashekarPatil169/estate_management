@@ -1,0 +1,59 @@
+<odoo>
+    <record id="view_helpdesk_ticket_form_inherit_submit" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.submit</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_ticket"
+                        string="Submit"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'new'"/>
+
+                <button name="action_assign_ticket"
+                        string="Assign"
+                        type="object"
+                        groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"
+                        invisible="state != 'submitted'"/>
+
+                <button name="action_resolve_ticket"
+                        string="Resolve"
+                        type="object"
+                        class="btn-warning"
+                        invisible="state != 'assigned'"/>
+
+                <button name="action_done_ticket"
+                        string="Done"
+                        type="object"
+                        class="btn-success"
+                        groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"
+                        invisible="state != 'resolved'"/>
+
+                <button name="action_cancel_ticket"
+                        string="Cancel"
+                        type="object"
+                        groups="department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"
+                        class="btn-danger"/>
+
+            </xpath>
+
+        </field>
+    </record>
+
+<!--    <record id="view_helpdesk_ticket_form_inherit_hide_stages" model="ir.ui.view">-->
+<!--        <field name="name">helpdesk.ticket.hide.stages</field>-->
+<!--        <field name="model">helpdesk.ticket</field>-->
+<!--        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            <xpath expr="//field[@name='stage_id']" position="attributes">-->
+<!--                <attribute name="statusbar_visible">-->
+<!--                    New,In Progress,Submitted,Awaiting,Resolved,Assigned-->
+<!--                </attribute>-->
+<!--            </xpath>-->
+
+<!--        </field>-->
+<!--    </record>-->
+</odoo>

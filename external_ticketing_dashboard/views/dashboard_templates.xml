@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Placeholder template — dashboard is rendered entirely client-side via OWL -->
+    <template id="ext_ticketing_dashboard_main" name="External Ticketing Dashboard">
+    </template>
+</odoo>

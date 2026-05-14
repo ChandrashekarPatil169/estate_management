@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list View -->
+    <record id="view_inventory_model_master_list" model="ir.ui.view">
+        <field name="name">inventory.model.master.list</field>
+        <field name="model">inventory.model.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="model_id"/>
+                <field name="warehouse_id"/>
+                <field name="asset_type_id"/>
+                <field name="asset_category_id"/>
+                <field name="product_name_id"/>
+                <field name="brand_id"/>
+                <!--                <field name="total_serial_count" string="Total Serials"/>-->
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_inventory_model_master_form" model="ir.ui.view">
+        <field name="name">inventory.model.master.form</field>
+        <field name="model">inventory.model.master</field>
+        <field name="arch" type="xml">
+            <form string="Model Master">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="model_id"/>
+                            <field name="warehouse_id" options="{'no_create': True}"/>
+                            <field name="asset_type_id" domain="[('id', 'in', allowed_asset_type_ids)]"/>
+                            <field name="asset_category_id" domain="[('id', 'in', allowed_asset_category_ids)]"/>
+                            <field name="product_name_id" domain="[('id', 'in', allowed_product_ids)]"/>
+                        </group>
+                        <group>
+                            <field name="brand_id" domain="[('id', 'in', allowed_brand_ids)]"/>
+                            <field name="total_count" readonly="1"/>
+                            <field name="inventory_product_count" readonly="1"/>
+                            <field name="deployed_count" readonly="1"/>
+                            <field name="service_count" readonly="1"/>
+                            <field name="retired_count" readonly="1"/>
+                            <field name="disposed_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Total Products">
+                            <field name="inventory_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id,
+           'default_model_id': model_id
+       }">
+                                <list>
+                                    <field name="serial_no"/>
+
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Inventory product">
+                            <field name="inventory_product_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_model_id': model_id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id,
+           'default_asset_owner': False
+       }">
+                                <list>
+                                    <field name="serial_no"/>
+
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Deployed product">
+                            <field name="inventory_deployed_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_model_id': model_id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id
+       }">
+                                <list>
+                                    <field name="serial_no"/>
+
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Service and Repair">
+                            <field name="inventory_service_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id,
+           'default_model_id': model_id
+       }">
+                                <list editable="bottom">
+                                    <field name="serial_no"/>
+
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Retired">
+                            <field name="inventory_retired_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id,
+           'default_model_id': model_id
+       }">
+                                <list editable="bottom">
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="serial_no"/>
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Disposed">
+                            <field name="inventory_disposed_ids" context="{
+           'default_model_master_ref_id': id,
+           'default_asset_type_id': asset_type_id,
+           'default_asset_category_id': asset_category_id,
+           'default_product_name_id': product_name_id,
+           'default_brand_id': brand_id,
+           'default_model_id': model_id
+       }">
+                                <list editable="bottom">
+                                    <field name="asset_type_id"/>
+                                    <field name="asset_category_id"/>
+                                    <field name="product_name_id"/>
+                                    <field name="brand_id"/>
+                                    <field name="model_id"/>
+
+                                    <field name="serial_no"/>
+                                    <field name="location_id"/>
+                                    <field name="in_charge"/>
+                                    <field name="lifecycle_state"/>
+                                    <field name="quantity"/>
+                                    <field name="floor_id"/>
+                                    <field name="building_id"/>
+                                    <field name="property_id"/>
+                                    <field name="unit_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_inventory_model_master_pivot" model="ir.ui.view">
+        <field name="name">inventory.model.master.pivot</field>
+        <field name="model">inventory.model.master</field>
+        <field name="arch" type="xml">
+            <pivot string="Model Master Analysis">
+
+                <!-- 🔥 REAL MEASURES -->
+                <field name="total_count" type="measure"/>
+                <field name="deployed_count" type="measure"/>
+                <field name="inventory_product_count" type="measure"/>
+                <field name="service_count" type="measure"/>
+
+                <!-- Group -->
+                <field name="model_id" type="row"/>
+                <field name="brand_id" type="row"/>
+
+                <!-- Optional -->
+                <field name="asset_category_id" type="col"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_inventory_model_master_graph" model="ir.ui.view">
+        <field name="name">inventory.model.master.graph</field>
+        <field name="model">inventory.model.master</field>
+        <field name="arch" type="xml">
+            <graph string="Inventory Counts" type="bar">
+
+                <field name="model_id"/>
+                <field name="total_count" type="measure"/>
+
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_inventory_maintenance_list" model="ir.ui.view">
+        <field name="name">inventory.maintenance.list</field>
+        <field name="model">inventory.maintenance</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="inventory_id" string="Asset Tag"/>
+                <field name="maintenance_type"/>
+                <field name="date"/>
+                <field name="deadline_date"/>
+                <field name="maintenance_category_id"/>
+                <field name="sent_to_vendor"/>
+                <field name="technician"/>
+                <field name="cost"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_inventory_maintenance_form" model="ir.ui.view">
+        <field name="name">inventory.maintenance.form</field>
+        <field name="model">inventory.maintenance</field>
+        <field name="arch" type="xml">
+            <form string="Maintenance History">
+                <sheet>
+
+                    <!-- TOP SECTION -->
+                    <group>
+                        <group>
+                            <field name="inventory_id" string="Asset Tag"/>
+                            <field name="maintenance_type"/>
+                            <field name="maintenance_category_id"/>
+                            <field name="date"/>
+                        </group>
+
+                        <group>
+                            <field name="technician"/>
+                            <field name="cost"/>
+                            <field name="deadline_date"/>
+                            <field name="sent_to_vendor"/>
+                        </group>
+                    </group>
+
+                    <!-- DESCRIPTION -->
+                    <group string="Description">
+                        <field name="description"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_inventory_maintenance_pivot" model="ir.ui.view">
+        <field name="name">inventory.maintenance.pivot</field>
+        <field name="model">inventory.maintenance</field>
+        <field name="arch" type="xml">
+            <pivot string="Maintenance Analysis">
+
+                <!-- Measures -->
+                <field name="id" type="measure"/>
+                <field name="cost" type="measure"/>
+
+                <!-- Rows -->
+                <field name="maintenance_type" type="row"/>
+                <field name="maintenance_category_id" type="row"/>
+
+                <!-- Columns -->
+                <field name="technician" type="col"/>
+                <field name="sent_to_vendor" type="col"/>
+
+                <!-- Time -->
+                <field name="date" interval="month" type="col"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_inventory_maintenance_graph" model="ir.ui.view">
+        <field name="name">inventory.maintenance.graph</field>
+        <field name="model">inventory.maintenance</field>
+        <field name="arch" type="xml">
+            <graph string="Maintenance Cost" type="bar">
+
+                <field name="maintenance_type"/>
+                <field name="cost" type="measure"/>
+
+            </graph>
+        </field>
+    </record>
+
+
+    <record id="action_maintenance_category" model="ir.actions.act_window">
+        <field name="name">Maintenance Categories</field>
+        <field name="res_model">maintenance.category</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem id="menu_maintenance_category"
+              name="Maintenance Categories"
+              parent="menu_inventory_misc_root"
+              action="action_maintenance_category"/>
+
+
+    <!-- Action -->
+    <record id="action_inventory_model_master" model="ir.actions.act_window">
+        <field name="name">Model Master</field>
+        <field name="res_model">inventory.model.master</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- Menu -->
+    <menuitem id="menu_inventory_model_master"
+              name="Model Master"
+              parent="custom_inventory_menu"
+              action="action_inventory_model_master"
+              sequence="50"/>
+
+
+    <!-- LIST VIEW -->
+    <record id="view_inventory_warehouse_list" model="ir.ui.view">
+        <field name="name">inventory.warehouse.list</field>
+        <field name="model">inventory.warehouse</field>
+        <field name="arch" type="xml">
+            <list string="Warehouses">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="create_uid"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_inventory_warehouse_form" model="ir.ui.view">
+        <field name="name">inventory.warehouse.form</field>
+        <field name="model">inventory.warehouse</field>
+        <field name="arch" type="xml">
+            <form string="Warehouse">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+
+                <!-- CHATTER -->
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_inventory_warehouse_pivot" model="ir.ui.view">
+        <field name="name">inventory.warehouse.pivot</field>
+        <field name="model">inventory.warehouse</field>
+        <field name="arch" type="xml">
+            <pivot string="Warehouse Analysis">
+
+                <!--                <field name="id" type="measure"/>-->
+
+                <field name="name" type="row"/>
+                <field name="record_count" type="measure"/>
+                <field name="create_uid" type="col"/>
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_inventory_warehouse_graph" model="ir.ui.view">
+        <field name="name">inventory.warehouse.graph</field>
+        <field name="model">inventory.warehouse</field>
+        <field name="arch" type="xml">
+            <graph string="Warehouse Overview" type="bar">
+
+                <!--                <field name="name"/>-->
+                <field name="create_uid"/>
+                <field name="id" type="measure"/>
+                <field name="record_count" type="measure"/>
+
+            </graph>
+        </field>
+    </record>
+    <!-- ACTION -->
+    <record id="action_inventory_warehouse" model="ir.actions.act_window">
+        <field name="name">Warehouses</field>
+        <field name="res_model">inventory.warehouse</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <menuitem id="menu_inventory_warehouse"
+              name="Warehouses"
+              parent="custom_inventory_menu"
+              action="action_inventory_warehouse"
+              groups="custom_inventory.group_warehouse_manager,base.group_system"
+              sequence="20"/>
+
+
+</odoo>

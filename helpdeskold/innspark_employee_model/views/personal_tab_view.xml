@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="move_personal_tab_first"
+                model="ir.ui.view">
+            <field name="name">hr.employee.move.personal.first</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <!-- Step 1: Copy Personal tab before Work -->
+                <xpath expr="//notebook/page[@name='work_information']"
+                       position="before">
+                    <xpath expr="//notebook/page[@name='personal_information']"
+                           position="replace"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

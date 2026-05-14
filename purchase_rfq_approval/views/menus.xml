@@ -1,0 +1,13 @@
+<odoo>
+    <menuitem id="menu_purchase_approval_root"
+              name="Purchase Approvals"
+              parent="purchase.menu_purchase_root"
+              sequence="60"
+              groups="purchase.group_purchase_manager"/>
+
+    <menuitem id="menu_purchase_approval_team"
+              name="Approval Teams"
+              parent="menu_purchase_approval_root"
+              action="action_purchase_approval_team"
+              groups="purchase.group_purchase_manager"/>
+</odoo>

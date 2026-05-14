@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_form_inherit_development"
+            model="ir.ui.view">
+
+        <field name="name">hr.employee.form.development</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='social_media']"
+                   position="after">
+
+                <page string="Development">
+
+                    <group string="Training Programs Attended">
+                        <field name="training_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="provider"/>
+                                <field name="date"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group string="Languages Known">
+                        <field name="language_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="proficiency"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group string="Licences / Permits">
+                        <field name="licence_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="expiry_date"/>
+                            </list>
+                        </field>
+                    </group>
+
+                    <group string="Promotions and Transfers">
+                        <field name="promotion_ids">
+                            <list editable="bottom">
+                                <field name="position"/>
+                                <field name="department"/>
+                                <field name="effective_date"/>
+                            </list>
+                        </field>
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
