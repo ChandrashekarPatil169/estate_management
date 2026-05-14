@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_employee_report_list" model="ir.ui.view">
+        <field name="name">employee.report.list</field>
+        <field name="model">employee.report</field>
+        <field name="arch" type="xml">
+            <list>
+                <!--                <field name="name"/>-->
+                <field name="employee_id"/>
+                <field name="date"/>
+                <field name="rating" widget="priority"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_employee_report_form" model="ir.ui.view">
+        <field name="name">employee.report.form</field>
+        <field name="model">employee.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="employee_id"/>
+                        <field name="date"/>
+                        <field name="rating" widget="priority" />
+
+                        <field name="comments"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Window Action -->
+<!--    <record id="action_employee_report" model="ir.actions.act_window">-->
+<!--        <field name="name">Employee Reports</field>-->
+<!--        <field name="res_model">employee.report</field>-->
+<!--        <field name="view_mode">list,form</field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Menu &ndash;&gt;-->
+<!--    <menuitem id="menu_employee_report"-->
+<!--              name="Employee Rating"-->
+<!--              parent="hr.menu_hr_root"-->
+<!--              action="action_employee_report"-->
+<!--              groups="hr.group_hr_user"-->
+<!--              sequence="50"/>-->
+
+</odoo>
+
+

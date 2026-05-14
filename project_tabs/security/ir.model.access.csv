@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_project_sub,access.project.project.sub,project.model_project_project,project.group_project_user,1,1,1,1
+access_project_risk,access.project.risk,model_project_risk,base.group_user,1,1,1,0
+access_project_charter_reject_wizard,access.project.charter.reject.wizard,model_project_charter_reject_wizard,base.group_user,1,1,1,1
+
+access_charter_approval_matrix_user,charter.approval.matrix,model_charter_approval_matrix,base.group_user,1,0,0,0
+access_charter_approval_matrix_admin,charter.approval.matrix,model_charter_approval_matrix,base.group_system,1,1,1,1
+access_charter_approval_matrix_line_admin,charter.approval.matrix.line,model_charter_approval_matrix_line,base.group_system,1,1,1,1

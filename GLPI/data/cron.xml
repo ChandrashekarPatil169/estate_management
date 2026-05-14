@@ -1,0 +1,10 @@
+<odoo>
+    <record id="cron_glpi_sync" model="ir.cron">
+        <field name="name">GLPI Sync</field>
+        <field name="model_id" ref="model_custom_inventory"/>
+        <field name="state">code</field>
+        <field name="code">model.action_sync_glpi()</field>
+        <field name="interval_number">5</field>
+        <field name="interval_type">minutes</field>
+    </record>
+</odoo>

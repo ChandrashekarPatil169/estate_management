@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="project_project_form_add_pages" model="ir.ui.view">
+        <field name="name">project.project.form.add.pages</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_milestones"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-flag"
+                        string="Milestones">
+                </button>
+            </xpath>
+
+
+            <!-- Add pages into the main notebook -->
+            <xpath expr="//notebook" position="inside">
+
+                <!-- Project Charter -->
+
+                <page string="Project Charter" name="project_charter">
+                    <field name="is_charter_approver" invisible="1"/>
+
+                    <!-- STATUS BAR ONLY -->
+                    <div class="d-flex justify-content-end mb-3">
+                        <field name="charter_state"
+                               widget="statusbar"
+                               statusbar_visible="draft,pending,approved,rejected"
+                               nolabel="1"
+                               readonly="1"/>
+                    </div>
+
+
+                    <!-- Leadership -->
+                    <group col="2" readonly="charter_state == 'approved'">
+                        <field name="department_head_id"/>
+                    </group>
+
+                    <!-- Project Overview -->
+                    <separator string="Project Overview"/>
+                    <group col="2" readonly="charter_state == 'approved'">
+                        <field name="project_purpose"/>
+                        <field name="business_case"/>
+                        <field name="project_goals_metrics"/>
+                        <field name="expected_deliverables"/>
+                        <field name="project_problems_issues"/>
+                    </group>
+
+                    <!-- Project Scope -->
+                    <separator string="Project Scope"/>
+                    <group col="2">
+                        <field name="scope_in"/>
+                        <field name="scope_out"/>
+                    </group>
+
+                    <!-- Resources -->
+                    <separator string="Resources"/>
+                    <group col="2">
+                        <field name="project_team_ids" widget="many2many_tags"/>
+                        <field name="support_resources"/>
+                        <field name="special_needs"/>
+                    </group>
+
+                    <!-- Benefits & Customers -->
+                    <separator string="Benefits &amp; Customers"/>
+                    <group col="2">
+                        <field name="process_owner_ids" widget="many2many_tags"/>
+                        <field name="key_stakeholder_ids" widget="many2many_tags"/>
+                        <field name="final_customer_id"/>
+                        <field name="expected_benefits"/>
+                    </group>
+
+                    <!-- Tentative Schedule -->
+                    <separator string="Tentative Schedule"/>
+                    <group>
+                        <button name="action_view_milestones"
+                                type="object"
+                                string="View Milestones"
+                                class="btn btn-primary"
+                                icon="fa-flag"/>
+                    </group>
+
+                    <!-- Risks -->
+                    <separator string="Risks, Constraints &amp; Assumptions"/>
+                    <group col="2">
+                        <field name="project_risks"/>
+                        <field name="project_constraints"/>
+                        <field name="project_assumptions"/>
+                    </group>
+
+                    <!-- 3. Approval Buttons (Final Logic) -->
+                    <group>
+                        <!-- Shows in Draft and Rejected -->
+                        <button name="action_submit_charter"
+                                type="object"
+                                string="Submit for Approval"
+                                class="btn btn-primary"
+                                invisible="charter_state not in ['draft', 'rejected']"/>
+
+                        <!-- Shows ONLY in Pending for authorized users -->
+                        <button name="action_approve_charter"
+                                type="object"
+                                string="Approve"
+                                class="btn btn-success"
+                                invisible="charter_state != 'pending' or not is_charter_approver"/>
+
+                        <button name="action_reject_charter"
+                                type="object"
+                                string="Reject"
+                                class="btn btn-danger"
+                                invisible="charter_state != 'pending' or not is_charter_approver"/>
+                    </group>
+
+
+                    <group>
+                        <!-- Make important fields editable if rejected (remove readonly if you had it) -->
+                        <field name="project_purpose" readonly="charter_state == 'approved'"/>
+                        <field name="business_case" readonly="charter_state == 'approved'"/>
+                    </group>
+
+                    <!-- Rejection Reason Box -->
+                    <group invisible="charter_state != 'rejected'">
+                        <div class="alert alert-danger" role="alert" style="margin-bottom:0px; border:none;">
+                            <strong>Rejected!</strong>
+                            Reason:
+                            <field name="rejection_reason" readonly="1" nolabel="1" class="d-inline"/>
+                        </div>
+                    </group>
+                    <!--                    &lt;!&ndash; Rejection Reason &ndash;&gt;-->
+                    <!--                    <group invisible="charter_state != 'rejected'">-->
+                    <!--                        <separator string="Rejection Reason"/>-->
+                    <!--                        <field name="rejection_reason" readonly="1"/>-->
+                    <!--                    </group>-->
+
+                </page>
+
+
+                <!-- Stake Holders -->
+                <!-- Stakeholders Tab - Hidden Always -->
+                <!--                <page string="Stakeholders" invisible="category != 'software'">-->
+                <!--                    <group>-->
+                <!--                        <field name="description" options="{'resizable': false}" placeholder="Project description..."/>-->
+                <!--                    </group>-->
+                <!--                </page>-->
+
+                <!-- Governance -->
+                <page string="Governance">
+
+                    <!-- ========================= -->
+                    <!-- Governance Overview -->
+                    <!-- ========================= -->
+                    <group string="Governance Overview">
+                        <field name="governance_profile_name"/>
+                        <field name="governance_enabled"/>
+                        <field name="governance_scope"/>
+                        <field name="governance_description"/>
+                        <field name="effective_from"/>
+                        <field name="effective_until"/>
+                    </group>
+
+                    <!-- ========================= -->
+                    <!-- Quality Gates -->
+                    <!-- ========================= -->
+                    <separator string="Quality Gates"/>
+
+                    <group>
+
+                        <!-- Definition of Ready -->
+                        <field name="dor_required"/>
+                        <field name="dor_text"
+                               invisible="dor_required != 'yes'"
+                               required="dor_required == 'yes'"/>
+
+                        <!-- Evidence -->
+                        <field name="evidence_mandatory"/>
+                        <field name="evidence_types"
+                               invisible="evidence_mandatory != 'yes'"
+                               required="evidence_mandatory == 'yes'"/>
+
+                        <field name="dod_required"/>
+                        <field name="acceptance_authority"/>
+                    </group>
+
+                    <!-- ========================= -->
+                    <!-- SLA & Escalation -->
+                    <!-- ========================= -->
+                    <separator string="SLA &amp; Escalation"/>
+
+                    <group>
+                        <field name="sla_applicable"/>
+                        <field name="sla_due_date_mandatory"
+                               invisible="not sla_applicable"/>
+
+                        <field name="sla_priority"
+                               invisible="not sla_applicable"/>
+
+                        <field name="sla_breach_allowed"/>
+                        <field name="escalation_trigger"/>
+                        <field name="escalation_delay"/>
+                    </group>
+
+                    <group string="Escalation Owners">
+                        <field name="escalation_l1" widget="many2many_tags"/>
+                        <field name="escalation_l2" widget="many2many_tags"/>
+                        <field name="escalation_l3" widget="many2many_tags"/>
+
+                    </group>
+
+                    <group string="Project Governance">
+                        <field name="project_approver_ids" widget="many2many_tags"/>
+                        <field name="approved_by_id" readonly="1"/>
+                        <field name="evidence_required"/>
+                        <field name="is_project_done" invisible="1"/>
+
+                        <!-- Odoo 19 uses direct field names for visibility -->
+                        <button name="action_approve_project"
+                                type="object"
+                                string="Approve Project &amp; Mark Done"
+                                class="btn-primary"
+                                invisible="is_project_done"/>
+                    </group>
+
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="project_project_form_add_smart_buttons" model="ir.ui.view">
+        <field name="name">project.project.form.smart.buttons</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+
+            <!-- Smart buttons box -->
+            <xpath expr="//div[@name='button_box']" position="inside">
+
+                <!-- Calendar Meetings -->
+                <button
+                        name="action_view_project_meetings"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-calendar">
+
+                    <field name="calendar_event_count"
+                           widget="statinfo"
+                           string="Meetings"/>
+                </button>
+
+                <!-- Documents -->
+                <button
+                        name="action_view_project_documents"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-folder">
+
+                    <field name="document_count"
+                           widget="statinfo"
+                           string="Documents"/>
+                </button>
+
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_project_charter_reject_wizard_form" model="ir.ui.view">
+        <field name="name">project.charter.reject.wizard.form</field>
+        <field name="model">project.charter.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="project_id" readonly="1"/>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button name="action_confirm_reject"
+                            type="object"
+                            string="Reject"
+                            class="btn btn-danger"/>
+                    <button string="Cancel"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+<record id="view_project_kanban_milestone_dropdown" model="ir.ui.view">
+    <field name="name">project.project.kanban.dropdown.milestone</field>
+    <field name="model">project.project</field>
+    <field name="inherit_id" ref="project.view_project_kanban"/>
+    <field name="arch" type="xml">
+        <!-- Add the field to the template context first -->
+        <xpath expr="//templates" position="before">
+            <field name="allow_milestones"/>
+        </xpath>
+
+        <!-- Use the name attribute 'card_menu_view' for the View section -->
+        <xpath expr="//div[@name='card_menu_view']" position="inside">
+            <div role="menuitem" >
+                <a type="object" name="action_view_milestones">Milestones</a>
+            </div>
+        </xpath>
+    </field>
+</record>
+
+</odoo>

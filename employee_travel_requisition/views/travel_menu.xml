@@ -1,0 +1,243 @@
+<odoo>
+
+    <menuitem id="menu_travel_root"
+              name="Travel"
+              sequence="10"
+              groups="employee_travel_requisition.group_travel_user"/>
+    <!--              groups="employee_travel_requisition.group_travel_user,employee_travel_requisition.group_travel_manager,employee_travel_requisition.group_travel_hr,employee_travel_requisition.group_travel_officer"/>-->
+
+    <menuitem id="menu_travel_request"
+              name="Travel Requests"
+              parent="menu_travel_root"
+              sequence="1"/>
+
+    <!-- ✅ ONLY OFFICER -->
+    <menuitem id="menu_travel_configuration_officer"
+              name="Configuration"
+              parent="menu_travel_root"
+              groups="employee_travel_requisition.group_travel_officer"
+              sequence="100"/>
+
+    <menuitem id="menu_employee_travel_requests"
+              name="Employee Travel Requests"
+              parent="menu_travel_request"
+              action="employee_travel_requisition.action_employee_travel_requests"
+              groups="employee_travel_requisition.group_travel_user"/>
+
+    <menuitem id="menu_travel_requests_to_approve"
+              name="Travel Requests To Approve"
+              parent="menu_travel_request"
+              action="employee_travel_requisition.action_travel_requests_to_approve"
+              groups="employee_travel_requisition.group_travel_manager"/>
+
+    <!-- ✅ ALL CONFIG CHILDREN → ONLY OFFICER -->
+    <menuitem id="menu_travel_expense_type"
+              parent="menu_travel_configuration_officer"
+              action="action_travel_expense_type"
+              groups="employee_travel_requisition.group_travel_officer"/>
+
+    <menuitem id="menu_travel_mode"
+              parent="menu_travel_configuration_officer"
+              action="action_travel_mode"
+              groups="employee_travel_requisition.group_travel_officer"/>
+
+    <menuitem id="menu_travel_status"
+              parent="menu_travel_configuration_officer"
+              action="action_travel_status"
+              groups="employee_travel_requisition.group_travel_officer"/>
+
+    <menuitem id="menu_travel_nature"
+              parent="menu_travel_configuration_officer"
+              action="action_travel_purpose"
+              groups="employee_travel_requisition.group_travel_officer"/>
+
+    <menuitem id="menu_travel_expense_account"
+              name="Expense Accounts"
+              parent="menu_travel_configuration_officer"
+              action="employee_travel_requisition.action_travel_expense_account"
+              groups="employee_travel_requisition.group_travel_officer"
+              sequence="50"/>
+
+    <!--    <menuitem id="menu_travel_analytic_account"-->
+    <!--          name="Analytic Accounts"-->
+    <!--          parent="menu_travel_configuration_officer"-->
+    <!--          action="employee_travel_requisition.action_travel_analytic_account"-->
+    <!--          groups="employee_travel_requisition.group_travel_officer"-->
+    <!--          sequence="50"/>-->
+
+
+</odoo>
+
+
+        <!--<odoo>-->
+
+        <!--    <menuitem id="menu_travel_root"-->
+        <!--              name="Travel"-->
+        <!--              sequence="10"-->
+        <!--              groups="employee_travel_requisition.group_travel_user,employee_travel_requisition.group_travel_manager,employee_travel_requisition.group_travel_hr,employee_travel_requisition.group_travel_officer"/>-->
+        <!--    <menuitem id="menu_travel_request"-->
+        <!--              name="Travel Requests"-->
+        <!--              parent="menu_travel_root"-->
+        <!--              sequence="1"/>-->
+        <!--    &lt;!&ndash;              action="action_travel_request"/>&ndash;&gt;-->
+
+        <!--    <menuitem id="menu_travel_configuration"-->
+        <!--              name="Configuration"-->
+        <!--              parent="menu_travel_root"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"-->
+        <!--              sequence="100"/>-->
+
+
+        <!--    <menuitem id="menu_employee_travel_requests"-->
+        <!--              name="Employee Travel Requests"-->
+        <!--              parent="menu_travel_request"-->
+        <!--              action="employee_travel_requisition.action_employee_travel_requests"-->
+        <!--              groups="employee_travel_requisition.group_travel_user"/>-->
+
+
+        <!--    <menuitem id="menu_travel_requests_to_approve"-->
+        <!--              name="Travel Requests To Approve"-->
+        <!--              parent="menu_travel_request"-->
+        <!--              action="employee_travel_requisition.action_travel_requests_to_approve"-->
+        <!--              groups="employee_travel_requisition.group_travel_manager"/>-->
+
+
+        <!--    &lt;!&ndash; Override Configuration menu &ndash;&gt;-->
+        <!--    <menuitem id="menu_travel_configuration"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"/>-->
+
+        <!--    &lt;!&ndash; Override children &ndash;&gt;-->
+        <!--    <menuitem id="menu_travel_expense_type"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"/>-->
+
+        <!--    <menuitem id="menu_travel_mode"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"/>-->
+
+        <!--    <menuitem id="menu_travel_status"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"/>-->
+
+        <!--    <menuitem id="menu_travel_nature"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"/>-->
+
+
+        <!--    &lt;!&ndash;    expenses type master menu&ndash;&gt;-->
+
+        <!--    <menuitem id="menu_travel_expense_type"-->
+        <!--              name="Expense Types"-->
+        <!--              parent="menu_travel_configuration"-->
+        <!--              action="action_travel_expense_type"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"-->
+        <!--              sequence="10"/>-->
+
+        <!--    <menuitem id="menu_travel_mode"-->
+        <!--              name="Travel Modes"-->
+        <!--              parent="menu_travel_configuration"-->
+        <!--              action="action_travel_mode"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"-->
+        <!--              sequence="20"/>-->
+
+        <!--    <menuitem id="menu_travel_status"-->
+        <!--              name="Status"-->
+        <!--              parent="menu_travel_configuration"-->
+        <!--              action="action_travel_status"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"-->
+        <!--              sequence="30"/>-->
+
+        <!--    <menuitem id="menu_travel_nature"-->
+        <!--              name="Purpose of Visit"-->
+        <!--              parent="menu_travel_configuration"-->
+        <!--              action="action_travel_purpose"-->
+        <!--              groups="employee_travel_requisition.group_travel_officer"-->
+        <!--              sequence="40"/>-->
+
+
+        <!--    &lt;!&ndash;    <menuitem id="menu_travel_expense_type"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              name="Expense Types"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              action="action_travel_expense_type"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              sequence="10"/>&ndash;&gt;-->
+
+        <!--    &lt;!&ndash;    <menuitem id="menu_travel_mode"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              name="Travel Modes"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              action="action_travel_mode"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              sequence="20"/>&ndash;&gt;-->
+
+        <!--    &lt;!&ndash;    <menuitem id="menu_travel_status"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              name="Status"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              action="action_travel_status"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              sequence="30"/>&ndash;&gt;-->
+
+        <!--    &lt;!&ndash;    <menuitem id="menu_travel_nature"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              name="Purpose of Visit"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              action="action_travel_purpose"&ndash;&gt;-->
+        <!--    &lt;!&ndash;              sequence="40"/>&ndash;&gt;-->
+
+
+        <!--</odoo>-->
+
+
+        <!--        &lt;!&ndash;<odoo>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_root"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Travel"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="10"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              groups="employee_travel_requisition.group_travel_user,employee_travel_requisition.group_travel_officer"/>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_request"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Travel Requests"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_root"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="1"/>&ndash;&gt;-->
+        <!--        &lt;!&ndash;    &lt;!&ndash;              action="action_travel_request"/>&ndash;&gt;&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_root"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              groups="employee_travel_requisition.group_travel_user,employee_travel_requisition.group_travel_officer"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="100"/>&ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_employee_travel_requests"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Employee Travel Requests"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_request"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="employee_travel_requisition.action_employee_travel_requests"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              groups="employee_travel_requisition.group_travel_user"/>&ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_requests_to_approve"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Travel Requests To Approve"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_request"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="employee_travel_requisition.action_travel_requests_to_approve"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              groups="employee_travel_requisition.group_travel_officer"/>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    &lt;!&ndash;    expenses type master menu&ndash;&gt;&ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_expense_type"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Expense Types"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="action_travel_expense_type"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="10"/>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_mode"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Travel Modes"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="action_travel_mode"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="20"/>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_status"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Status"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="action_travel_status"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="30"/>&ndash;&gt;-->
+
+        <!--        &lt;!&ndash;    <menuitem id="menu_travel_nature"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              name="Purpose of Visit"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              parent="menu_travel_configuration"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              action="action_travel_purpose"&ndash;&gt;-->
+        <!--        &lt;!&ndash;              sequence="40"/>&ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash;</odoo>&ndash;&gt;-->

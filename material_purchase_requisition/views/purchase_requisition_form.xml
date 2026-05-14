@@ -1,0 +1,212 @@
+<odoo>
+    <record id="view_pr_form" model="ir.ui.view">
+        <field name="name">material.purchase.requisition.form</field>
+        <field name="model">material.purchase.requisition</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <header>
+
+
+                    <!-- Submit: only in draft -->
+                    <button name="action_submit"
+                            type="object"
+                            string="Submit"
+                            invisible="state != 'draft'"/>
+
+                    <!--                    &lt;!&ndash; Approve: only current approver &ndash;&gt;-->
+                    <!--                    <button name="action_approve"-->
+                    <!--                            type="object"-->
+                    <!--                            string="Approve"-->
+                    <!--                            invisible="state != 'pending' or current_approver_id != uid"/>-->
+
+                    <!--                    &lt;!&ndash; Reject: only current approver &ndash;&gt;-->
+                    <!--                    <button name="action_reject"-->
+                    <!--                            type="object"-->
+                    <!--                            string="Reject"-->
+                    <!--                            invisible="state != 'pending' or (current_approver_id != uid and not user_has_group('base.group_system'))"/>-->
+                    <!--                    -->
+                    <!-- NORMAL APPROVER -->
+                    <!-- APPROVE -->
+                    <button name="action_approve"
+                            type="object"
+                            string="Approve"
+                            class="btn-primary"
+                            invisible="state != 'pending' or (current_approver_id != uid and not is_admin)"/>
+
+                    <!-- REJECT -->
+                    <button name="action_reject"
+                            type="object"
+                            string="Reject"
+                            class="btn-danger"
+                            invisible="state != 'pending' or (current_approver_id != uid and not is_admin)"/>
+
+
+                    <button name="action_create_rfq"
+                            type="object"
+                            string="Create RFQ"
+                            invisible="state != 'approved' or rfq_created"/>
+                    <!-- VIEW RFQs -->
+                    <button name="action_view_rfqs"
+                            type="object"
+                            string="View RFQs"
+                            class="btn-secondary"
+
+                            invisible="state != 'approved'"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="employee_id" readonly="state != 'draft'" widget="many2one_avatar_user"/>
+                        <field name="department_id" readonly="state != 'draft'"/>
+
+                        <field name="required_date"/>
+                        <field name="budget_code"/>
+                        <!--                        <field name="cost_center_id" required="1"/>-->
+
+
+                        <field name="reason_for_requisition"/>
+                        <field name="total_amount"/>
+                    </group>
+                    <group string="Approval Information" invisible="state == 'draft'">
+                        <field name="current_approver_id" readonly="1"/>
+                        <field name="approval_level" readonly="1"/>
+                    </group>
+                    <group string="Procurement Traceability" invisible="not rfq_created">
+                        <field name="rfq_created" readonly="1"/>
+                        <field name="purchase_order_ids" readonly="1"/>
+                        <field name="final_po_id" readonly="1"/>
+                        <field name="attachment_count" readonly="1"/>
+
+                    </group>
+                    <group string="Supporting Documents">
+                        <field name="attachment_ids"
+                               widget="many2many_binary"
+                               options="{'filename': 'name'}"/>
+                    </group>
+
+
+                    <!--                    <group>-->
+                    <!--                        <field name="employee_id" readonly="state != 'draft'"/>-->
+                    <!--                        <field name="department_id" readonly="state != 'draft'"/>-->
+                    <!--                        <field name="reason_for_requisition"/>-->
+                    <!--                        <field name="total_amount" readonly="1"/>-->
+                    <!--                    </group>-->
+
+                    <notebook>
+                        <page string="Requisition Lines">
+                            <field name="line_ids">
+                                <list editable="bottom" delete="1">
+                                    <field name="product_id"/>
+                                    <field name="specification"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+</odoo>
+
+
+        <!--<odoo>-->
+        <!--    <record id="view_pr_form" model="ir.ui.view">-->
+        <!--        <field name="name">material.purchase.requisition.form</field>-->
+        <!--        <field name="model">material.purchase.requisition</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <form>-->
+
+        <!--                <header>-->
+        <!--                    &lt;!&ndash; Submit: only in draft &ndash;&gt;-->
+        <!--                    <button name="action_submit"-->
+        <!--                            type="object"-->
+        <!--                            string="Submit"-->
+        <!--                            invisible="state != 'draft'"/>-->
+
+        <!--                    &lt;!&ndash; Approve: only current approver &ndash;&gt;-->
+        <!--                    <button name="action_approve"-->
+        <!--                            type="object"-->
+        <!--                            string="Approve"-->
+        <!--                            invisible="current_approver_id != uid"/>-->
+
+        <!--                    &lt;!&ndash; Reject: only current approver &ndash;&gt;-->
+        <!--                    <button name="action_reject"-->
+        <!--                            type="object"-->
+        <!--                            string="Reject"-->
+        <!--                            invisible="current_approver_id != uid"/>-->
+        <!--                    <button name="action_create_rfq"-->
+        <!--                            type="object"-->
+        <!--                            string="Create RFQ"-->
+        <!--                            invisible="state != 'approved' or rfq_created"/>-->
+
+        <!--                    <field name="state" widget="statusbar"/>-->
+        <!--                </header>-->
+
+        <!--                <sheet>-->
+        <!--                    <group>-->
+        <!--                        <field name="employee_id" readonly="state != 'draft'"/>-->
+        <!--                        <field name="department_id" readonly="state != 'draft'"/>-->
+
+        <!--                        <field name="required_date" required="1"/>-->
+        <!--                        <field name="budget_code" required="1"/>-->
+        <!--                        &lt;!&ndash;                        <field name="cost_center_id" required="1"/>&ndash;&gt;-->
+
+
+        <!--                        <field name="reason_for_requisition"/>-->
+        <!--                        <field name="total_amount" readonly="1"/>-->
+        <!--                    </group>-->
+        <!--                    <group string="Approval Information" invisible="state == 'draft'">-->
+        <!--                        <field name="current_approver_id" readonly="1"/>-->
+        <!--                        <field name="approval_level" readonly="1"/>-->
+        <!--                    </group>-->
+        <!--                    <group string="Procurement Traceability" invisible="not rfq_created">-->
+        <!--                        <field name="rfq_created" readonly="1"/>-->
+        <!--                        <field name="purchase_order_ids" readonly="1"/>-->
+        <!--                        <field name="final_po_id" readonly="1"/>-->
+        <!--                        <field name="attachment_count" readonly="1"/>-->
+
+        <!--                    </group>-->
+        <!--                    <group string="Supporting Documents">-->
+        <!--                        <field name="attachment_ids"-->
+        <!--                               widget="many2many_binary"-->
+        <!--                               options="{'filename': 'name'}"/>-->
+        <!--                    </group>-->
+        <!--                    <group invisible="state != rejected ">-->
+        <!--                        <field name="rejection_reason"/>-->
+        <!--                        <field name="rejected_by_id"/>-->
+        <!--                        <field name="rejected_on"/>-->
+        <!--                    </group>-->
+
+
+        <!--                    &lt;!&ndash;                    <group>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <field name="employee_id" readonly="state != 'draft'"/>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <field name="department_id" readonly="state != 'draft'"/>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <field name="reason_for_requisition"/>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                        <field name="total_amount" readonly="1"/>&ndash;&gt;-->
+        <!--                    &lt;!&ndash;                    </group>&ndash;&gt;-->
+
+        <!--                    <notebook>-->
+        <!--                        <page string="Requisition Lines">-->
+        <!--                            <field name="line_ids">-->
+        <!--                                <list editable="bottom">-->
+        <!--                                    <field name="product_id"/>-->
+        <!--                                    <field name="quantity"/>-->
+        <!--                                    <field name="price_unit"/>-->
+        <!--                                </list>-->
+        <!--                            </field>-->
+        <!--                        </page>-->
+        <!--                    </notebook>-->
+        <!--                </sheet>-->
+        <!--                <chatter/>-->
+
+        <!--            </form>-->
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--</odoo>-->

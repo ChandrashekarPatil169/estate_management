@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_previous_employment"
+            model="ir.ui.view">
+
+        <field name="name">
+            hr.employee.form.inherit.previous.employment
+        </field>
+
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+
+        <field name="arch" type="xml">
+
+            <!-- Insert RIGHT AFTER Note group -->
+            <xpath expr="//page[@name='work_information']"
+                   position="inside">
+
+                <separator string="Previous Employment"/>
+
+                <field name="previous_employment_ids" nolabel="1">
+                    <list editable="bottom">
+                        <field name="company_name"/>
+                        <field name="designation"/>
+                        <field name="duration"/>
+                        <field name="reason_for_leaving"/>
+                    </list>
+                </field>
+
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+        <!--    <record id="view_employee_form_inherit_previous_employment"-->
+        <!--            model="ir.ui.view">-->
+
+        <!--        <field name="name">-->
+        <!--            hr.employee.form.inherit.previous.employment-->
+        <!--        </field>-->
+
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Insert RIGHT AFTER Note group &ndash;&gt;-->
+        <!--            <xpath expr="//page[@name='work_information']-->
+        <!--                          //div[@id='o_work_information']-->
+        <!--                          //group[@name='note']"-->
+        <!--                   position="after">-->
+
+        <!--                <group string="Previous Employment">-->
+        <!--                    <field name="previous_employment_ids" nolabel="1">-->
+        <!--                        <list editable="bottom">-->
+        <!--                            <field name="company_name"/>-->
+        <!--                            <field name="designation"/>-->
+        <!--                            <field name="duration"/>-->
+        <!--                            <field name="reason_for_leaving"/>-->
+        <!--                        </list>-->
+        <!--                    </field>-->
+        <!--                </group>-->
+
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--</odoo>-->

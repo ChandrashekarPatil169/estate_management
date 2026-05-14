@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+    <record id="pr_reminder_default_config"
+            model="pr.approval.reminder.config">
+        <field name="delay_value">3</field>
+        <field name="delay_unit">days</field>
+        <field name="active">True</field>
+    </record>
+</odoo>
+

@@ -1,0 +1,8 @@
+<odoo>
+  <record id="seq_pr" model="ir.sequence">
+    <field name="name">Purchase Requisition</field>
+    <field name="code">material.purchase.requisition</field>
+    <field name="prefix">PR</field>
+    <field name="padding">4</field>
+  </record>
+</odoo>

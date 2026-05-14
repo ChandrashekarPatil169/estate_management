@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+  <!-- Root OWL component wrapper -->
+  <t t-name="ExtTicketingDashboard" owl="1">
+    <div class="ext_ticketing_dashboard">
+      <div class="container-fluid ext_dashboard_main"/>
+    </div>
+  </t>
+
+  <!-- ================================================================
+       Main Dashboard Template
+       ================================================================ -->
+  <t t-name="DashBoardExtTicketing">
+    <link rel="stylesheet"
+          href="/external_ticketing_dashboard/static/src/css/ext_dashboard.css"/>
+
+    <div class="row ext-main-section mt-4" t-ref="extTicketDashboard">
+
+      <!-- ============================================================
+           HEADER
+           ============================================================ -->
+      <div class="col-12 mb-3">
+        <h2 class="ext-section-header">
+          <i class="fa fa-ticket me-2"/>
+          External Ticketing Dashboard
+        </h2>
+        <p class="text-muted" style="font-size:0.95rem;">
+          Real-time overview of all external project tickets, priorities and stages.
+        </p>
+        <hr/>
+      </div>
+
+      <!-- ============================================================
+           ROW 1 — KPI STAT CARDS
+           ============================================================ -->
+
+      <!-- New Tickets -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-new-tickets"
+           t-on-click="openNewTickets">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-new">
+              <i class="fa fa-inbox"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">New</div>
+              <div class="ext-stat-digit" id="ext_new_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- In Progress -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-progress-tickets"
+           t-on-click="openProgressTickets">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-progress">
+              <i class="fa fa-spinner"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">In Progress</div>
+              <div class="ext-stat-digit" id="ext_progress_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resolved -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-resolved-tickets"
+           t-on-click="openResolvedTickets">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-resolved">
+              <i class="fa fa-check-circle"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">Resolved</div>
+              <div class="ext-stat-digit" id="ext_resolved_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Done -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-done-tickets"
+           t-on-click="openDoneTickets">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-done">
+              <i class="fa fa-flag-checkered"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">Done</div>
+              <div class="ext-stat-digit" id="ext_done_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-project-card"
+           t-on-click="openProjects">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-project">
+              <i class="fa fa-briefcase"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">Projects</div>
+              <div class="ext-stat-digit" id="ext_project_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subprojects -->
+      <div class="col-sm-6 col-md-4 col-lg-2 ext-helpdesk ext-subproject-card"
+           t-on-click="openSubprojects">
+        <div class="ext-dashboard-card">
+          <div class="ext-stat-widget">
+            <div class="ext-stat-icon ext-icon-subproject">
+              <i class="fa fa-folder-open"/>
+            </div>
+            <div class="ext-stat-content">
+              <div class="ext-stat-text">Subprojects</div>
+              <div class="ext-stat-digit" id="ext_subproject_count">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           ROW 2 — CHARTS + PRIORITY
+           ============================================================ -->
+      <div class="row ext-ticket-section w-100 mt-3">
+
+        <!-- Priority Progress Bars -->
+        <div class="col-12 col-sm-12 col-md-4 ext-ticket-box ext-chart-container ext-card-shadow">
+          <h5 class="ext-tickets-head">
+            <i class="fa fa-bar-chart me-1"/>
+            Ticket Priority
+          </h5>
+          <hr/>
+
+          <div class="ext-priority-row">
+            <span class="ext-priority-label">Very Low</span>
+            <div class="ext-priority-bar-wrap">
+              <div class="ext-priority-bar ext-bar-verylow very_low_count"/>
+            </div>
+            <span class="ext-priority-pct very_low_pct">0%</span>
+          </div>
+
+          <div class="ext-priority-row">
+            <span class="ext-priority-label">Low</span>
+            <div class="ext-priority-bar-wrap">
+              <div class="ext-priority-bar ext-bar-low low_count"/>
+            </div>
+            <span class="ext-priority-pct low_pct">0%</span>
+          </div>
+
+          <div class="ext-priority-row">
+            <span class="ext-priority-label">Normal</span>
+            <div class="ext-priority-bar-wrap">
+              <div class="ext-priority-bar ext-bar-normal normal_count"/>
+            </div>
+            <span class="ext-priority-pct normal_pct">0%</span>
+          </div>
+
+          <div class="ext-priority-row">
+            <span class="ext-priority-label">High</span>
+            <div class="ext-priority-bar-wrap">
+              <div class="ext-priority-bar ext-bar-high high_count"/>
+            </div>
+            <span class="ext-priority-pct high_pct">0%</span>
+          </div>
+
+          <div class="ext-priority-row">
+            <span class="ext-priority-label">Very High</span>
+            <div class="ext-priority-bar-wrap">
+              <div class="ext-priority-bar ext-bar-veryhigh very_high_count"/>
+            </div>
+            <span class="ext-priority-pct very_high_pct">0%</span>
+          </div>
+        </div>
+
+        <!-- Stage Distribution Doughnut -->
+        <div class="col-12 col-sm-12 col-md-4">
+          <div class="ext-chart-container ext-card-shadow">
+            <h5 class="ext-tickets-head">
+              <i class="fa fa-pie-chart me-1"/>
+              Stage Distribution
+            </h5>
+            <hr/>
+            <div class="ext-graph-canvas">
+              <canvas id="ext_stage_chart" width="200" height="180"/>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Ticket Bar -->
+        <div class="col-12 col-sm-12 col-md-4">
+          <div class="ext-chart-container ext-card-shadow">
+            <h5 class="ext-tickets-head">
+              <i class="fa fa-tasks me-1"/>
+              Tickets by Project
+            </h5>
+            <hr/>
+            <div class="ext-graph-canvas">
+              <canvas id="ext_project_chart" width="200" height="180"/>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================
+           ROW 3 — MONTHLY TREND (full width)
+           ============================================================ -->
+      <div class="row w-100 mt-3">
+        <div class="col-12">
+          <div class="ext-chart-container ext-card-shadow">
+            <h5 class="ext-tickets-head">
+              <i class="fa fa-line-chart me-1"/>
+              Monthly Ticket Trend
+            </h5>
+            <hr/>
+            <div class="ext-graph-canvas">
+              <canvas id="ext_monthly_chart" height="80"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================
+           ROW 4 — TICKET TABLE
+           ============================================================ -->
+      <div class="row w-100 mt-3">
+        <div class="col-12">
+          <div class="ext-chart-container ext-card-shadow ext-ticket-table-wrap">
+            <h5 class="ext-tickets-head">
+              <i class="fa fa-list me-1"/>
+              Recent External Tickets
+            </h5>
+            <hr/>
+            <table class="ext-ticket-table" id="ext_ticket_table">
+              <thead>
+                <tr>
+                  <th>Ticket</th>
+                  <th>Title / Subject</th>
+                  <th>Customer</th>
+                  <th>Project</th>
+                  <th>Subproject</th>
+                  <th>Priority</th>
+                  <th>Stage</th>
+                  <th>Assigned To</th>
+                </tr>
+              </thead>
+              <tbody id="ext_ticket_tbody">
+                <tr>
+                  <td colspan="8" class="text-center text-muted py-3">Loading…</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /row ext-main-section -->
+  </t>
+
+</templates>

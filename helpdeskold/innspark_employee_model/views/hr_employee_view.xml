@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Personal fields -->
+        <record id="hr_employee_form_inherit_personal_fields" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.personal.fields</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='legal_name']" position="after">
+                    <field name="first_name"/>
+                    <field name="middle_name"/>
+                    <field name="last_name"/>
+                    <field name="full_name" readonly="1"/>
+                    <field name="blood_group"/>
+                </xpath>
+
+                <xpath expr="//group[@name='hr_birth_group']/div[@name='div_km_home_work']" position="after">
+                    <field name="age" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Alternative Email -->
+        <record id="hr_employee_form_inherit_alternative_email" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.alternative.email</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='private_email']" position="after">
+                    <field name="alternative_email"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Mentor -->
+        <record id="hr_employee_form_inherit_mentor" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.mentor</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="mentor_id" widget="many2one_avatar_employee"/>
+                    <field name="rfid"/>
+                    <field name="date_of_joining"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Emergency -->
+        <record id="hr_employee_form_inherit_emergency_contact_extra" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.emergency.contact.extra</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='emergency_contact']" position="after">
+                    <field name="emergency_contact_name"/>
+                    <field name="emergency_contact_relation"/>
+                    <field name="emergency_contact_email"/>
+                    <field name="emergency_contact_address"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Alternative Address -->
+        <record id="hr_employee_form_inherit_alt_address" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherit.alt.address</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='hr_location_group']/div[@name='div_km_home_work']" position="after">
+                    <div class="o_form_label">Alternative Address</div>
+                    <div class="o_address_format">
+                        <field name="same_as_private_address"/>
+                        <field name="alternative_street"/>
+                        <field name="alternative_street2"/>
+                        <field name="alternative_city"/>
+                        <field name="alternative_state_id"/>
+                        <field name="alternative_zip"/>
+                        <field name="alternative_country_id"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Experience -->
+        <record id="view_employee_form_experience" model="ir.ui.view">
+            <field name="name">hr.employee.form.experience</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_of_joining']" position="after">
+                    <field name="experience" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Tab reorder -->
+        <record id="hr_employee_form_reorder_tabs" model="ir.ui.view">
+            <field name="name">hr.employee.form.reorder.tabs</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="priority">1200</field>
+            <field name="arch" type="xml">
+
+                <xpath expr="//page[@name='work_information']" position="before">
+                    <xpath expr="//page[@name='personal_information']" position="move"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+        <!--    <record id="hr_employee_form_inherit_personal_fields" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.inherit.personal.fields</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Personal fields after Legal Name &ndash;&gt;-->
+        <!--            <xpath expr="//field[@name='legal_name']" position="after">-->
+        <!--                <field name="first_name"/>-->
+        <!--                <field name="middle_name"/>-->
+        <!--                <field name="last_name"/>-->
+        <!--                <field name="full_name" readonly="1"/>-->
+        <!--                <field name="blood_group"/>-->
+        <!--                &lt;!&ndash;                <field name="aadhar_no"/>&ndash;&gt;-->
+        <!--            </xpath>-->
+
+
+        <!--            &lt;!&ndash; Age directly below Birthday &ndash;&gt;-->
+        <!--            <xpath expr="//group[@name='hr_birth_group']/div[@name='div_km_home_work']"-->
+        <!--                   position="after">-->
+        <!--                <field name="age" readonly="1"/>-->
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    <record id="hr_employee_form_inherit_alternative_email" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.inherit.alternative.email</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Insert Alternative Email below Private Email &ndash;&gt;-->
+        <!--            <xpath expr="//field[@name='private_email']" position="after">-->
+        <!--                <field name="alternative_email"-->
+        <!--                       placeholder="e.g. alternate@example.com"/>-->
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+
+        <!--    <record id="hr_employee_form_inherit_mentor" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.inherit.mentor</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Insert Mentor below Manager &ndash;&gt;-->
+        <!--            <xpath expr="//field[@name='parent_id']" position="after">-->
+        <!--                <field name="mentor_id"-->
+        <!--                       widget="many2one_avatar_employee"/>-->
+        <!--                <field name="rfid"/>-->
+        <!--                <field name="date_of_joining"/>-->
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    <record id="hr_employee_form_inherit_emergency_contact_extra" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.inherit.emergency.contact.extra</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            <xpath expr="//field[@name='emergency_contact']" position="after">-->
+        <!--                <field name="emergency_contact_name"/>-->
+        <!--                <field name="emergency_contact_relation"/>-->
+        <!--                <field name="emergency_contact_email"/>-->
+        <!--                <field name="emergency_contact_address"/>-->
+        <!--            </xpath>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    <record id="hr_employee_form_inherit_alt_address"-->
+        <!--            model="ir.ui.view">-->
+
+        <!--        <field name="name">hr.employee.form.inherit.alt.address</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Insert Alternative Address after Location group &ndash;&gt;-->
+        <!--            <xpath expr="//group[@name='hr_location_group']/div[@name='div_km_home_work']"-->
+        <!--                   position="after">-->
+
+        <!--                <div class="o_form_label">Alternative Address</div>-->
+        <!--                <div class="o_address_format">-->
+
+        <!--                    <field name="same_as_private_address"/>-->
+        <!--                    <field name="alternative_street"-->
+        <!--                           placeholder="Street..."-->
+        <!--                           class="o_address_street"/>-->
+
+        <!--                    <field name="alternative_street2"-->
+        <!--                           placeholder="Street 2..."-->
+        <!--                           class="o_address_street"/>-->
+
+        <!--                    <field name="alternative_city"-->
+        <!--                           placeholder="City"-->
+        <!--                           class="o_address_city"/>-->
+
+        <!--                    <field name="alternative_state_id"-->
+        <!--                           class="o_address_state"-->
+        <!--                           placeholder="State"/>-->
+
+        <!--                    <field name="alternative_zip"-->
+        <!--                           placeholder="ZIP"-->
+        <!--                           class="o_address_zip"/>-->
+
+        <!--                    <field name="alternative_country_id"-->
+        <!--                           placeholder="Country"-->
+        <!--                           class="o_address_country"/>-->
+
+        <!--                </div>-->
+
+        <!--            </xpath>-->
+
+
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--    <record id="view_employee_form_experience" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.experience</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            <xpath expr="//field[@name='date_of_joining']" position="after">-->
+        <!--                <field name="experience" readonly="1"/>-->
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    <record id="view_employee_form_replace_name" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.replace.name</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash;            <xpath expr="//h1/field[@name='name']" position="replace">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <field name="full_name"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                       placeholder="Full Name"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                       readonly="1"&ndash;&gt;-->
+        <!--            &lt;!&ndash;                       style="font-size: min(4vw, 2.6rem);"/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </xpath>&ndash;&gt;-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    <record id="hr_employee_form_reorder_tabs" model="ir.ui.view">-->
+        <!--        <field name="name">hr.employee.form.reorder.tabs</field>-->
+        <!--        <field name="model">hr.employee</field>-->
+        <!--        <field name="inherit_id" ref="hr.view_employee_form"/>-->
+        <!--        <field name="priority">1200</field>-->
+        <!--        <field name="arch" type="xml">-->
+
+        <!--            &lt;!&ndash; Move Personal before Work &ndash;&gt;-->
+        <!--            <xpath expr="//page[@name='private_information']" position="move"/>-->
+        <!--            <xpath expr="//page[@name='work_information']" position="before">-->
+        <!--                <xpath expr="//page[@name='private_information']" position="move"/>-->
+        <!--            </xpath>-->
+
+        <!--        </field>-->
+        <!--    </record>-->
+
+
+        <!--</odoo>-->

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Floor list View -->
+    <record id="view_floor_list" model="ir.ui.view">
+        <field name="name">estate.floor.list</field>
+        <field name="model">estate.floor</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="floor_code" readonly="floor_code_locked"/>
+                <field name="hup_building_id"/>
+                <field name="hup_property_id"/>
+                <field name="hup_location_id"/>
+                <field name="hcount_unit" optional="show"/>
+                <!-- OPTIONAL -->
+                <field name="hup_location_id" optional="hide"/>
+                <field name="hcount_room" optional="hide"/>
+                <field name="hcount_table" optional="hide"/>
+                <field name="access" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Floor Form View -->
+    <record id="view_floor_form" model="ir.ui.view">
+        <field name="name">estate.floor.form</field>
+        <field name="model">estate.floor</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="haction_open_units"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-home"
+                        >
+                            <field name="hcount_unit" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_rooms"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-th-large"
+                        >
+                            <field name="hcount_room" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_tables"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-table"
+                        >
+                            <field name="hcount_table" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
+                    <!-- Floor Details -->
+                    <group>
+                        <field name="name"/>
+                        <!--                        <field name="property_id"/>-->
+                        <!--                        <field name="access"/>-->
+                        <field name="access_id"/>
+                        <field name="floor_code"/>
+
+
+                        <!--                        <field name="corridor_lighting"/>-->
+                        <!--                        <field name="water_tank"/>-->
+                        <!--                        <field name="number_of_units" readonly="1"/>-->
+                        <!--                        <field name="number_of_rooms" readonly="1"/>-->
+                        <!--                        <field name="employee_count" readonly="1"/>-->
+                    </group>
+                    <group string="Details">
+
+                        <field name="hup_building_id"/>
+                        <field name="hup_property_id"/>
+                        <field name="hup_location_id"/>
+
+                    </group>
+
+                    <!-- Units Notebook -->
+                    <notebook>
+
+                        <page string="Related Details">
+                            <group readonly="1">
+                                <field name="hdown_unit_ids" widget="many2many_tags"/>
+
+                            </group>
+                        </page>
+                    </notebook>
+
+                    <!-- Chatter -->
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- FLOOR PIVOT VIEW -->
+    <record id="view_floor_pivot" model="ir.ui.view">
+        <field name="name">estate.floor.pivot</field>
+        <field name="model">estate.floor</field>
+        <field name="arch" type="xml">
+            <pivot string="Floor Analysis">
+
+                <!-- ROW GROUPS -->
+                <field name="hup_location_id" type="row"/>
+                <field name="hup_property_id" type="row"/>
+                <field name="hup_building_id" type="row"/>
+                <field name="access_id" type="row"/>
+
+                <!-- TIME -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <!--                <field name="id" type="measure" operator="count"/>-->
+
+            </pivot>
+        </field>
+    </record>
+
+
+</odoo>

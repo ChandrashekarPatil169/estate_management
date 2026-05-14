@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_approval_matrix_admin,Project Approval Matrix Admin,model_project_approval_matrix,base.group_system,1,1,1,1
+access_project_reject_wizard_user,Project Reject Wizard,model_project_reject_wizard,base.group_user,1,1,1,1
+access_project_project_user,Project Project User,project.model_project_project,base.group_user,1,0,0,0
+
+access_project_share_wizard_project_manager,project.share.wizard.project.manager,project.model_project_share_wizard,project.group_project_manager,1,1,1,1
+access_project_share_wizard_project_user,project.share.wizard.project.user,project.model_project_share_wizard,project.group_project_user,1,1,1,1
+

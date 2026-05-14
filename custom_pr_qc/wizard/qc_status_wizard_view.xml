@@ -1,0 +1,41 @@
+<odoo>
+    <record id="view_qc_wizard_form" model="ir.ui.view">
+        <field name="model">qc.status.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check Status">
+                <!-- CRITICAL: The ID must be on the form for compute to work -->
+                <field name="qc_id" invisible="1"/>
+
+                <div class="alert alert-warning" role="alert">
+                    <strong>Validation Blocked:</strong>
+                    Some products still pending approval.
+
+                </div>
+
+                <group string="Checkers Status">
+                    <field name="wizard_requester_id"/>
+                    <field name="wizard_admin_1_id"/>
+                    <field name="wizard_admin_2_id"/>
+                </group>
+                <!-- ⭐ PRODUCT LINES -->
+                <group string="Product Status">
+
+                    <field name="wizard_line_ids" nolabel="1">
+                        <list>
+
+                            <field name="product_id"/>
+                            <field name="qty"/>
+
+                            <field name="req_result"/>
+                            <field name="inv_result"/>
+                            <field name="acc_result"/>
+
+                        </list>
+                    </field>
+
+                </group>
+
+            </form>
+        </field>
+    </record>
+</odoo>

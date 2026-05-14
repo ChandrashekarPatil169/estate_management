@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ===================================================== -->
+    <!-- GLOBAL RULE TEMPLATE APPLIED TO ALL MODELS -->
+    <!-- OWN + FOLLOWER + HIERARCHY (EXCEPT ADMIN RECORDS) -->
+    <!-- ===================================================== -->
+
+    <!-- PROPERTY -->
+    <record id="estate_property_rw_rule" model="ir.rule">
+        <field name="name">Property Secure Access</field>
+        <field name="model_id" ref="model_estate_property"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- LOCATION -->
+    <record id="estate_location_rw_rule" model="ir.rule">
+        <field name="name">Location Secure Access</field>
+        <field name="model_id" ref="model_estate_location"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- BUILDING -->
+    <record id="estate_building_rw_rule" model="ir.rule">
+        <field name="name">Building Secure Access</field>
+        <field name="model_id" ref="model_estate_building"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- FLOOR -->
+    <record id="estate_floor_rw_rule" model="ir.rule">
+        <field name="name">Floor Secure Access</field>
+        <field name="model_id" ref="model_estate_floor"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- UNIT -->
+    <record id="estate_unit_rw_rule" model="ir.rule">
+        <field name="name">Unit Secure Access</field>
+        <field name="model_id" ref="model_estate_unit"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- ROOM -->
+    <record id="estate_room_rw_rule" model="ir.rule">
+        <field name="name">Room Secure Access</field>
+        <field name="model_id" ref="model_estate_room"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- UNIT PAYMENT -->
+    <record id="estate_unit_payment_rw_rule" model="ir.rule">
+        <field name="name">Unit Payment Secure Access</field>
+        <field name="model_id" ref="model_estate_unit_payment"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- BUILDING PAYMENT -->
+    <record id="estate_building_payment_rw_rule" model="ir.rule">
+        <field name="name">Building Payment Secure Access</field>
+        <field name="model_id" ref="model_estate_building_payment"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                                   (4, ref('estate_management.group_estate_employee')),
+                                   (4, ref('estate_management.group_estate_manager')),
+                                   (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+
+<!--    <record id="estate_subfarm_rw_rule" model="ir.rule">-->
+<!--        <field name="name">Sub Farm Secure Access</field>-->
+<!--        <field name="model_id" ref="model_estate_sub_farm"/>-->
+<!--        <field name="domain_force">-->
+<!--            ['|','|',-->
+<!--            ('create_uid', '=', user.id),-->
+<!--            ('message_partner_ids', 'in', [user.partner_id.id]),-->
+<!--            '&amp;',-->
+<!--            ('create_uid', '!=', 1),-->
+<!--            ('create_uid', 'child_of', user.id)-->
+<!--            ]-->
+<!--        </field>-->
+<!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+<!--                               (4, ref('estate_management.group_estate_employee')),-->
+<!--                               (4, ref('estate_management.group_estate_manager')),-->
+<!--                               (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+<!--        <field name="perm_read" eval="True"/>-->
+<!--        <field name="perm_write" eval="True"/>-->
+<!--        <field name="perm_create" eval="False"/>-->
+<!--        <field name="perm_unlink" eval="True"/>-->
+<!--    </record>-->
+<!--    <record id="estate_farm_rw_rule" model="ir.rule">-->
+<!--        <field name="name">Farm Secure Access</field>-->
+<!--        <field name="model_id" ref="model_estate_farm"/>-->
+<!--        <field name="domain_force">-->
+<!--            ['|','|',-->
+<!--            ('create_uid', '=', user.id),-->
+<!--            ('message_partner_ids', 'in', [user.partner_id.id]),-->
+<!--            '&amp;',-->
+<!--            ('create_uid', '!=', 1),-->
+<!--            ('create_uid', 'child_of', user.id)-->
+<!--            ]-->
+<!--        </field>-->
+<!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+<!--                               (4, ref('estate_management.group_estate_employee')),-->
+<!--                               (4, ref('estate_management.group_estate_manager')),-->
+<!--                               (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+<!--        <field name="perm_read" eval="True"/>-->
+<!--        <field name="perm_write" eval="True"/>-->
+<!--        <field name="perm_create" eval="False"/>-->
+<!--        <field name="perm_unlink" eval="True"/>-->
+<!--    </record>-->
+
+<!--    <record id="estate_livestock_rw_rule" model="ir.rule">-->
+<!--        <field name="name">Livestock Secure Access</field>-->
+<!--        <field name="model_id" ref="model_estate_livestock"/>-->
+<!--        <field name="domain_force">-->
+<!--            ['|','|',-->
+<!--            ('create_uid', '=', user.id),-->
+<!--            ('message_partner_ids', 'in', [user.partner_id.id]),-->
+<!--            '&amp;',-->
+<!--            ('create_uid', '!=', 1),-->
+<!--            ('create_uid', 'child_of', user.id)-->
+<!--            ]-->
+<!--        </field>-->
+<!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+<!--                               (4, ref('estate_management.group_estate_employee')),-->
+<!--                               (4, ref('estate_management.group_estate_manager')),-->
+<!--                               (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+<!--        <field name="perm_read" eval="True"/>-->
+<!--        <field name="perm_write" eval="True"/>-->
+<!--        <field name="perm_create" eval="False"/>-->
+<!--        <field name="perm_unlink" eval="True"/>-->
+<!--    </record>-->
+    <record id="estate_room_table_rw_rule" model="ir.rule">
+        <field name="name">Room Table Secure Access</field>
+        <field name="model_id" ref="model_estate_room_table"/>
+        <field name="domain_force">
+            ['|','|',
+            ('create_uid', '=', user.id),
+            ('message_partner_ids', 'in', [user.partner_id.id]),
+            '&amp;',
+            ('create_uid', '!=', 1),
+            ('create_uid', 'child_of', user.id)
+            ]
+        </field>
+        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                               (4, ref('estate_management.group_estate_employee')),
+                               (4, ref('estate_management.group_estate_manager')),
+                               (4, ref('estate_management.group_estate_general_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <record id="estate_farm_rw_rule_override" model="ir.rule">
+    <field name="name">Farm Access Override</field>
+    <field name="model_id" ref="model_estate_farm"/>
+
+    <field name="domain_force">
+        ['|','|','|',
+            ('id','=',False),
+            ('create_uid','=',user.id),
+            ('message_partner_ids','in',[user.partner_id.id]),
+            '&amp;',
+            ('create_uid','!=',1),
+            ('create_uid','child_of',user.id)
+        ]
+    </field>
+
+    <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                               (4, ref('estate_management.group_estate_employee')),
+                               (4, ref('estate_management.group_estate_manager')),
+                               (4, ref('estate_management.group_estate_general_manager'))]"/>
+
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+</record>
+    <record id="estate_subfarm_rw_rule_override" model="ir.rule">
+    <field name="name">SubFarm Access Override</field>
+    <field name="model_id" ref="model_estate_sub_farm"/>
+
+    <field name="domain_force">
+        ['|','|','|',
+            ('id','=',False),
+            ('create_uid','=',user.id),
+            ('message_partner_ids','in',[user.partner_id.id]),
+            '&amp;',
+            ('create_uid','!=',1),
+            ('create_uid','child_of',user.id)
+        ]
+    </field>
+
+    <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                               (4, ref('estate_management.group_estate_employee')),
+                               (4, ref('estate_management.group_estate_manager')),
+                               (4, ref('estate_management.group_estate_general_manager'))]"/>
+
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+</record>
+    <record id="estate_livestock_rw_rule_override" model="ir.rule">
+    <field name="name">Livestock Access Override</field>
+    <field name="model_id" ref="model_estate_livestock"/>
+
+    <field name="domain_force">
+        ['|','|','|',
+            ('id','=',False),
+            ('create_uid','=',user.id),
+            ('message_partner_ids','in',[user.partner_id.id]),
+            '&amp;',
+            ('create_uid','!=',1),
+            ('create_uid','child_of',user.id)
+        ]
+    </field>
+
+    <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),
+                               (4, ref('estate_management.group_estate_employee')),
+                               (4, ref('estate_management.group_estate_manager')),
+                               (4, ref('estate_management.group_estate_general_manager'))]"/>
+
+    <field name="perm_read" eval="1"/>
+    <field name="perm_write" eval="1"/>
+    <field name="perm_create" eval="1"/>
+    <field name="perm_unlink" eval="1"/>
+</record>
+
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+        <!--    &lt;!&ndash; READ / WRITE / DELETE RULE (GLOBAL LOGIC) &ndash;&gt;-->
+        <!--    &lt;!&ndash; OWN + FULL HIERARCHY + FOLLOWER &ndash;&gt;-->
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+        <!--    &lt;!&ndash; PROPERTY &ndash;&gt;-->
+        <!--    <record id="estate_property_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Property Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_property"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; LOCATION &ndash;&gt;-->
+        <!--    <record id="estate_location_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Location Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_location"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; BUILDING &ndash;&gt;-->
+        <!--    <record id="estate_building_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Building Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_building"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; FLOOR &ndash;&gt;-->
+        <!--    <record id="estate_floor_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Floor Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_floor"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; UNIT &ndash;&gt;-->
+        <!--    <record id="estate_unit_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Unit Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_unit"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ROOM &ndash;&gt;-->
+        <!--    <record id="estate_room_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Room Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_room"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; UNIT PAYMENT &ndash;&gt;-->
+        <!--    <record id="estate_unit_payment_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Unit Payment Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_unit_payment"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; BUILDING PAYMENT &ndash;&gt;-->
+        <!--    <record id="estate_building_payment_rw_rule" model="ir.rule">-->
+        <!--        <field name="name">Building Payment Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_building_payment"/>-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|','|',-->
+        <!--                ('create_uid', '=', user.id),-->
+        <!--                ('create_uid', 'child_of', user.id),-->
+        <!--                ('message_partner_ids', 'in', [user.partner_id.id])-->
+        <!--            ]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_read" eval="True"/>-->
+        <!--        <field name="perm_write" eval="True"/>-->
+        <!--        <field name="perm_create" eval="False"/>-->
+        <!--        <field name="perm_unlink" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+        <!--    &lt;!&ndash; CREATE RULES (ALLOW CREATE FOR ALL ESTATE USERS) &ndash;&gt;-->
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+        <!--    <record id="estate_property_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Property Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_property"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_location_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Location Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_location"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_building_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Building Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_building"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_floor_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Floor Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_floor"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_unit_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Unit Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_unit"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_room_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Room Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_room"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_unit_payment_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Unit Payment Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_unit_payment"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    <record id="estate_building_payment_create_rule" model="ir.rule">-->
+        <!--        <field name="name">Building Payment Create</field>-->
+        <!--        <field name="model_id" ref="model_estate_building_payment"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('estate_management.group_estate_user')),-->
+        <!--                                   (4, ref('estate_management.group_estate_employee')),-->
+        <!--                                   (4, ref('estate_management.group_estate_manager')),-->
+        <!--                                   (4, ref('estate_management.group_estate_general_manager'))]"/>-->
+        <!--        <field name="perm_create" eval="True"/>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+        <!--    &lt;!&ndash; ADMIN FULL ACCESS &ndash;&gt;-->
+        <!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+        <!--    <record id="estate_admin_full" model="ir.rule">-->
+        <!--        <field name="name">Estate Admin Full Access</field>-->
+        <!--        <field name="model_id" ref="model_estate_property"/>-->
+        <!--        <field name="domain_force">[(1,'=',1)]</field>-->
+        <!--        <field name="groups" eval="[(4, ref('base.group_system'))]"/>-->
+        <!--    </record>-->
+
+        <!--</odoo>-->

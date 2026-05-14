@@ -1,0 +1,37 @@
+<odoo>
+
+    <record id="mail_template_vendor_rfq_reminder" model="mail.template">
+        <field name="name">Vendor RFQ Reminder</field>
+        <field name="model_id" ref="purchase.model_purchase_order"/>
+
+        <!-- Fix 1: Remove newlines/CDATA from subject if it's a simple string -->
+        <field name="subject">Reminder: RFQ Pending</field>
+
+        <!-- Fix 2: Remove the spaces and newlines around the email expressions -->
+        <field name="email_from">{{ object.company_id.email }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+
+        <field name="auto_delete">False</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Dear <t t-out="object.partner_id.name"/>,</p>
+                <p>
+                    This is a reminder that the RFQ <b><t t-out="object.name"/></b>
+                    is still pending your response.
+                </p>
+                <p><b>Products:</b></p>
+                <ul>
+                    <t t-foreach="object.order_line" t-as="line">
+                        <li>
+                            <t t-out="line.product_id.display_name"/> -
+                            Qty: <t t-out="line.product_qty"/>
+                        </li>
+                    </t>
+                </ul>
+                <p>Please accept or reject the RFQ at your earliest convenience.</p>
+                <p>Thank you.</p>
+            </div>
+        </field>
+    </record>
+
+</odoo>

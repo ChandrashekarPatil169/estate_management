@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- LIST VIEW -->
+    <!--    <record id="view_room_employee_list" model="ir.ui.view">-->
+    <!--        <field name="name">estate.room.employee.list</field>-->
+    <!--        <field name="model">estate.room.employee</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <list string="Room Employees">-->
+    <!--                <field name="room_id"/>-->
+    <!--                <field name="employee_id"/>-->
+    <!--                <field name="table_id"/>-->
+    <!--                <field name="unit_id"/>-->
+    <!--                <field name="floor_id"/>-->
+    <!--                <field name="building_id"/>-->
+    <!--                <field name="property_id"/>-->
+    <!--            </list>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!--    &lt;!&ndash; FORM VIEW &ndash;&gt;-->
+    <!--    <record id="view_room_employee_form" model="ir.ui.view">-->
+    <!--        <field name="name">estate.room.employee.form</field>-->
+    <!--        <field name="model">estate.room.employee</field>-->
+    <!--        <field name="arch" type="xml">-->
+    <!--            <form string="Room Employee">-->
+    <!--                <sheet>-->
+    <!--                    <group>-->
+    <!--                        <group>-->
+    <!--                            <field name="room_id"/>-->
+    <!--                            <field name="employee_id"/>-->
+    <!--                            <field name="table_id"/>-->
+    <!--                        </group>-->
+
+    <!--                        <group string="Hierarchy Info">-->
+    <!--                            <field name="property_id" readonly="1"/>-->
+    <!--                            <field name="building_id" readonly="1"/>-->
+    <!--                            <field name="floor_id" readonly="1"/>-->
+    <!--                            <field name="unit_id" readonly="1"/>-->
+    <!--                        </group>-->
+    <!--                    </group>-->
+
+    <!--                    &lt;!&ndash; CHATTER &ndash;&gt;-->
+    <!--                    <div class="oe_chatter">-->
+    <!--                        <field name="message_ids"/>-->
+    <!--                        <field name="activity_ids"/>-->
+    <!--                    </div>-->
+
+    <!--                </sheet>-->
+    <!--            </form>-->
+    <!--        </field>-->
+    <!--    </record>-->
+
+    <!--    <record id="view_room_employee_pivot" model="ir.ui.view">-->
+    <!--        <field name="name">estate.room.employee.pivot</field>-->
+    <!--        <field name="model">estate.room.employee</field>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            <pivot string="Room Employee Analysis">-->
+
+    <!--                &lt;!&ndash; ROWS (Hierarchy Flow) &ndash;&gt;-->
+    <!--                <field name="property_id" type="row"/>-->
+    <!--                <field name="building_id" type="row"/>-->
+    <!--                <field name="floor_id" type="row"/>-->
+    <!--                <field name="unit_id" type="row"/>-->
+    <!--                <field name="room_id" type="row"/>-->
+    <!--                <field name="table_id" type="row"/>-->
+
+    <!--                &lt;!&ndash; COLUMNS &ndash;&gt;-->
+    <!--                <field name="employee_id" type="col"/>-->
+
+    <!--                &lt;!&ndash; MEASURE &ndash;&gt;-->
+    <!--                <field name="id" type="measure"/>-->
+
+    <!--            </pivot>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+
+
+    <record id="view_estate_room_employee_list" model="ir.ui.view">
+        <field name="name">estate.room.employee.list</field>
+        <field name="model">estate.room.employee</field>
+        <field name="arch" type="xml">
+            <list string="Room Employee Assignments">
+
+                <field name="employee_id"/>
+                <field name="table_id"/>
+<!--                <field name="table_number"/>-->
+                <field name="room_id"/>
+
+                <field name="unit_id"/>
+                <field name="floor_id"/>
+                <field name="building_id"/>
+                <field name="property_id"/>
+
+                <field name="create_date"/>
+                <field name="create_uid"/>
+
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ===================================================== -->
+    <!-- 🔹 FORM VIEW -->
+    <!-- ===================================================== -->
+    <record id="view_estate_room_employee_form" model="ir.ui.view">
+        <field name="name">estate.room.employee.form</field>
+        <field name="model">estate.room.employee</field>
+        <field name="arch" type="xml">
+            <form string="Room Employee Assignment">
+
+                <sheet>
+
+                    <!-- BASIC -->
+                    <group string="Assignment Details">
+                        <field name="employee_id"/>
+                        <field name="table_id"/>
+<!--                        <field name="table_number"/>-->
+                        <field name="room_id"/>
+                    </group>
+
+                    <!-- LOCATION -->
+                    <group string="Location Details">
+                        <field name="property_id" />
+                        <field name="building_id"/>
+                        <field name="floor_id"/>
+                        <field name="unit_id"/>
+                    </group>
+
+                    <!-- META -->
+                    <group string="Audit">
+                        <field name="create_uid" readonly="1"/>
+                        <field name="create_date" readonly="1"/>
+                        <field name="write_uid" readonly="1"/>
+                        <field name="write_date" readonly="1"/>
+                    </group>
+
+
+                </sheet>
+                    <chatter/>
+
+
+            </form>
+        </field>
+    </record>
+    <record id="action_room_employee" model="ir.actions.act_window">
+        <field name="name">Room Employees</field>
+        <field name="res_model">estate.room.employee</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- ✅ Menu Item -->
+    <menuitem id="menu_room_employee"
+              name="Room Employees"
+              parent="menu_estate_root"
+              action="action_room_employee"
+              sequence="7"/>
+</odoo>

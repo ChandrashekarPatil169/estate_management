@@ -1,0 +1,42 @@
+<odoo>
+    <data>
+        <record id="mail_template_po_pending_reminder" model="mail.template">
+            <field name="name">PO Approval Reminder</field>
+
+            <!-- Standard Reference for Purchase Module -->
+            <field name="model_id" ref="purchase.model_purchase_order"/>
+
+            <field name="subject">⏰ Reminder: PO Approval Pending - {{ object.name }}</field>
+
+            <field name="email_from">{{ object.company_id.email }}</field>
+
+            <!-- Pass 'approver_email' in your Python context when sending -->
+            <field name="email_to"></field>
+
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello <t t-out="ctx.get('approver_name') or 'Approver'"/>,
+                        <br/><br/>
+                        This is a reminder that the following Purchase Order is awaiting approval.
+                        <br/><br/>
+                        <ul>
+                            <li><b>PO:</b> <t t-out="object.name"/></li>
+                            <li><b>Vendor:</b> <t t-out="object.partner_id.name"/></li>
+                            <li><b>Total:</b> <t t-out="object.amount_total"/> <t t-out="object.currency_id.name"/></li>
+                        </ul>
+                        <br/>
+                        Please <b>Approve</b> or <b>Reject</b> this PO.
+                        <br/><br/>
+                        <span style="color: red;">
+                            ⚠ Reminder will continue daily until action is taken.
+                        </span>
+                        <br/><br/>
+                        Regards,<br/>
+                        <t t-out="object.company_id.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

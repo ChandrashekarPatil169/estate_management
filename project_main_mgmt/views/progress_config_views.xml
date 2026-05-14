@@ -1,0 +1,42 @@
+<odoo>
+
+    <record id="view_progress_config_form" model="ir.ui.view">
+        <field name="name">progress.config.form</field>
+        <field name="model">progress.config</field>
+        <field name="arch" type="xml">
+            <form string="Progress Bar Color Configuration">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Progress Color Range">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="min_value"/>
+                                    <field name="max_value"/>
+                                    <field name="color" widget="radio" class="progress_color_radio" options="{'horizontal': true}"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_progress_config" model="ir.actions.act_window">
+        <field name="name">Progress Color Config</field>
+        <field name="res_model">progress.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_progress_config"
+              name="Progress Bar Color"
+              parent="project.menu_project_config"
+              action="action_progress_config"
+              sequence="99"/>
+
+</odoo>

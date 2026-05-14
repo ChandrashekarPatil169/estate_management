@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <record id="mail_template_pr_submit" model="mail.template">
+        <field name="name">PR Submitted</field>
+        <field name="model_id" ref="model_material_purchase_requisition"/>
+        <field name="subject">
+            <![CDATA[Purchase Requisition Submitted ]]>
+        </field>
+        <field name="email_from">{{ object.company_id.email }}</field>
+
+        <field name="auto_delete">False</field>
+
+        <!-- VERY IMPORTANT: leave empty -->
+        <field name="email_to"></field>
+
+        <field name="body_html">
+            <![CDATA[
+            <p>
+                📢 <b><t t-out="object.employee_id.name"/></b> submitted a Purchase Requisition
+            </p>
+
+            <ul>
+                <li><b>Reference:</b> <t t-out="object.name"/></li>
+                <li><b>Department:</b> <t t-out="object.department_id.name or 'N/A'"/></li>
+                <li><b>Total Amount:</b> <t t-out="object.total_amount"/></li>
+            </ul>
+
+            <p><b>Requisition Lines:</b></p>
+
+            <table border="1" cellpadding="5" cellspacing="0">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                </tr>
+
+                <t t-foreach="object.line_ids" t-as="line">
+                    <tr>
+                        <td><t t-out="line.product_id.display_name"/></td>
+                        <td><t t-out="line.quantity"/></td>
+                        <td><t t-out="line.price_unit"/></td>
+                    </tr>
+                </t>
+            </table>
+
+            <br/>
+
+            <p>Please review this requisition.</p>
+            ]]>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_project_task_timer_user,project.task.timer.user,project.model_project_task,project.group_project_user,1,1,1,1
+access_project_task_timer_manager,project.task.timer.manager,project.model_project_task,project.group_project_manager,1,1,1,1
+
+access_timesheet_approval_user,timesheet.approval.user,model_timesheet_approval,rt_project_task_timer.group_timesheet_user_custom,1,1,1,0
+access_timesheet_approval_approver,timesheet.approval.approver,model_timesheet_approval,rt_project_task_timer.group_timesheet_approver_custom,1,1,1,1

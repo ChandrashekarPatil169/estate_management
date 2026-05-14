@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_form_inherit_social_media" model="ir.ui.view">
+        <field name="name">hr.employee.form.social.media</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert Social Media page AFTER Educational Background -->
+            <xpath expr="//page[@name='educational_background']" position="after">
+
+                <page string="Social Media" name="social_media">
+                    <group>
+                        <group string="Social Profiles">
+                            <field name="facebook_id"/>
+                            <field name="linkedin_id"/>
+                            <field name="x_twitter_id"/>
+                        </group>
+
+                        <group string="Messaging Apps">
+                            <field name="whatsapp_no"/>
+                            <field name="signal_id"/>
+                        </group>
+                    </group>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

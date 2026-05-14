@@ -1,0 +1,210 @@
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--&lt;!&ndash;-->
+<!--    Copyright 2018 Onestein-->
+<!--    Migrated to Odoo 19-->
+<!--    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)-->
+<!--&ndash;&gt;-->
+<!--<odoo>-->
+
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Timeline View Definition                              &ndash;&gt;-->
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+<!--    <record id="project_project_timeline" model="ir.ui.view">-->
+<!--        <field name="name">project.project.timeline</field>-->
+<!--        <field name="model">project.project</field>-->
+<!--        <field name="type">timeline</field>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            <timeline-->
+<!--                    date_start="date_start"-->
+<!--                    date_stop="date"-->
+<!--                    default_group_by="user_id"-->
+<!--                    event_open_popup="true">-->
+
+<!--                &lt;!&ndash; ================= PROJECT FIELDS ================= &ndash;&gt;-->
+<!--                <field name="name"/>-->
+<!--                <field name="date_start"/>-->
+<!--                <field name="date"/>-->
+<!--                <field name="expected_end_date"/>-->
+<!--                <field name="user_id"/>-->
+
+<!--                <field name="hierarchy_display"/>-->
+
+<!--                <templates>-->
+<!--                    <t t-name="timeline-item">-->
+<!--                        <div style="font-size:13px;">-->
+
+<!--                            &lt;!&ndash; TOP ROW &ndash;&gt;-->
+<!--                            <div style="display:flex; align-items:center; white-space:nowrap;">-->
+
+<!--                                &lt;!&ndash; LEFT SIDE &ndash;&gt;-->
+<!--                                <div style="flex:1;">-->
+<!--                                    <t t-esc="record.name"/>-->
+
+<!--                                    <t t-if="record.date_start and record.date">-->
+<!--                                        <span style="margin-left:15px;">-->
+<!--                                            | Planned Date:-->
+<!--                                            <t t-esc="record.date_start.split(' ')[0]"/>-->
+<!--                                            →-->
+<!--                                            <t t-esc="record.date.split(' ')[0]"/>-->
+<!--                                        </span>-->
+<!--                                    </t>-->
+
+<!--                                    <t t-if="record.expected_end_date">-->
+<!--                                        <span class="o_timeline_exp_date" style="margin-left:10px;">-->
+<!--                                            | Exp:-->
+<!--                                            <t t-esc="record.expected_end_date.split(' ')[0]"/>-->
+<!--                                        </span>-->
+<!--                                    </t>-->
+<!--                                </div>-->
+
+<!--                            </div>-->
+
+<!--                            &lt;!&ndash; HIERARCHY BLOCK &ndash;&gt;-->
+<!--                            &lt;!&ndash;                            <t t-if="record.hierarchy_display">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                <div style="&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        margin-top:8px;&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        line-height:1.6;&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        white-space:pre-wrap;&ndash;&gt;-->
+<!--                            &lt;!&ndash;                        font-family:monospace;&ndash;&gt;-->
+<!--                            &lt;!&ndash;                    ">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                    <t t-foreach="record.hierarchy_display.split('\n')" t-as="line">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                        <div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                            <t t-esc="line"/>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                        </div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                    </t>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                </div>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            </t>&ndash;&gt;-->
+
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </timeline>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Attach Timeline View to Main Project Action           &ndash;&gt;-->
+<!--    &lt;!&ndash; (DO NOT override original action)                     &ndash;&gt;-->
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+<!--    <record id="project_project_timeline_action_main"-->
+<!--            model="ir.actions.act_window.view">-->
+<!--        <field name="sequence" eval="90"/>-->
+<!--        <field name="view_mode">timeline</field>-->
+<!--        <field name="view_id" ref="project_project_timeline"/>-->
+<!--        <field name="act_window_id" ref="project.open_view_project_all"/>-->
+<!--    </record>-->
+
+
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+<!--    &lt;!&ndash; Attach Timeline View to Grouped Stage Action          &ndash;&gt;-->
+<!--    &lt;!&ndash; ===================================================== &ndash;&gt;-->
+
+<!--    <record id="project_project_timeline_action_group_stage"-->
+<!--            model="ir.actions.act_window.view">-->
+<!--        <field name="sequence" eval="90"/>-->
+<!--        <field name="view_mode">timeline</field>-->
+<!--        <field name="view_id" ref="project_project_timeline"/>-->
+<!--        <field name="act_window_id" ref="project.open_view_project_all_group_stage"/>-->
+<!--    </record>-->
+
+
+<!--</odoo>-->
+
+
+<!--  Copyright 2018 Onestein
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).  -->
+<odoo>
+    <record id="project_project_timeline" model="ir.ui.view">
+        <field name="model">project.project</field>
+        <field name="type">timeline</field>
+        <field name="arch" type="xml">
+            <timeline
+                    date_start="planned_start_date"
+                    date_stop="planned_end_date"
+                    default_group_by="user_id"
+                    event_open_popup="true"
+            >
+
+                <!-- Required fields -->
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="project_progress"/>
+
+                <templates>
+                    <t t-name="timeline-item">
+                        <div class="o_project_timeline_item"
+                             style="white-space:nowrap; font-size:13px;">
+
+                            <!-- Project Manager Avatar -->
+                            <t t-if="record.user_id">
+                                <img
+                                        t-att-src="'/web/image/res.users/%s/avatar_128' % record.user_id[0]"
+                                        width="16"
+                                        height="16"
+                                        class="me-1 rounded-circle"
+                                        t-att-alt="record.user_id[1]"
+                                />
+                            </t>
+
+                            <!-- Project Name -->
+                            <t t-esc="record.name"/>
+
+                            <!-- Planned Dates -->
+                            <t t-if="record.planned_start_date and record.planned_end_date">
+                                |
+                                Planned Date:
+                                <t t-esc="record.planned_start_date.substr(0,10)"/>
+                                →
+                                <t t-esc="record.planned_end_date.substr(0,10)"/>
+                            </t>
+
+                            <!-- Expected Date -->
+                            <t t-if="record.expected_end_date">
+                                <span class="o_timeline_exp_date" style="margin-left:10px;">
+                                    |
+                                    Exp:
+                                    <t t-esc="record.expected_end_date.substr(0,10)"/>
+                                </span>
+                            </t>
+
+                            <t t-set="progress" t-value="record.project_progress || 0"/>
+
+                            <t t-set="bar_color"
+                               t-value="progress &lt; 30
+                                        ? '#dc3545'
+                                        : (progress &lt; 70
+                                        ? '#f4d03f'
+                                        : '#2ecb71')"/>
+
+                            <div style="margin-top:5px; width:200px;">
+                                <div style="background:#e9ecef; height:6px; border-radius:4px;">
+                                    <div t-att-style="'width:' + progress + '%; height:6px; border-radius:4px; background:' + bar_color + ';'">
+                                    </div>
+                                </div>
+                                <small style="font-size:11px;">
+                                    <t t-esc="progress.toFixed(1)"/>%
+                                </small>
+                            </div>
+
+                        </div>
+                    </t>
+                </templates>
+
+            </timeline>
+        </field>
+    </record>
+
+    <record id="project.open_view_project_all" model="ir.actions.act_window">
+        <field name="view_mode">kanban,list,form,timeline</field>
+    </record>
+    <record id="project.open_view_project_all_group_stage" model="ir.actions.act_window">
+        <field name="view_mode">kanban,list,form,calendar,activity,timeline</field>
+    </record>
+</odoo>

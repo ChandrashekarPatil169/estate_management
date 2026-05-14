@@ -1,0 +1,133 @@
+<odoo>
+    <!-- Payment list View -->
+    <record id="view_unit_payment_list" model="ir.ui.view">
+        <field name="name">estate.unit.payment.list</field>
+        <field name="model">estate.unit.payment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="building_id"/>
+                <field name="unit_id"/>
+                <field name="product_id"/>
+                <field name="amount"/>
+                <field name="due_date"/>
+                <field name="meter_start_reading"/>
+                <field name="meter_end_reading"/>
+                <field name="meter_consumed"/>
+                <field name="description" optional="hide"/>
+                <field name="service_billing_date" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Payment Form View -->
+    <record id="view_unit_product_idm" model="ir.ui.view">
+        <field name="name">estate.unit.payment.form</field>
+        <field name="model">estate.unit.payment</field>
+        <field name="arch" type="xml">
+            <form string="Unit Payment">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="unit_id"/>
+                        <field name="building_id"/>
+                        <field name="property_id"/>
+                        <field name="product_id"/>
+                        <field name="amount" readonly="amount_locked and id"/>
+                        <field name="due_date" readonly="due_date_locked and id"/>
+                        <field name="amount_locked" widget="boolean_toggle"/>
+                        <field name="due_date_locked" widget="boolean_toggle"/>
+
+                        <!--                        <field name="amount"/>-->
+                        <!--                        <field name="payment_date"/>-->
+                        <!--                        <field name="due_date"/>-->
+
+                        <field name="recurring_payment" widget="boolean_toggle"/>
+
+                        <field name="recurring_start_date"
+                               invisible="recurring_payment == False"/>
+
+                        <field name="recurring_end_date"
+                               invisible="recurring_payment == False"/>
+                    </group>
+                    <group string="Meter Details">
+                        <field name="meter_start_reading"/>
+                        <field name="meter_end_reading"/>
+                        <field name="meter_consumed" readonly="1"/>
+                    </group>
+                    <group string="Payment Completion">
+                        <group>
+                            <field name="payment_done_date"/>
+                            <field name="payment_method_id"/>
+
+                        </group>
+                        <group>
+                            <field name="receipt_number"/>
+                        </group>
+                    </group>
+                    <group string="Additional Details">
+                        <field name="description"/>
+                        <field name="service_billing_date"/>
+                    </group>
+
+
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Payment Pivot View -->
+    <record id="view_unit_payment_pivot" model="ir.ui.view">
+        <field name="name">estate.unit.payment.pivot</field>
+        <field name="model">estate.unit.payment</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Unit Payment Analysis">
+
+                <!-- ROW GROUPING -->
+                <field name="property_id" type="row"/>
+                <field name="building_id" type="row"/>
+                <field name="unit_id" type="row"/>
+
+                <!-- COLUMN -->
+                <field name="product_id" type="col"/>
+
+                <!-- TIME ANALYSIS -->
+                <field name="due_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <field name="amount" type="measure"/>
+                <field name="meter_consumed" type="measure"/>
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+
+        </field>
+    </record>
+
+    <!-- Payment Action -->
+    <record id="action_unit_payment" model="ir.actions.act_window">
+        <field name="name">Unit Payments</field>
+        <field name="res_model">estate.unit.payment</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_unit_payment_search" model="ir.ui.view">
+        <field name="name">estate.unit.payment.search</field>
+        <field name="model">estate.unit.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="building_id"/>
+                <field name="unit_id"/>
+                <field name="product_id"/>
+                <field name="due_date"/>
+                <field name="payment_done_date"/>
+
+            </search>
+        </field>
+    </record>
+</odoo>

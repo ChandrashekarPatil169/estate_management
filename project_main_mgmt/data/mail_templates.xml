@@ -1,0 +1,106 @@
+<odoo>
+    <!-- Start Mail -->
+    <record id="mail_template_sprint_start" model="mail.template">
+        <field name="name">Sprint Start</field>
+        <!-- Updated ref with your actual module name -->
+        <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>
+        <field name="subject">Sprint {{ object.name }} Started</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Hello,</p>
+                <p>Sprint
+                    <strong>
+                        <t t-out="object.name"/>
+                    </strong>
+                    starts today.
+                </p>
+                <p>
+                    <b>Start:</b>
+                    <t t-out="object.start_date"/>
+                </p>
+                <p>
+                    <b>End:</b>
+                    <t t-out="object.end_date"/>
+                </p>
+            </div>
+        </field>
+    </record>
+
+    <!-- Mid Mail -->
+    <record id="mail_template_sprint_mid" model="mail.template">
+        <field name="name">Sprint Midway</field>
+        <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>
+        <field name="subject">Sprint {{ object.name }} Midway</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p>Hello,</p>
+                <p>Sprint
+                    <strong>
+                        <t t-out="object.name"/>
+                    </strong>
+                    has reached its midpoint.
+                </p>
+            </div>
+        </field>
+    </record>
+
+
+    <record id="mail_template_sprint_done" model="mail.template">
+        <field name="name">Sprint Completed</field>
+        <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>
+        <field name="subject">Sprint {{ object.name }} Completed</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px; font-family: 'Arial', sans-serif;">
+                <h2 style="color: #714B67;">Sprint Completed:
+                    <t t-out="object.name"/>
+                </h2>
+
+                <p>
+                    <strong>Project:</strong>
+                    <t t-out="object.project_id.name"/>
+                </p>
+                <p>
+                    <strong>Duration:</strong>
+                    <t t-out="object.start_date"/>
+                    to
+                    <t t-out="object.end_date"/>
+                </p>
+
+                <!-- Sprint Scope Table -->
+                <h4 style="margin-top: 20px; border-bottom: 1px solid #eee;">Sprint Scope</h4>
+                <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                    <thead>
+                        <tr style="background-color: #f8f9fa; text-align: left;">
+                            <th style="padding: 8px; border: 1px solid #dee2e6;">User Story</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6;">Task</th>
+                            <th style="padding: 8px; border: 1px solid #dee2e6;">Subtask</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="object.scope_line_ids" t-as="line">
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #dee2e6;">
+                                    <t t-out="line.user_story_id.display_name or '-'"/>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #dee2e6;">
+                                    <t t-out="line.task_id.display_name or '-'"/>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #dee2e6;">
+                                    <t t-out="line.subtask_id.display_name or '-'"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!-- Notes Section -->
+                <t t-if="object.description">
+                    <h4 style="margin-top: 20px; border-bottom: 1px solid #eee;">Sprint Notes</h4>
+                    <div style="padding: 10px; background: #fcfcfc; border: 1px inset #eee;">
+                        <t t-out="object.description"/>
+                    </div>
+                </t>
+            </div>
+        </field>
+    </record>
+</odoo>

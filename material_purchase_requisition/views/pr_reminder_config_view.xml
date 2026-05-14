@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pr_reminder_config_tree" model="ir.ui.view">
+        <field name="name">pr.approval.reminder.config.list</field>
+        <field name="model">pr.approval.reminder.config</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="delay_value"/>
+                <field name="delay_unit"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pr_reminder_config_form" model="ir.ui.view">
+        <field name="name">pr.approval.reminder.config.form</field>
+        <field name="model">pr.approval.reminder.config</field>
+        <field name="arch" type="xml">
+            <form string="PR Approval Reminder Configuration">
+                <sheet>
+                    <group>
+                        <field name="delay_value"/>
+                        <field name="delay_unit"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pr_reminder_config" model="ir.actions.act_window">
+        <field name="name">Approval Reminder Settings</field>
+        <field name="res_model">pr.approval.reminder.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

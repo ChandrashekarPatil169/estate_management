@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ===================== -->
+    <!-- TABLE LIST VIEW -->
+    <!-- ===================== -->
+    <record id="view_room_table_list" model="ir.ui.view">
+        <field name="name">estate.room.table.list</field>
+        <field name="model">estate.room.table</field>
+        <field name="arch" type="xml">
+            <list string="Room Tables">
+
+                <!-- MAIN -->
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+
+                <field name="employee_id"/>
+
+                <!-- HIERARCHY -->
+                <field name="hup_room_id"/>
+
+                <!-- OPTIONAL -->
+                <field name="hup_unit_id" optional="hide"/>
+                <field name="hup_floor_id" optional="hide"/>
+                <field name="hup_building_id" optional="hide"/>
+                <field name="hup_property_id" optional="hide"/>
+                <field name="hup_location_id" optional="hide"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- ===================== -->
+    <!-- TABLE FORM VIEW -->
+    <!-- ===================== -->
+    <record id="view_room_table_form" model="ir.ui.view">
+        <field name="name">estate.room.table.form</field>
+        <field name="model">estate.room.table</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <!--                        <field name="hup_room_id"/>-->
+                        <!--                        <field name="unit_id"/>-->
+                        <!--                        <field name="floor_id"/>-->
+                        <!--                        <field name="building_id"/>-->
+                        <!--                        <field name="property_id"/>-->
+                        <field name="active"/>
+                    </group>
+                    <group string="Related Details" readonly="1">
+                        <field name="hup_room_id"/>
+                        <field name="hup_unit_id"/>
+                        <field name="hup_floor_id"/>
+                        <field name="hup_building_id"/>
+                        <field name="hup_property_id"/>
+                        <field name="hup_location_id"/>
+                    </group>
+                    <group string="Employee Assignment">
+                        <field name="employee_id"/>
+                    </group>
+                    <notebook>
+                        <page string="Employees" invisible="1">
+                            <field name="employee_line_ids">
+                                <list editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="room_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- ROOM TABLE PIVOT -->
+    <record id="view_room_table_pivot" model="ir.ui.view">
+        <field name="name">estate.room.table.pivot</field>
+        <field name="model">estate.room.table</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Room Table Analysis">
+
+                <!-- ROWS -->
+                <field name="hup_property_id" type="row"/>
+                <field name="hup_building_id" type="row"/>
+                <field name="hup_floor_id" type="row"/>
+                <field name="hup_unit_id" type="row"/>
+                <field name="hup_room_id" type="row"/>
+
+                <!-- COLUMN -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURE -->
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+
+        </field>
+    </record>
+
+    <!-- ============================== -->
+    <!-- Room Table : Action -->
+    <!-- ============================== -->
+
+
+    <record id="view_room_list" model="ir.ui.view">
+        <field name="name">estate.room.list</field>
+        <field name="model">estate.room</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hup_unit_id"/>
+                <field name="hup_floor_id"/>
+                <field name="hup_building_id"/>
+                <field name="hup_property_id"/>
+                <field name="hup_location_id"/>
+                <field name="room_type_id"/>
+                <field name="size_sqft"/>
+                <field name="employee_count"/>
+                <field name="hcount_table" optional="show"/>
+                <field name="employee_count" optional="hide"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_room_form" model="ir.ui.view">
+        <field name="name">estate.room.form</field>
+        <field name="model">estate.room</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="haction_open_tables"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-table"
+                        >
+                            <field name="hcount_table" widget="statinfo"/>
+                        </button>
+
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <!--                        <field name="hup_unit_id"/>-->
+                        <field name="code"
+                        />
+
+
+                        <!--                        <field name="hub_building_id"/>-->
+                        <!--                        <field name="property_id"/>-->
+                        <field name="size_sqft"/>
+                        <field name="room_type_id"/>
+                        <field name="employee_count" readonly="1"/>
+                    </group>
+                    <group string="Details">
+                        <field name="hup_unit_id"/>
+                        <field name="hup_floor_id"/>
+                        <field name="hup_building_id"/>
+                        <field name="hup_property_id"/>
+                        <field name="hup_location_id"/>
+
+
+                    </group>
+
+                    <div>
+                        <notebook>
+                            <page string="Employees">
+                                <field name="employee_ids" readonly="1">
+                                    <list>
+                                        <field name="employee_id"/>
+                                        <field name="table_id"/>
+                                    </list>
+                                </field>
+                            </page>
+
+                            <page string="Related Details">
+                                <group readonly="1">
+                                    <field name="hdown_table_ids" widget="many2many_tags"/>
+                                </group>
+
+
+                            </page>
+                        </notebook>
+                    </div>
+
+
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- ROOM PIVOT -->
+    <record id="view_room_pivot" model="ir.ui.view">
+        <field name="name">estate.room.pivot</field>
+        <field name="model">estate.room</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Room Analysis">
+
+                <!-- ROW -->
+                <field name="hup_property_id" type="row"/>
+                <field name="hup_building_id" type="row"/>
+                <field name="hup_floor_id" type="row"/>
+                <field name="hup_unit_id" type="row"/>
+                <field name="room_type_id" type="row"/>
+
+                <!-- COLUMN -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURE -->
+                <field name="employee_count" type="measure"/>
+                <field name="size_sqft" type="measure"/>
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+
+        </field>
+    </record>
+
+
+    <record id="view_estate_room_form_hierarchy_full" model="ir.ui.view">
+        <field name="name">estate.room.form.hierarchy.full</field>
+        <field name="model">estate.room</field>
+        <field name="inherit_id" ref="estate_management.view_room_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/group" position="inside">
+
+            </xpath>
+
+
+        </field>
+    </record>
+
+
+</odoo>

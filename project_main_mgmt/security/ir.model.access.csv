@@ -1,0 +1,46 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_backlog_user,product.backlog user,model_product_backlog,base.group_user,1,1,1,1
+access_project_epic_user,project.epic user,model_project_epic,base.group_user,1,1,1,1
+access_project_user_story_user,project.user.story user,model_project_user_story,base.group_user,1,1,1,1
+access_project_subtask_user,project.subtask user,model_project_subtask,base.group_user,1,1,1,1
+access_product_backlog_type_user,access.product.backlog.type user,model_product_backlog_type,base.group_user,1,1,1,0
+access_product_backlog_type_manager,access.product.backlog.type manager,model_product_backlog_type,base.group_system,1,1,1,1
+
+access_sla_monitor_selector_user,sla.monitor.selector user,model_sla_monitor_selector,base.group_user,1,1,1,0
+access_project_subtask_stage,access.project.subtask.stage,model_project_subtask_stage,base.group_user,1,1,1,1
+access_project_sprint_user,project.sprint user,model_project_sprint,base.group_user,1,1,1,1
+access_project_sprint_line_user,project.sprint.line user,model_project_sprint_line,base.group_user,1,1,1,1
+access_project_sprint_stage,project.sprint.stage,model_project_sprint_stage,base.group_user,1,1,1,1
+
+
+access_task_type_master_manager,task.type.master.manager,model_project_task_type_master,project.group_project_manager,1,1,1,1
+access_task_type_master_user,task.type.master.user,model_project_task_type_master,project.group_project_user,1,0,0,0
+
+
+access_progress_config,progress.config,model_progress_config,,1,1,1,1
+access_progress_config_line,progress.config.line,model_progress_config_line,,1,1,1,1
+
+access_task_label_master_manager,task.label.master.manager,model_project_task_label_master,project.group_project_manager,1,1,1,1
+access_task_label_master_user,task.label.master.user,model_project_task_label_master,project.group_project_user,1,0,0,0
+
+access_task_user,task user,project.model_project_task,project.group_project_user,1,1,1,0
+access_project_block,project block,project.model_project_project,project.group_project_user,1,0,0,0
+
+
+
+
+access_timesheet_user_custom,Timesheet User Custom,account.model_account_analytic_line,project_main_mgmt.group_timesheet_user_custom,1,1,1,0
+
+
+
+
+
+
+
+
+
+
+
+access_project_task_internal,project.task internal,project.model_project_task,base.group_user,1,0,1,0
+access_timesheet_internal,account.analytic.line internal,analytic.model_account_analytic_line,base.group_user,1,1,1,0
+access_hr_employee_internal,hr.employee internal,hr.model_hr_employee,base.group_user,1,0,0,0

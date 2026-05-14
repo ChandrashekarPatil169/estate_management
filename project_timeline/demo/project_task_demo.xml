@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Migrated to Odoo 19 -->
+<odoo>
+
+    <!-- ================= Project 1 Tasks ================= -->
+
+    <record id="project.project_1_task_9" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=13)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() - datetime.timedelta(days=6)"/>
+    </record>
+
+    <record id="project.project_1_task_2" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=1)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=1)"/>
+    </record>
+
+    <record id="project.project_1_task_3" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=2)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=1)"/>
+    </record>
+
+    <record id="project.project_1_task_8" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=10)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() - datetime.timedelta(days=6)"/>
+    </record>
+
+    <record id="project.project_1_task_6" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=9)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() - datetime.timedelta(days=2)"/>
+    </record>
+
+    <record id="project.project_1_task_7" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=7)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() - datetime.timedelta(days=2)"/>
+    </record>
+
+    <record id="project.project_1_task_5" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=6)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() - datetime.timedelta(days=3)"/>
+    </record>
+
+    <!-- ================= Project 2 Tasks ================= -->
+
+    <record id="project.project_2_task_7" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=1)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=10)"/>
+    </record>
+
+    <record id="project.project_2_task_9" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() - datetime.timedelta(days=1)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=6)"/>
+    </record>
+
+    <record id="project.project_2_task_5" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=13)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=23)"/>
+    </record>
+
+    <record id="project.project_2_task_4" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=13)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=23)"/>
+    </record>
+
+    <record id="project.project_2_task_3" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=1)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=20)"/>
+    </record>
+
+    <record id="project.project_2_task_2" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=1)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=10)"/>
+    </record>
+
+    <record id="project.project_2_task_6" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=11)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=15)"/>
+    </record>
+
+    <record id="project.project_2_task_8" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=12)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=20)"/>
+    </record>
+
+    <record id="project.project_2_task_1" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=20)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=22)"/>
+    </record>
+
+    <record id="project.project_1_task_4" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=30)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=32)"/>
+    </record>
+
+    <record id="project.project_1_task_1" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=30)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=35)"/>
+    </record>
+
+    <record id="project.project_2_task_10" model="project.task">
+        <field name="planned_date_start"
+               eval="datetime.datetime.now() + datetime.timedelta(days=20)"/>
+        <field name="planned_date_end"
+               eval="datetime.datetime.now() + datetime.timedelta(days=50)"/>
+    </record>
+
+</odoo>

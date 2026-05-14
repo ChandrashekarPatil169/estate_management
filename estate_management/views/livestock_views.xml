@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Livestock list View -->
+    <record id="view_livestock_list" model="ir.ui.view">
+        <field name="name">estate.livestock.list</field>
+        <field name="model">estate.livestock</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="unique_id"/>
+
+                <field name="animal_config_id"/>
+
+                <field name="code"/>
+                <field name="gender"/>
+
+
+                <field name="breed"/>
+                <field name="total_count"/>
+                <field name="male_count"/>
+                <field name="female_count"/>
+                <field name="farm_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Livestock Form View -->
+    <record id="view_livestock_form" model="ir.ui.view">
+        <field name="name">estate.livestock.form</field>
+        <field name="model">estate.livestock</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_open_feeding"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-cutlery">
+                            <field name="feeding_count" widget="statinfo" string="Feeding"/>
+                        </button>
+
+                        <button name="action_open_medical"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-medkit">
+                            <field name="medical_count" widget="statinfo" string="Medical"/>
+                        </button>
+
+                        <button name="action_open_harvest"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="harvest_count" widget="statinfo" string="Harvest"/>
+                        </button>
+                    </div>
+
+                    <group>
+                        <field name="animal_config_id"/>
+                        <field name="unique_id"/>
+                        <field name="code" readonly="code_locked"/>
+                        <field name="gender"/>
+                        <field name="subfarm_id"/>
+                        <field name="farm_id"/>
+                        <field name="property_id"/>
+                        <field name="building_id"/>
+                        <field name="group_name"/>
+                        <field name="total_count" invisible="1"/>
+                        <field name="male_count" invisible="1"/>
+                        <field name="female_count" invisible="1"/>
+                    </group>
+                    <group string="Animal Details">
+                        <field name="breed_ids" widget="many2many_tags" domain="[('id', 'in', allowed_breed_ids)]"/>
+                        <field name="feed_ids" widget="many2many_tags" domain="[('id', 'in', allowed_feed_ids)]"/>
+                        <field name="disease_ids" widget="many2many_tags" domain="[('id', 'in', allowed_disease_ids)]"/>
+                    </group>
+                    <group string="Lifecycle Logs" invisible="1">
+                        <field name="feeding_ids" widget="many2many_tags"/>
+                        <field name="medical_ids" widget="many2many_tags"/>
+                        <field name="harvest_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <group string="Production &amp; Health" invisible="1">
+                        <field name="milk_production"/>
+                        <field name="egg_production"/>
+                        <field name="meat_production"/>
+                        <field name="vaccination_records"/>
+                        <field name="medical_treatments" invisible="1"/>
+                        <field name="diseases" invisible="1"/>
+                    </group>
+
+                    <group string="Housing &amp; Breeding" invisible="1">
+                        <field name="building_id"/>
+                        <field name="floor_id"/>
+                        <field name="unit_id"/>
+                        <field name="room_id"/>
+                        <field name="breeding_records"/>
+                        <field name="feed_management"/>
+                        <field name="pedigree"/>
+                    </group>
+
+
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- LIVESTOCK PIVOT VIEW -->
+    <record id="view_livestock_pivot" model="ir.ui.view">
+        <field name="name">estate.livestock.pivot</field>
+        <field name="model">estate.livestock</field>
+        <field name="arch" type="xml">
+            <pivot string="Livestock Analysis">
+
+                <!-- ROW GROUPS -->
+                <field name="farm_id" type="row"/>
+                <field name="subfarm_id" type="row"/>
+                <field name="animal_config_id" type="row"/>
+                <field name="gender" type="row"/>
+                <field name="breed" type="row"/>
+
+                <!-- TIME -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <field name="total_count" type="measure"/>
+                <field name="male_count" type="measure"/>
+                <field name="female_count" type="measure"/>
+<!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+        </field>
+    </record>
+    <record id="view_estate_livestock_feeding_list" model="ir.ui.view">
+        <field name="name">estate.livestock.feeding.list</field>
+        <field name="model">estate.livestock.feeding</field>
+        <field name="arch" type="xml">
+            <list>
+                <!--            <field name="livestock_ids"/>-->
+                <field name="animal_type_id"/>
+                <field name="feed_id"/>
+                <field name="expected_feed_time"/>
+                <field name="actual_feed_time"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_livestock_feeding_form" model="ir.ui.view">
+        <field name="name">estate.livestock.feeding.form</field>
+        <field name="model">estate.livestock.feeding</field>
+        <field name="arch" type="xml">
+            <form string="Feeding Log">
+                <sheet>
+                    <group>
+                        <!--                    <field name="livestock_id" />-->
+                        <field name="animal_type_id"/>
+                    </group>
+
+                    <group>
+
+                        <field name="feed_id" domain="[('id', 'in', allowed_feed_ids)]"/>
+                        <field name="expected_feed_time"/>
+                        <field name="actual_feed_time"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_livestock_medical_list" model="ir.ui.view">
+        <field name="name">estate.livestock.medical.list</field>
+        <field name="model">estate.livestock.medical</field>
+        <field name="arch" type="xml">
+            <list>
+                <!--            <field name="livestock_id"/>-->
+                <field name="animal_type_id"/>
+                <field name="medical_treatment_ids"/>
+                <field name="treatment_date"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_livestock_medical_form" model="ir.ui.view">
+        <field name="name">estate.livestock.medical.form</field>
+        <field name="model">estate.livestock.medical</field>
+        <field name="arch" type="xml">
+            <form string="Medical Treatment">
+                <sheet>
+                    <group>
+                        <!--                    <field name="livestock_id"/>-->
+                        <field name="animal_type_id"/>
+                    </group>
+
+                    <group>
+
+                        <field name="disease_id"
+                               domain="[('id','in', allowed_disease_ids)]"/>
+
+                        <field name="medical_treatment_ids" widget="many2many_tags"
+                               domain="[('id','in', allowed_medical_ids)]"/>
+                        <field name="treatment_date"/>
+
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_livestock_harvest_list" model="ir.ui.view">
+        <field name="name">estate.livestock.harvest.list</field>
+        <field name="model">estate.livestock.harvest</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="animal_type_id"/>
+                <field name="harvest_product_id"/>
+                <field name="expected_harvest_date"/>
+                <field name="actual_harvest_datetime"/>
+                <field name="harvested_quantity"/>
+                <field name="uom_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_livestock_harvest_form" model="ir.ui.view">
+        <field name="name">estate.livestock.harvest.form</field>
+        <field name="model">estate.livestock.harvest</field>
+        <field name="arch" type="xml">
+            <form string="Harvest Record">
+                <sheet>
+                    <group>
+                        <field name="animal_type_id"/>
+                    </group>
+
+                    <group>
+                        <field name="harvest_product_id" domain="[('id','in', allowed_product_ids)]"/>
+                        <field name="expected_harvest_date"/>
+                        <field name="actual_harvest_datetime"/>
+                        <field name="harvested_quantity"/>
+                        <field name="uom_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Livestock Action -->
+    <record id="action_livestock" model="ir.actions.act_window">
+        <field name="name">Livestock</field>
+        <field name="res_model">estate.livestock</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- Livestock Menu -->
+    <menuitem id="menu_livestock" name="Livestock Operations" parent="menu_farm" action="action_livestock"
+              sequence="2"/>
+</odoo>
+

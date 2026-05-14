@@ -1,0 +1,35 @@
+<odoo>
+    <data>
+        <record id="email_template_qc_notify" model="mail.template">
+            <field name="name">Quality Check: Notification</field>
+            <!-- ✅ Points to stock.picking -->
+            <field name="model_id" ref="stock.model_stock_picking"/>
+
+            <!-- ✅ Headers on a single line -->
+            <field name="subject">Quality Check Required for Receipt</field>
+            <field name="email_from">{{ object.company_id.email }}</field>
+            <field name="email_to"></field>
+
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p>Hello,</p>
+                    <p>
+                        A new Quality Check is required for
+                        <strong><t t-out="object.name"/></strong>
+                        <t t-if="object.origin">(Source: <t t-out="object.origin"/>)</t>.
+                    </p>
+                    <p>Please click the button below to review and pass the inspection:</p>
+                    <div style="margin: 16px 0px 16px 0px;">
+                        <!-- ✅ Safer backend URL for stock.picking -->
+                        <a t-attf-href="/web#id={{ object.id }}&amp;model=stock.picking&amp;view_type=form"
+                           style="background-color: #875A7B; padding: 10px 20px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
+                            View Receipt
+                        </a>
+                    </div>
+                    <p>Regards.</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

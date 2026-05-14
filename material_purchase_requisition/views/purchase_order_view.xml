@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <record id="purchase_order_form_ribbon_inherit" model="ir.ui.view">
+            <field name="name">purchase.order.form.ribbon</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+
+
+                <xpath expr="//sheet" position="inside">
+
+
+                    <!-- PARTIALLY RECEIVED -->
+                    <widget name="web_ribbon"
+                            title="Partially Received"
+                            bg_color="bg-warning"
+                            invisible="receipt_status != 'partial'"/>
+
+
+                    <!-- FULLY RECEIVED -->
+                    <widget name="web_ribbon"
+                            title="Fully Received"
+                            bg_color="bg-success"
+                            invisible="receipt_status != 'full'"/>
+
+
+                </xpath>
+
+                <!-- ✅ INSERT INSIDE EXISTING "OTHER INFORMATION" TAB -->
+                <xpath expr="//field[@name='fiscal_position_id']" position="after">
+
+                    <field name="employee_id" readonly="1" widget="many2one_avatar_user"/>
+                    <field name="department_id" readonly="1"/>
+
+                </xpath>
+                <!-- ================= ENABLE BUTTONS IN RECEIVED STAGE ================= -->
+
+                <!-- STATUS BAR -->
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">
+                        draft,sent,purchase,received
+                    </attribute>
+                </xpath>
+
+                <!-- FILE UPLOAD -->
+                <xpath expr="//widget[@name='purchase_file_uploader']"
+                       position="attributes">
+                    <attribute name="invisible">
+                        state not in ('purchase','received')
+                    </attribute>
+                </xpath>
+
+                <!-- SEND RFQ / SEND PO -->
+                <xpath expr="//button[@name='action_rfq_send']"
+                       position="attributes">
+                    <attribute name="invisible">
+                        state not in ('draft','sent','purchase','received')
+                    </attribute>
+                </xpath>
+
+                <!-- ACKNOWLEDGE -->
+                <xpath expr="//button[@name='action_acknowledge']"
+                       position="attributes">
+                    <attribute name="invisible">
+                        acknowledged or state not in ('purchase','received')
+                    </attribute>
+                </xpath>
+
+            </field>
+
+
+        </record>
+
+
+    </data>
+</odoo>

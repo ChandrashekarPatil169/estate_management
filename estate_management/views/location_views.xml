@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_location_list" model="ir.ui.view">
+        <field name="name">estate.location.list</field>
+        <field name="model">estate.location</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+                <field name="hcount_property" optional="show"/>
+                <field name="hcount_building" optional="show"/>
+                <field name="hcount_unit" optional="show"/>
+
+                <!-- OPTIONAL -->
+                <field name="hcount_floor" optional="hide"/>
+                <field name="hcount_room" optional="hide"/>
+                <field name="hcount_table" optional="hide"/>
+                <field name="hcount_farm" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ================================================= -->
+    <!-- LOCATION FORM VIEW -->
+    <!-- ================================================= -->
+    <record id="view_location_form" model="ir.ui.view">
+        <field name="name">estate.location.form</field>
+        <field name="model">estate.location</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <sheet>
+
+                    <!-- ================= SMART BUTTONS ================= -->
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="haction_open_properties"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-building">
+                            <field name="hcount_property"
+                                   widget="statinfo"
+                                   string="Properties"/>
+                        </button>
+
+                        <button name="haction_open_buildings"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-building">
+                            <field name="hcount_building"
+                                   widget="statinfo"
+                                   string="Buildings"/>
+                        </button>
+
+                        <button name="haction_open_floors"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-home">
+                            <field name="hcount_floor"
+                                   widget="statinfo"
+                                   string="Floors"/>
+                        </button>
+
+                        <button name="haction_open_units"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-home">
+                            <field name="hcount_unit"
+                                   widget="statinfo"
+                                   string="Units"/>
+                        </button>
+
+                        <button name="haction_open_rooms"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-th-large">
+                            <field name="hcount_room"
+                                   widget="statinfo"
+                                   string="Rooms"/>
+                        </button>
+
+                        <button name="haction_open_tables"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-table">
+                            <field name="hcount_table"
+                                   widget="statinfo"
+                                   string="Tables"/>
+                        </button>
+
+                        <button name="haction_open_farms"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="hcount_farm"
+                                   widget="statinfo"
+                                   string="Farms"/>
+                        </button>
+
+                    </div>
+
+                    <!-- ================= LOCATION DETAILS ================= -->
+                    <group string="Location Details">
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+
+                    <!-- ================= RELATED DETAILS ================= -->
+                    <notebook>
+                        <page string="Related Details">
+                            <group readonly="1">
+                                <field name="hdown_property_ids" widget="many2many_tags"/>
+                                <field name="hdown_building_ids" widget="many2many_tags"/>
+                                <field name="hdown_farm_ids" widget="many2many_tags"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_location_pivot" model="ir.ui.view">
+        <field name="name">estate.location.pivot</field>
+        <field name="model">estate.location</field>
+        <field name="arch" type="xml">
+            <pivot string="Location Analysis">
+
+                <!-- ROW GROUP -->
+                <field name="name" type="row"/>
+                <field name="active" type="row"/>
+
+            </pivot>
+        </field>
+    </record>
+
+
+    <!--    <record id="view_users_form_inherit_estate_hierarchy" model="ir.ui.view">-->
+    <!--        <field name="name">res.users.form.inherit.estate.hierarchy</field>-->
+    <!--        <field name="model">res.users</field>-->
+    <!--        <field name="inherit_id" ref="base.view_users_form"/>-->
+    <!--        <field name="arch" type="xml">-->
+
+    <!--            &lt;!&ndash; Add under preferences or access rights &ndash;&gt;-->
+    <!--            <xpath expr="//sheet//group" position="inside">-->
+
+    <!--                <group string="Hierarchy">-->
+    <!--                    <field name="parent_id"/>-->
+    <!--                </group>-->
+
+    <!--            </xpath>-->
+
+    <!--        </field>-->
+    <!--    </record>-->
+    <record id="view_users_form_inherit_hierarchy" model="ir.ui.view">
+        <field name="name">res.users.form.hierarchy</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add new notebook page -->
+            <xpath expr="//notebook" position="inside">
+
+                <!-- Manager -->
+                <page string="Estate Hierarchy">
+
+                    <group>
+                        <field name="parent_id"/>
+                    </group>
+
+                    <!-- Subordinates -->
+                    <group string="Subordinates">
+                        <field name="child_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="login"/>
+                            </list>
+                        </field>
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <record id="view_mail_followers_edit_form_inherit_can_edit" model="ir.ui.view">
+        <field name="name">mail.followers.edit.form.inherit.can.edit</field>
+        <field name="model">mail.followers.edit</field>
+        <field name="inherit_id" ref="mail.mail_followers_edit_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='partner_ids']" position="after">
+                <field name="can_edit"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_partner_form_disable_image_edit" model="ir.ui.view">
+        <field name="name">res.partner.form.disable.image.edit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Make image (avatar/logo) readonly -->
+            <xpath expr="//field[@name='image_1920']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_users_form_disable_avatar_edit" model="ir.ui.view">
+        <field name="name">res.users.form.disable.avatar</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+
+            <!-- Disable avatar editing -->
+            <xpath expr="//field[@name='image_1920']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_users_form_image_readonly" model="ir.ui.view">
+        <field name="name">res.users.form.image.readonly</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Target the actual editable image field -->
+            <xpath expr="//field[@name='image_1920']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="estate_hide_can_edit_field" model="ir.ui.view">
+        <field name="name">mail.followers.edit.hide.can_edit</field>
+        <field name="model">mail.followers.edit</field>
+        <field name="inherit_id" ref="mail.mail_followers_list_edit_form"/>
+        <field name="arch" type="xml">
+
+            <!-- 🔥 HIDE FIELD COMPLETELY -->
+            <xpath expr="//field[@name='can_edit']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+
+
+
+
+</odoo>

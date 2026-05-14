@@ -1,0 +1,47 @@
+<odoo>
+    <!-- 1. Global Rule: Apply to everyone by default -->
+    <record id="rule_qc_visibility_user" model="ir.rule">
+        <field name="name">QC: Default visibility restricted</field>
+        <field name="model_id" ref="model_material_quality_check"/>
+        <field name="domain_force">
+            ['|', '|',
+            ('requester_id', '=', user.id),
+            ('admin_1_id', '=', user.id),
+            ('admin_2_id', '=', user.id)]
+        </field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- 2. Admin Bypass: Specifically for ERP Managers -->
+    <record id="rule_qc_visibility_admin" model="ir.rule">
+        <field name="name">QC: Administrators see all records</field>
+        <field name="model_id" ref="model_material_quality_check"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_erp_manager'))]"/>
+    </record>
+
+</odoo>
+
+
+        <!--<odoo>-->
+        <!--    <record id="rule_qc_visibility" model="ir.rule">-->
+        <!--        <field name="name">Only show assigned QC tasks</field>-->
+        <!--        <field name="model_id" ref="model_material_quality_check"/>-->
+        <!--        <field name="domain_force">['|', '|', ('requester_id', '=', user.id), ('admin_1_id', '=', user.id),-->
+        <!--            ('admin_2_id', '=', user.id)]-->
+        <!--        </field>-->
+        <!--    </record>-->
+        <!--    <record id="rule_qc_visibility" model="ir.rule">-->
+        <!--        <field name="name">History: Show assigned QC tasks</field>-->
+        <!--        <field name="model_id" ref="model_material_quality_check"/>-->
+        <!--        &lt;!&ndash; This allows users to see any record where they were one of the 3 checkers &ndash;&gt;-->
+        <!--        <field name="domain_force">-->
+        <!--            ['|', '|',-->
+        <!--            ('requester_id', '=', user.id),-->
+        <!--            ('admin_1_id', '=', user.id),-->
+        <!--            ('admin_2_id', '=', user.id)]-->
+        <!--        </field>-->
+        <!--        <field name="groups" eval="[(4, ref('base.group_user'))]"/>-->
+        <!--    </record>-->
+
+        <!--</odoo>-->

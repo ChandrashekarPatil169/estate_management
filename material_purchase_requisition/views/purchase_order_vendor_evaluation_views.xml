@@ -1,0 +1,33 @@
+<odoo>
+    <record id="view_product_vendor_evaluation_list" model="ir.ui.view">
+        <field name="name">product.vendor.evaluation.list</field>
+        <field name="model">purchase.order.line</field>
+        <field name="arch" type="xml">
+
+            <list string="Product Vendor Evaluation"
+                  decoration-success="is_best_vendor">
+
+                <header>
+                    <button name="%(action_product_vendor_evaluation_report)d"
+                            type="action"
+                            string="Print Product Vendor Evaluation"
+                            class="btn-primary"/>
+                </header>
+
+                <field name="product_id"/>
+                <field name="vendor_id"/>
+                <field name="price_unit"/>
+                <field name="product_uom_qty"/>
+                <field name="delivery_date"/>
+                <field name="discount"/>
+
+                <field name="eval_price_score"/>
+                <field name="eval_qty_score"/>
+                <field name="eval_delivery_score"/>
+                <field name="eval_discount_score"/>
+                <field name="eval_total_score"/>
+            </list>
+
+        </field>
+    </record>
+</odoo>

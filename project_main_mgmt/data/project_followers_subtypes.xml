@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="mt_project_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop all project kanban records</field>
+        <field name="res_model">project.project</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">999</field>
+
+    </record>
+    <record id="mt_project_product_backlog_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop kanban records</field>
+        <field name="res_model">product.backlog</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1011</field>
+    </record>
+
+    <record id="mt_project_epic_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop kanban records</field>
+        <field name="res_model">project.epic</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1021</field>
+    </record>
+    <record id="mt_project_user_story_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop kanban records</field>
+        <field name="res_model">project.user.story</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1031</field>
+    </record>
+    <record id="mt_project_task_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop kanban records</field>
+        <field name="res_model">project.task</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1041</field>
+    </record>
+    <record id="mt_project_subtask_kanban_drag_access" model="mail.message.subtype">
+        <field name="name">Kanban Drag &amp; Drop Access</field>
+        <field name="description">Allows this follower to drag and drop kanban records</field>
+        <field name="res_model">project.subtask</field>
+        <field name="default" eval="False"/>
+        <field name="internal" eval="True"/>
+        <field name="sequence">1051</field>
+    </record>
+
+
+
+
+
+
+
+
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================== -->
+    <!-- Root Menu -->
+    <!-- ============================== -->
+    <menuitem id="menu_estate_root" name="Estate Management" sequence="1"/>
+
+    <!-- ============================== -->
+    <!-- Properties -->
+    <!-- ============================== -->
+
+    <menuitem id="menu_property_root" name="Management Console" parent="menu_estate_root" sequence="1"/>
+    <menuitem id="menu_location"
+              name="Location Management"
+              parent="menu_property_root"
+              action="action_location"
+              sequence="-1"/>
+    <menuitem id="menu_property" name="Property Management" parent="menu_property_root" action="action_property"
+              sequence="1"/>
+    <menuitem id="menu_building_root" name="Buildings" parent="menu_property_root" sequence="2"/>
+
+    <!-- Sub-menus under Buildings -->
+    <menuitem id="menu_building" name="Building Management" parent="menu_property_root" action="action_building"
+              sequence="1"/>
+    <menuitem id="menu_floor" name="Floors Management" parent="menu_property_root" action="action_floor" sequence="2"/>
+    <menuitem id="menu_unit" name="Units Management" parent="menu_property_root" action="action_unit" sequence="3"/>
+    <menuitem id="menu_room" name="Rooms Management" parent="menu_property_root" action="action_room" sequence="4"/>
+    <menuitem id="menu_room_table"
+              name="Tables Management"
+              parent="menu_property_root"
+              action="action_room_table"
+              sequence="5"/>
+
+    <!-- ============================== -->
+    <!-- Farms -->
+    <!-- ============================== -->
+    <menuitem id="menu_farm_root" name="Farms" parent="menu_estate_root" sequence="2"/>
+    <menuitem id="menu_farm_all_new" name="Farms management" parent="menu_farm_root" action="action_farm_new"
+              sequence="0"/>
+    <menuitem id="menu_farm" name="Farm Management" parent="menu_farm_root" action="action_farm" sequence="1"/>
+    <menuitem id="menu_livestock" name="Livestock" parent="menu_farm_root" action="action_livestock" sequence="3"/>
+    <menuitem id="menu_farm_task" name="Farm Tasks" parent="menu_farm_root" action="action_farm_task" sequence="4"/>
+    <menuitem id="menu_farm_employee" name="Farm Employees" parent="menu_farm_root" action="action_farm_employee"
+              sequence="5"/>
+    <menuitem id="menu_asset" name="Assets" parent="menu_farm_root" action="action_asset" sequence="6"/>
+<!--    <menuitem id="menu_farm_plot" name="Farm Plots" parent="menu_farm_root" action="action_farm_plot" sequence="7"/>-->
+<!--    <menuitem id="menu?_irrigation" name="Irrigation Logs" parent="menu_farm_root" action="action_irrigation"-->
+              sequence="8"/>
+<!--    <menuitem id="menu_compliance" name="Compliance" parent="menu_farm_root" action="action_compliance" sequence="9"/>-->
+<!--    <menuitem id="menu_sales" name="Post-Harvest &amp; Sales" parent="menu_farm_root" action="action_sales"-->
+              sequence="10"/>
+
+    <!-- ============================== -->
+    <!-- Miscellaneous -->
+    <!-- ============================== -->
+    <menuitem id="menu_miscellaneous_root" name="Miscellaneous" parent="menu_estate_root" sequence="7"/>
+    <menuitem id="menu_building_Configuration"
+              name="Building Configuration"
+              parent="menu_property_root"
+              sequence="20"/>
+    <menuitem id="menu_building_payment"
+              name="Building Payments"
+              parent="menu_building_Configuration"
+              action="action_building_payment"
+              sequence="2"/>
+    <menuitem id="menu_unit_configuration_section" name="Unit Configuration" parent="menu_property_root" sequence="30"/>
+    <menuitem id="menu_unit_type"
+              name="Unit Types"
+              parent="menu_unit_configuration_section"
+              action="action_unit_type"
+              sequence="1"/>
+    <menuitem id="menu_payment_method"
+              name="Payment Methods"
+              parent="menu_unit_configuration_section"
+              action="action_payment_method"
+              sequence="4"/>
+    <menuitem id="menu_unit_payment" name="Unit Payments" parent="menu_unit_configuration_section"
+              action="action_unit_payment" sequence="1"/>
+
+</odoo>

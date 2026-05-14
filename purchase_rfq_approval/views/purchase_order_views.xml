@@ -1,0 +1,101 @@
+<odoo>
+    <record id="purchase_order_form_rfq_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.rfq.approval</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Header Buttons: Replaced 'states' with 'invisible' -->
+            <xpath expr="//header" position="inside">
+                <button name="action_submit_for_approval"
+                        string="Submit for Approval"
+                        type="object"
+                        invisible="approval_state != 'draft'"
+                        class="btn-primary"/>
+
+                <button name="action_approve"
+                        string="Approve"
+                        type="object"
+                        invisible="approval_state != 'to_approve'"
+                        groups="purchase_rfq_approval.group_purchase_approver"
+                        class="btn-success"/>
+
+                <button name="action_reject"
+                        string="Reject"
+                        type="object"
+                        invisible="approval_state != 'to_approve'"
+                        groups="purchase_rfq_approval.group_purchase_approver"
+                        class="btn-danger"/>
+
+                <!-- ✅ Vendor Accept -->
+                <button name="action_vendor_accept"
+                        string="Accept RFQ"
+                        type="object"
+                        class="btn-success"
+                        invisible="state != 'sent' or vendor_decision"/>
+
+                <!-- ✅ Vendor Reject -->
+                <button name="action_open_vendor_reject_wizard"
+                        string="Reject RFQ"
+                        type="object"
+                        class="btn-danger"
+                        invisible="state != 'sent' or vendor_decision"/>
+            </xpath>
+
+            <!-- Statusbar: Ensure field is added to the header, not sheet -->
+            <xpath expr="//header" position="inside">
+                <field name="approval_state" widget="statusbar" statusbar_visible="draft,to_approve,approved,rejected"/>
+            </xpath>
+
+            <!-- Approval Team: Replaced 'attrs' with 'readonly' -->
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="approval_team_id"
+                       readonly="approval_state != 'draft'"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list//field[@name='product_id']" position="after">
+                <field name="specification"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']/list//field[@name='specification']" position="after">
+                <field name="technical_remarks"/>
+            </xpath>
+
+            <xpath expr="//field[@name='partner_ref']" position="after">
+                <field name="technical_team_id"
+                       readonly="approval_state != 'draft'"/>
+            </xpath>
+
+            <!-- Approval History Tab -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Approval History" groups="purchase_rfq_approval.group_purchase_approver">
+                    <field name="approval_history_ids" readonly="1">
+                        <list>
+                            <field name="user_id"/>
+                            <field name="action"/>
+                            <field name="create_date" string="Date"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_vendor_reject_wizard" model="ir.ui.view">
+        <field name="name">vendor.reject.wizard.form</field>
+        <field name="model">purchase.vendor.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reject RFQ">
+                <group>
+                    <field name="reason"/>
+                </group>
+                <footer>
+                    <button string="Cancel" special="cancel"/>
+                    <button string="Reject"
+                            type="object"
+                            name="action_confirm_reject"
+                            class="btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

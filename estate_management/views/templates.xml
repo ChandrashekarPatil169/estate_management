@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <record id="email_template_building_payment_reminder" model="mail.template">
+            <field name="name">Building Payment Reminder</field>
+            <field name="model_id" ref="estate_management.model_estate_building_payment"/>
+            <field name="subject">
+                Building Payment Reminder - {{ object.name }}
+            </field>
+            <field name="use_default_to" eval="True"/>
+
+            <field name="body_html" type="html">
+                <div style="margin:0px; padding:0px; font-family:'Segoe UI', Arial, sans-serif;">
+
+                    <p style="font-size:13px; color:#495057;">
+                        Hello {{ ctx.get('recipient_name') or 'Resident' }},
+                        <br/>
+                        <br/>
+
+                        This is a reminder that the building payment
+                        <strong>{{ object.name }}</strong>
+                        is due on
+                        <strong>{{ object.due_date }}</strong>.
+                        <br/>
+                        <br/>
+                    </p>
+
+                    <table border="0" cellpadding="5" cellspacing="0"
+                           style="background-color:#f8f9fa;
+                                  border:1px solid #dee2e6;
+                                  width:100%;
+                                  max-width:400px;
+                                  border-radius:4px;">
+                        <tr>
+                            <td style="color:#6c757d;">Payment Reference:</td>
+                            <td style="font-weight:600;">
+                                {{ object.name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="color:#6c757d;">Amount Due:</td>
+                            <td style="font-weight:600; color:#d9534f;">
+                                {{ object.amount }}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br/>
+
+                    <p style="font-size:13px; color:#495057;">
+                        Please ensure your payment is processed by the due date to avoid late fees.
+                        <br/>
+                        <br/>
+
+                        Regards,
+                        <br/>
+                        <strong>{{ object.company_id.name }}</strong>
+                    </p>
+
+                </div>
+            </field>
+
+        </record>
+
+        <record id="email_template_unit_payment_reminder" model="mail.template">
+            <field name="name">Unit Payment Reminder</field>
+            <field name="model_id" ref="estate_management.model_estate_unit_payment"/>
+            <field name="subject">
+                Unit Payment Reminder - {{ object.name }}
+            </field>
+            <field name="use_default_to" eval="True"/>
+
+            <field name="body_html" type="html">
+                <div style="margin:0px; padding:0px; font-family:'Segoe UI', Arial, sans-serif;">
+
+                    <p style="font-size:13px; color:#495057;">
+                        Hello {{ ctx.get('recipient_name') or 'Resident' }},
+                        <br/>
+                        <br/>
+
+                        This is a reminder that your unit payment
+                        <strong>{{ object.name }}</strong>
+                        is due on
+                        <strong>{{ object.due_date }}</strong>.
+                        <br/>
+                        <br/>
+                    </p>
+
+                    <table border="0" cellpadding="6" cellspacing="0"
+                           style="background-color:#f8f9fa;
+                                  border:1px solid #dee2e6;
+                                  width:100%;
+                                  max-width:450px;
+                                  border-radius:4px;">
+
+                        <tr>
+                            <td style="color:#6c757d;">Unit:</td>
+                            <td style="font-weight:600;">
+                                {{ object.unit_id.display_name }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="color:#6c757d;">Payment For:</td>
+                            <td style="font-weight:600;">
+                                {{ object.product_id.name }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="color:#6c757d;">Amount Due:</td>
+                            <td style="font-weight:600; color:#d9534f;">
+                                {{ object.amount }}
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <br/>
+
+                    <p style="font-size:13px; color:#495057;">
+                        Please ensure the payment is completed before the due date to avoid penalties.
+                        <br/>
+                        <br/>
+
+                        Regards,
+                        <br/>
+                        <strong>{{ object.company_id.name }}</strong>
+                    </p>
+
+                </div>
+            </field>
+
+        </record>
+
+    </data>
+</odoo>
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+        <!--    <data noupdate="1">-->
+        <!--        <record id="email_template_building_payment_reminder" model="mail.template">-->
+        <!--            <field name="name">Building Payment Reminder</field>-->
+        <!--            <field name="model_id" ref="estate_management.model_estate_building_payment"/>-->
+        <!--            <field name="subject">Building Payment Reminder - {{ object.name }}</field>-->
+        <!--            <field name="use_default_to" eval="True"/>-->
+        <!--            &lt;!&ndash;            <field name="body_html" type="html">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <div style="margin: 0px; padding: 0px;">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                    <p style="margin: 0px; padding: 0px; font-size: 13px;">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        Hello,<br/><br/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        This is a reminder that the building payment&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        <strong>&lt;t t-out="object.partner_name"/&gt;</strong> is due on&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        <strong>&lt;t t-out="object.due_date"/&gt;</strong>.<br/><br/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        Amount Due: <strong>&lt;t t-out="object.amount"/&gt;</strong><br/><br/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        Regards,<br/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                        &lt;t t-out="object.company_id.name"/&gt;&ndash;&gt;-->
+        <!--            &lt;!&ndash;                    </p>&ndash;&gt;-->
+        <!--            &lt;!&ndash;                </div>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </field>&ndash;&gt;-->
+        <!--            <field name="body_html" type="html">-->
+        <!--                <div style="margin: 0px; padding: 0px;">-->
+        <!--                    <p style="margin: 0px; padding: 0px; font-size: 13px;">-->
+        <!--                        Hello,-->
+        <!--                        <br/>-->
+        <!--                        <br/>-->
+        <!--                        This is a reminder that the building payment-->
+        <!--                        <strong>-->
+        <!--                            <t t-out="object.name"/>-->
+        <!--                        </strong>-->
+        <!--                        is due on-->
+        <!--                        <strong>-->
+        <!--                            <t t-out="object.due_date"/>-->
+        <!--                        </strong>-->
+        <!--                        .-->
+        <!--                        <br/>-->
+        <!--                        <br/>-->
+
+        <!--                        Amount Due:-->
+        <!--                        <strong>-->
+        <!--                            <t t-out="object.amount"/>-->
+        <!--                        </strong>-->
+        <!--                        <br/>-->
+        <!--                        <br/>-->
+
+        <!--                        Regards,-->
+        <!--                        <br/>-->
+        <!--                        <t t-out="object.company_id.name"/>-->
+        <!--                    </p>-->
+        <!--                </div>-->
+        <!--            </field>-->
+        <!--        </record>-->
+        <!--    </data>-->
+        <!--</odoo>-->

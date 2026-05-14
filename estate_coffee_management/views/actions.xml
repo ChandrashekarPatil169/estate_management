@@ -1,0 +1,59 @@
+<odoo>
+
+    <!-- Purchases -->
+    <record id="action_coffee_purchase" model="ir.actions.act_window">
+        <field name="name">Purchases</field>
+        <field name="res_model">coffee.purchase</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Main Stock -->
+    <record id="action_coffee_ingredient" model="ir.actions.act_window">
+        <field name="name">Main Stock</field>
+        <field name="res_model">estate.coffee.ingredient</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Building Stock -->
+    <record id="action_building_stock" model="ir.actions.act_window">
+        <field name="name">Building Stock</field>
+        <field name="res_model">building.stock</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Coffee Machines -->
+    <record id="action_coffee_machine" model="ir.actions.act_window">
+        <field name="name">Coffee Machines</field>
+        <field name="res_model">coffee.machine</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Machine Refills -->
+    <record id="action_machine_stock" model="ir.actions.act_window">
+        <field name="name">Machine Refills</field>
+        <field name="res_model">machine.stock</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Cleaning Logs -->
+    <record id="action_cleaning_log" model="ir.actions.act_window">
+        <field name="name">Cleaning Logs</field>
+        <field name="res_model">cleaning.log</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Ingredient Master -->
+    <record id="action_coffee_ingredient_master" model="ir.actions.act_window">
+        <field name="name">Ingredients</field>
+        <field name="res_model">coffee.ingredient.master</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+    <record id="action_coffee_transfer" model="ir.actions.act_window">
+        <field name="name">All Transfers</field>
+        <field name="res_model">coffee.building.transfer</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+
+</odoo>
+

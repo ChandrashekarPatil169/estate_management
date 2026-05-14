@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+<t t-name="custom_location.FetchLocationBtn">
+    <button type="button"
+            class="btn btn-primary"
+            t-on-click="onClick">
+        <i class="fa fa-map-marker"/>
+        Fetch Location
+    </button>
+</t></templates>

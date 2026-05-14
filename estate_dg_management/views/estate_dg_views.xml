@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- DG list/form (extend what you had) -->
+    <record id="view_estate_dg_list" model="ir.ui.view">
+        <field name="name">estate.dg.list</field>
+        <field name="model">estate.dg</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="generator_master_id"/>
+                <field name="code"/>
+                <field name="building_id"/>
+                <field name="unit_id"/>
+                <field name="floor_id"/>
+                <field name="tank_capacity_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_dg_form" model="ir.ui.view">
+        <field name="name">estate.dg.form</field>
+        <field name="model">estate.dg</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_open_refills"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tint">
+
+                            <field name="refill_count" widget="statinfo" string="Refills"/>
+                        </button>
+
+                        <button name="action_open_logs"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text">
+
+                            <field name="log_count" widget="statinfo" string="Logs"/>
+                        </button>
+
+                    </div>
+
+                    <group>
+                        <field name="generator_master_id"/>
+                        <field name="code"/>
+                        <field name="building_id"/>
+                        <field name="unit_id"/>
+                        <field name="floor_id"/>
+                        <field name="tank_capacity_id"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Refills" invisible="1">
+                            <field name="refill_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="liters"/>
+                                    <field name="purchase_invoice"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Logs" invisible="1">
+                            <field name="log_ids">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="session"/>
+                                    <field name="reading"/>
+                                    <field name="topup_liters"/>
+                                    <field name="consumed_liters"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_estate_generator_master_list" model="ir.ui.view">
+        <field name="name">estate.generator.master.list</field>
+        <field name="model">estate.generator.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="generator_code"/>
+                <field name="building_id"/>
+                <field name="unit_id"/>
+                <field name="floor_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_estate_generator_master_form" model="ir.ui.view">
+        <field name="name">estate.generator.master.form</field>
+        <field name="model">estate.generator.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="generator_code"/>
+                        </group>
+                        <group>
+                            <field name="building_id"/>
+                            <field name="unit_id"/>
+                            <field name="floor_id"/>
+                        </group>
+                    </group>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_estate_generator_master" model="ir.actions.act_window">
+        <field name="name">Generator Master</field>
+        <field name="res_model">estate.generator.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- ================= FUEL TYPE MASTER ================= -->
+
+    <record id="view_estate_fuel_type_list" model="ir.ui.view">
+        <field name="name">estate.fuel.type.list</field>
+        <field name="model">estate.fuel.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_fuel_type_form" model="ir.ui.view">
+        <field name="name">estate.fuel.type.form</field>
+        <field name="model">estate.fuel.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_estate_fuel_type" model="ir.actions.act_window">
+        <field name="name">Fuel Type</field>
+        <field name="res_model">estate.fuel.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+<!--    <menuitem id="menu_estate_fuel_type"-->
+<!--              name="Fuel Type"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_fuel_type"-->
+<!--              sequence="10"/>-->
+
+
+    <!-- ================= MAIN STOCK ================= -->
+
+    <record id="view_estate_stock_main_list" model="ir.ui.view">
+        <field name="name">estate.stock.main.list</field>
+        <field name="model">estate.stock.main</field>
+        <field name="arch" type="xml">
+            <list create="false" delete="false">
+                <field name="date"/>
+                <field name="fuel_type_id"/>
+                <field name="quantity_available" readonly="1"/>
+
+                <field name="source"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="view_estate_stock_main_form" model="ir.ui.view">
+        <field name="name">estate.stock.main.form</field>
+        <field name="model">estate.stock.main</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_purchases"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <field name="purchase_count" widget="statinfo" string="Purchases"/>
+                        </button>
+
+                        <button name="action_view_refills"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-tint">
+                            <field name="refill_count" widget="statinfo" string="DG Refills"/>
+                        </button>
+
+                    </div>
+
+                    <group>
+                        <field name="date" readonly="1"/>
+                        <field name="fuel_type_id" readonly="1"/>
+                        <field name="quantity_available" readonly="1"/>
+                        <field name="source" readonly="1"/>
+                    </group>
+
+
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_stock_main_pivot" model="ir.ui.view">
+        <field name="name">estate.stock.main.pivot</field>
+        <field name="model">estate.stock.main</field>
+        <field name="arch" type="xml">
+            <pivot string="Stock Summary">
+                <field name="fuel_type_id" type="row"/>
+                <field name="quantity_available" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="action_estate_stock_main" model="ir.actions.act_window">
+        <field name="name">Main Stock</field>
+        <field name="res_model">estate.stock.main</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+
+<!--    <menuitem id="menu_estate_stock_main"-->
+<!--              name="Main Stock"-->
+<!--              parent="menu_estate_dg_root"-->
+<!--              action="action_estate_stock_main"-->
+<!--              sequence="30"/>-->
+
+
+</odoo>

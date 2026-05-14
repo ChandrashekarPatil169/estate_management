@@ -1,0 +1,92 @@
+<odoo>
+
+    <record id="inherit_project_task_kanban_story_top" model="ir.ui.view">
+        <field name="name">project.task.kanban.story.top</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_kanban"/>
+        <field name="arch" type="xml">
+
+            <!-- IMPORTANT: load fields first -->
+            <xpath expr="//kanban" position="inside">
+                <field name="story_id"/>
+                <field name="planned_start_date"/>
+                <field name="planned_end_date"/>
+                <field name="expected_end_date"/>
+                <field name="estimate"/>
+                <field name="task_progress"/>
+                <field name="progress_color"/>
+                <field name="task_type_id"/>
+
+            </xpath>
+
+            <!-- ADD AT TOP OF CARD -->
+            <xpath expr="//t[@t-name='card']/main/field[@name='name']" position="before">
+
+                <!-- 🔵 PROJECT -->
+                <div class="text-primary fw-bold">
+                    <field name="project_id"/>
+                </div>
+
+                <!-- 🟣 USER STORY (TOP) -->
+                <div class="text-dark fw-bold"
+                     t-if="record.story_id.raw_value">
+                    Story:
+                    <field name="story_id"/>
+                </div>
+
+            </xpath>
+
+            <!-- ADD BELOW TITLE -->
+            <xpath expr="//t[@t-name='card']/main/field[@name='name']" position="after">
+
+                <!-- START -->
+                <div class="text-muted small">
+                    Start:
+                    <field name="planned_start_date"/>
+                </div>
+
+                <!-- END -->
+                <div class="text-muted small">
+                    End:
+                    <field name="planned_end_date"/>
+                </div>
+
+                <!-- EXPECTED -->
+                <div class="text-muted small">
+                    Expected:
+                    <field name="expected_end_date"/>
+                </div>
+
+                <!-- ESTIMATE -->
+                <div class="fw-bold text-info small">
+                    Estimate:
+                    <field name="estimate"/>
+                    hrs
+                </div>
+                <div class="fw-bold text-info small">
+                    Task Type:
+                    <field name="task_type_id"/>
+
+                </div>
+
+                <!-- PROGRESS BAR -->
+                <div class="progress mt-2" style="height:8px;">
+                    <div t-att-class="'progress-bar ' + (record.progress_color.raw_value or 'bg-primary')"
+                         role="progressbar"
+                         t-att-style="'width:' + (record.task_progress.raw_value or 0) + '%;'">
+                    </div>
+                </div>
+
+                <div class="small text-muted mt-1">
+                    <t t-esc="record.task_progress.raw_value or 0"/>%
+                </div>
+
+            </xpath>
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="highlight_color"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

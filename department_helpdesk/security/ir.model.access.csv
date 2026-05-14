@@ -1,0 +1,50 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_department_user,helpdesk.department user,model_helpdesk_department,department_helpdesk.group_helpdesk_user_custom,1,0,0,0
+access_helpdesk_department_manager,helpdesk.department manager,model_helpdesk_department,department_helpdesk.group_helpdesk_department_manager,1,1,1,0
+access_helpdesk_department_admin,helpdesk.department admin,model_helpdesk_department,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_helpdesk_ticket_user,helpdesk.ticket user,helpdesk_mgmt.model_helpdesk_ticket,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_helpdesk_ticket_manager,helpdesk.ticket manager,helpdesk_mgmt.model_helpdesk_ticket,department_helpdesk.group_helpdesk_department_manager,1,1,1,0
+access_helpdesk_ticket_admin,helpdesk.ticket admin,helpdesk_mgmt.model_helpdesk_ticket,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_parts_required_user,helpdesk.parts.required user,model_helpdesk_parts_required,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_parts_required_manager,helpdesk.parts.required manager,model_helpdesk_parts_required,department_helpdesk.group_helpdesk_department_manager,1,1,1,0
+access_parts_required_admin,helpdesk.parts.required admin,model_helpdesk_parts_required,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_parts_issued_user,helpdesk.parts.issued user,model_helpdesk_parts_issued,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_parts_issued_manager,helpdesk.parts.issued manager,model_helpdesk_parts_issued,department_helpdesk.group_helpdesk_department_manager,1,1,1,0
+access_parts_issued_admin,helpdesk.parts.issued admin,model_helpdesk_parts_issued,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_facility_asset,facility.asset,model_facility_asset,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+access_facility_contract,facility.contract,model_facility_contract,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+access_facility_permit,facility.permit,model_facility_permit,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_maintenance_type_user,maintenance.type user,model_maintenance_type,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_maintenance_severity_user,maintenance.severity user,model_maintenance_severity,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+
+access_request_type,request.type,model_request_type,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+access_helpdesk_trade,helpdesk.trade,model_helpdesk_trade,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+access_helpdesk_urgency_user,helpdesk.urgency user,model_helpdesk_urgency,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_helpdesk_impact_user,helpdesk.impact user,model_helpdesk_impact,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_helpdesk_priority_master_user,helpdesk.priority.master user,model_helpdesk_priority_master,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+
+access_helpdesk_ticket_parts_user,helpdesk.ticket.parts user,model_helpdesk_ticket_parts,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_helpdesk_service_type_user,helpdesk.service.type user,model_helpdesk_service_type,department_helpdesk.group_helpdesk_user_custom,1,1,1,0
+access_helpdesk_hr_request_type,helpdesk.hr.request.type,model_helpdesk_hr_request_type,department_helpdesk.group_helpdesk_admin_custom,1,1,1,1
+
+
+access_hr_employee_user,access_hr_employee_user,hr.model_hr_employee,base.group_user,1,1,1,1
+
+
+
+
+access_project_project_user,project.project.user,model_project_project_custom,base.group_user,1,1,1,1
+access_project_subproject_user,project.subproject.user,model_project_subproject,base.group_user,1,1,1,1
+
+access_project_project_manager,project.project.manager,model_project_project_custom,base.group_system,1,1,1,1
+access_project_subproject_manager,project.subproject.manager,model_project_subproject,base.group_system,1,1,1,1
+
+
+access_ticket_reference_user,access.ticket.reference.user,model_helpdesk_ticket_reference,base.group_user,1,1,1,1
+access_ticket_reference_user,access.ticket.reference.user,model_helpdesk_ticket_reference,base.group_system,1,1,1,1

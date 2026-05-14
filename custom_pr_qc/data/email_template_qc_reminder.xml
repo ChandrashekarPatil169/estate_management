@@ -1,0 +1,49 @@
+<odoo>
+    <data>
+        <record id="email_template_qc_reminder" model="mail.template">
+            <field name="name">QC Daily Reminder</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+
+            <!-- New Syntax: {{ object.field }} -->
+            <field name="subject">🔔 Reminder: QC Pending for {{ object.name }}</field>
+
+            <field name="email_from">{{ (object.company_id.email or 'noreply@company.com') }}</field>
+
+            <!-- You might want to default this to the assigned user or a QC group -->
+            <field name="email_to">{{ object.user_id.email_formatted or '' }}</field>
+
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Hello,
+                        <br/><br/>
+                        This is a <strong>daily reminder</strong> that the Quality Check for
+                        <strong><t t-out="object.name"/></strong> is still <b style="color: #E74C3C;">PENDING</b>.
+                        <br/><br/>
+                        <t t-if="object.origin">
+                            <b>Source:</b> <t t-out="object.origin"/><br/>
+                        </t>
+                        <br/>
+                        Please complete your QC action (Pass / Reject) as soon as possible.
+                        <br/><br/>
+                        <!-- Dynamic Link using base_url -->
+                        <div style="margin: 16px 0px 16px 0px;">
+                            <a t-attf-href="{{ object.get_base_url() }}/web#id={{ object.id }}&amp;model=stock.picking&amp;view_type=form"
+                               style="background-color: #E74C3C; padding: 10px 18px; text-decoration: none; color: #fff; border-radius: 5px; font-size: 13px;">
+                                Complete Quality Check
+                            </a>
+                        </div>
+                        <br/>
+                        <span style="color: #E74C3C;">
+                            ⚠ This reminder will continue daily until action is taken.
+                        </span>
+                        <br/><br/>
+                        Regards,<br/>
+                        <t t-out="object.company_id.name"/>
+                    </p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

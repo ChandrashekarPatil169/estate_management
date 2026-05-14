@@ -1,0 +1,549 @@
+<odoo>
+
+    <data>
+        <record id="ir_cron_sprint_notifications" model="ir.cron">
+            <field name="name">Sprint: Milestone Notifications</field>
+            <!-- Updated ref to include module name -->
+            <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sprint_notifications()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">minutes</field>
+            <!--        <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+
+        <!-- Subtask SLA Recompute -->
+        <record id="ir_cron_subtask_sla_recompute" model="ir.cron">
+            <field name="name">Subtask SLA Recompute</field>
+            <!-- Using search to match your working Backlog style -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_subtask_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Subtask SLA Email -->
+        <record id="ir_cron_subtask_sla_email" model="ir.cron">
+            <field name="name">Subtask SLA Email</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_subtask_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <!-- SLA RECOMPUTE DAILY -->
+        <record id="ir_cron_sla_recompute" model="ir.cron">
+            <field name="name">SLA Recompute</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <!--        <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+        <!-- SLA EMAIL -->
+        <record id="ir_cron_sla_email" model="ir.cron">
+            <field name="name">SLA Escalation Email</field>
+            <field name="model_id" ref="project.model_project_task"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <!--        <field name="numbercall">-1</field>-->
+            <field name="active">True</field>
+        </record>
+
+
+        <!--    userstories-->
+        <record id="ir_cron_story_sla_recompute" model="ir.cron">
+            <field name="name">Story SLA Recompute</field>
+            <!-- Look up the model by its technical _name -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_story_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="ir_cron_story_sla_email" model="ir.cron">
+            <field name="name">Story SLA Escalation Email</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_story_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!--    epics-->
+        <record id="ir_cron_epic_sla_recompute" model="ir.cron">
+            <field name="name">Epic SLA Recompute</field>
+            <!-- Look up model by technical name instead of ref -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_epic_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="ir_cron_epic_sla_email" model="ir.cron">
+            <field name="name">Epic SLA Email</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_epic_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <!--    product backlog-->
+        <record id="ir_cron_backlog_sla_recompute" model="ir.cron">
+            <field name="name">Backlog SLA Recompute</field>
+            <!-- Safer way to find the model to avoid ParseError -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_backlog_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Backlog SLA Email Escalation Cron -->
+        <record id="ir_cron_backlog_sla_email" model="ir.cron">
+            <field name="name">Backlog SLA Email</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_backlog_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <!-- Project SLA Recompute Cron -->
+        <record id="ir_cron_project_sla_recompute" model="ir.cron">
+            <field name="name">Project SLA Recompute</field>
+            <!-- Safer lookup for the standard Odoo project model -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_recompute_project_sla()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <!-- Project SLA Email Escalation Cron -->
+        <record id="ir_cron_project_sla_email" model="ir.cron">
+            <field name="name">Project SLA Email</field>
+            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_project_sla_email()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <!--    daily reminder-->
+
+        <!-- Daily User Work Summary Cron -->
+        <record id="ir_cron_daily_user_summary" model="ir.cron">
+            <field name="name">Daily User Work Summary</field>
+            <!-- Safer lookup to find the model by technical name -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'work.summary.service')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_daily_user_work_summary()</field>
+            <!-- Runs once a day -->
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+
+        <!-- Review Reminder Cron -->
+        <record id="ir_cron_review_reminder" model="ir.cron">
+            <field name="name">Review Reminder</field>
+            <!-- Safer lookup to find the model by technical name -->
+            <field name="model_id" model="ir.model" search="[('model', '=', 'review.reminder.service')]"/>
+            <field name="state">code</field>
+            <field name="code">model._cron_review_reminder()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+
+</odoo>
+
+
+        <!--<odoo>-->
+        <!--    <data>-->
+        <!--        <record id="ir_cron_sprint_notifications" model="ir.cron">-->
+        <!--            <field name="name">Sprint: Milestone Notifications</field>-->
+        <!--            &lt;!&ndash; Updated ref to include module name &ndash;&gt;-->
+        <!--            <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_sprint_notifications()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">minutes</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Subtask SLA Recompute &ndash;&gt;-->
+        <!--        <record id="ir_cron_subtask_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Subtask SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Using search to match your working Backlog style &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_subtask_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Subtask SLA Email &ndash;&gt;-->
+        <!--        <record id="ir_cron_subtask_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Subtask SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_subtask_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; SLA RECOMPUTE DAILY &ndash;&gt;-->
+        <!--        <record id="ir_cron_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">SLA Recompute</field>-->
+        <!--            <field name="model_id" ref="project.model_project_task"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; SLA EMAIL &ndash;&gt;-->
+        <!--        <record id="ir_cron_sla_email" model="ir.cron">-->
+        <!--            <field name="name">SLA Escalation Email</field>-->
+        <!--            <field name="model_id" ref="project.model_project_task"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    userstories&ndash;&gt;-->
+        <!--        <record id="ir_cron_story_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Story SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Look up the model by its technical _name &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_story_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        <record id="ir_cron_story_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Story SLA Escalation Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_story_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash;    epics&ndash;&gt;-->
+        <!--        <record id="ir_cron_epic_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Epic SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Look up model by technical name instead of ref &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_epic_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        <record id="ir_cron_epic_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Epic SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_epic_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    product backlog&ndash;&gt;-->
+        <!--        <record id="ir_cron_backlog_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Backlog SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Safer way to find the model to avoid ParseError &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_backlog_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Backlog SLA Email Escalation Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_backlog_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Backlog SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_backlog_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Project SLA Recompute Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_project_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Project SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Safer lookup for the standard Odoo project model &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_project_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Project SLA Email Escalation Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_project_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Project SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_project_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    daily reminder&ndash;&gt;-->
+
+        <!--        &lt;!&ndash; Daily User Work Summary Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_daily_user_summary" model="ir.cron">-->
+        <!--            <field name="name">Daily User Work Summary</field>-->
+        <!--            &lt;!&ndash; Safer lookup to find the model by technical name &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'work.summary.service')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_daily_user_work_summary()</field>-->
+        <!--            &lt;!&ndash; Runs once a day &ndash;&gt;-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Review Reminder Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_sprint_notifications" model="ir.cron">-->
+        <!--            <field name="name">Sprint: Milestone Notifications</field>-->
+        <!--            &lt;!&ndash; Updated ref to include module name &ndash;&gt;-->
+        <!--            <field name="model_id" ref="project_main_mgmt.model_project_sprint"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_sprint_notifications()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">minutes</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Subtask SLA Recompute &ndash;&gt;-->
+        <!--        <record id="ir_cron_subtask_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Subtask SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Using search to match your working Backlog style &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_subtask_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Subtask SLA Email &ndash;&gt;-->
+        <!--        <record id="ir_cron_subtask_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Subtask SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.subtask')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_subtask_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; SLA RECOMPUTE DAILY &ndash;&gt;-->
+        <!--        <record id="ir_cron_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">SLA Recompute</field>-->
+        <!--            <field name="model_id" ref="project.model_project_task"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; SLA EMAIL &ndash;&gt;-->
+        <!--        <record id="ir_cron_sla_email" model="ir.cron">-->
+        <!--            <field name="name">SLA Escalation Email</field>-->
+        <!--            <field name="model_id" ref="project.model_project_task"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            &lt;!&ndash;        <field name="numbercall">-1</field>&ndash;&gt;-->
+        <!--            <field name="active">True</field>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    userstories&ndash;&gt;-->
+        <!--        <record id="ir_cron_story_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Story SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Look up the model by its technical _name &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_story_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        <record id="ir_cron_story_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Story SLA Escalation Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.user.story')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_story_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash;    epics&ndash;&gt;-->
+        <!--        <record id="ir_cron_epic_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Epic SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Look up model by technical name instead of ref &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_epic_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        <record id="ir_cron_epic_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Epic SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.epic')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_epic_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    product backlog&ndash;&gt;-->
+        <!--        <record id="ir_cron_backlog_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Backlog SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Safer way to find the model to avoid ParseError &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_backlog_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Backlog SLA Email Escalation Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_backlog_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Backlog SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'product.backlog')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_backlog_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Project SLA Recompute Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_project_sla_recompute" model="ir.cron">-->
+        <!--            <field name="name">Project SLA Recompute</field>-->
+        <!--            &lt;!&ndash; Safer lookup for the standard Odoo project model &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_recompute_project_sla()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--        &lt;!&ndash; Project SLA Email Escalation Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_project_sla_email" model="ir.cron">-->
+        <!--            <field name="name">Project SLA Email</field>-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'project.project')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_project_sla_email()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">hours</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash;    daily reminder&ndash;&gt;-->
+
+        <!--        &lt;!&ndash; Daily User Work Summary Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_daily_user_summary" model="ir.cron">-->
+        <!--            <field name="name">Daily User Work Summary</field>-->
+        <!--            &lt;!&ndash; Safer lookup to find the model by technical name &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'work.summary.service')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_daily_user_work_summary()</field>-->
+        <!--            &lt;!&ndash; Runs once a day &ndash;&gt;-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+
+        <!--        &lt;!&ndash; Review Reminder Cron &ndash;&gt;-->
+        <!--        <record id="ir_cron_review_reminder" model="ir.cron">-->
+        <!--            <field name="name">Review Reminder</field>-->
+        <!--            &lt;!&ndash; Dynamic search for the model by its technical name &ndash;&gt;-->
+        <!--            <field name="model_id" model="ir.model" search="[('model', '=', 'review.reminder.service')]"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model._cron_review_reminder()</field>-->
+        <!--            <field name="interval_number">1</field>-->
+        <!--            <field name="interval_type">days</field>-->
+        <!--            <field name="active" eval="True"/>-->
+        <!--        </record>-->
+
+        <!--    </data>-->
+        <!--</odoo>-->

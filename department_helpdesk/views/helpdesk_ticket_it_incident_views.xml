@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_helpdesk_ticket_form_it_incident"
+            model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.it.incident</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk_mgmt.ticket_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="IT Incident"
+                      name="it_incident"
+                     invisible="department_type != 'it_incident'">
+
+                    <!-- ================= IMPACT ================= -->
+                    <group string="Impact on Operations" col="2">
+                        <field name="affected_users" widget="many2many_tags"/>
+                        <field name="affected_users_count" readonly="1"/>
+                        <field name="affected_department_id"/>
+                        <field name="outage_flag"/>
+                    </group>
+
+                    <!-- ================= ASSET DETAILS ================= -->
+                    <group string="Asset / Technical Details" col="2">
+                        <field name="asset_tag"/>
+
+                        <field name="product"/>
+                        <field name="brand"/>
+                        <field name="model_name"/>
+                        <field name="serial_number"/>
+                        <field name="part_number"/>
+                        <field name="purchase_date"/>
+                        <field name="warranty"/>
+                        <field name="expiry_date"/>
+
+                        <separator string="Network and System"/>
+
+                        <field name="device_name"/>
+                        <field name="host"/>
+                        <field name="ip_address"/>
+                        <field name="os"/>
+                        <field name="software_name"/>
+                        <field name="error_code"/>
+                        <field name="screenshot" widget="many2many_binary"/>
+                        <field name="steps_to_reproduce"/>
+                        <field name="last_working_time"/>
+                    </group>
+
+                    <!-- ================= SECURITY ================= -->
+                    <group string="Security and Access" col="2">
+                        <field name="data_sensitivity"/>
+                        <field name="security_incident_flag"/>
+                        <field name="requires_approval"/>
+                        <field name="approval_workflow_id"/>
+                        <field name="approver_id"/>
+                        <field name="approved_at"/>
+                    </group>
+
+                    <!-- ================= RESOLUTION ================= -->
+                    <group string="Resolution" col="2">
+                        <field name="resolution_category"/>
+                        <field name="kb_article_used"/>
+                        <field name="root_cause"/>
+                        <field name="preventive_action"/>
+                    </group>
+
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

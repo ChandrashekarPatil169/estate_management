@@ -1,0 +1,135 @@
+<odoo>
+    <!--    expenses type master list-->
+    <record id="view_travel_expense_type_list" model="ir.ui.view">
+        <field name="name">travel.expense.type.list</field>
+        <field name="model">travel.expense.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <!--    expenses type master form-->
+    <record id="view_travel_expense_type_form" model="ir.ui.view">
+        <field name="name">travel.expense.type.form</field>
+        <field name="model">travel.expense.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <!--    mode of travel master list-->
+    <record id="view_travel_mode_list" model="ir.ui.view">
+        <field name="name">travel.mode.list</field>
+        <field name="model">travel.mode</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <!--    mode of travel master form-->
+    <record id="view_travel_mode_form" model="ir.ui.view">
+        <field name="name">travel.mode.form</field>
+        <field name="model">travel.mode</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- STATUS MASTER -->
+    <record id="view_travel_status_list" model="ir.ui.view">
+        <field name="name">travel.status.list</field>
+        <field name="model">travel.status</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_travel_status_form" model="ir.ui.view">
+        <field name="name">travel.status.form</field>
+        <field name="model">travel.status</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_travel_status" model="ir.actions.act_window">
+        <field name="name">Status</field>
+        <field name="res_model">travel.status</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+    <!-- purpose MASTER -->
+    <record id="view_travel_purpose_list" model="ir.ui.view">
+        <field name="name">travel.purpose.list</field>
+        <field name="model">travel.purpose</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_travel_purpose_form" model="ir.ui.view">
+        <field name="name">travel.purpose.form</field>
+        <field name="model">travel.purpose</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="name"/>
+                    <field name="active"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_travel_purpose" model="ir.actions.act_window">
+        <field name="name">Purpose of Visit</field>
+        <field name="res_model">travel.purpose</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!--    expenses type master action-->
+    <record id="action_travel_expense_type" model="ir.actions.act_window">
+        <field name="name">Expense Types</field>
+        <field name="res_model">travel.expense.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!--    mode of travel master action-->
+    <record id="action_travel_mode" model="ir.actions.act_window">
+        <field name="name">Travel Modes</field>
+        <field name="res_model">travel.mode</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_travel_expense_account" model="ir.actions.act_window">
+        <field name="name">Expense Accounts</field>
+        <field name="res_model">travel.expense.account</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+
+</odoo>

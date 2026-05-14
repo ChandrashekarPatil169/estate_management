@@ -1,0 +1,50 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_dg_user_dg,DG User DG,model_estate_dg,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_dg,DG Employee DG,model_estate_dg,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_dg,DG Manager DG,model_estate_dg,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_dg,DG GM DG,model_estate_dg,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_purchase,DG User Purchase,model_estate_dg_purchase,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_purchase,DG Employee Purchase,model_estate_dg_purchase,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_purchase,DG Manager Purchase,model_estate_dg_purchase,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_purchase,DG GM Purchase,model_estate_dg_purchase,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_refill,DG User Refill,model_estate_dg_refill,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_refill,DG Employee Refill,model_estate_dg_refill,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_refill,DG Manager Refill,model_estate_dg_refill,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_refill,DG GM Refill,model_estate_dg_refill,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_log,DG User Log,model_estate_dg_log,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_log,DG Employee Log,model_estate_dg_log,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_log,DG Manager Log,model_estate_dg_log,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_log,DG GM Log,model_estate_dg_log,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_stock_main,DG User Stock Main,model_estate_stock_main,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_stock_main,DG Employee Stock Main,model_estate_stock_main,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_stock_main,DG Manager Stock Main,model_estate_stock_main,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_stock_main,DG GM Stock Main,model_estate_stock_main,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_generator_master,DG User Generator Master,model_estate_generator_master,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_generator_master,DG Employee Generator Master,model_estate_generator_master,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_generator_master,DG Manager Generator Master,model_estate_generator_master,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_generator_master,DG GM Generator Master,model_estate_generator_master,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_tank_capacity,DG User Tank Capacity,model_estate_tank_capacity_master,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_tank_capacity,DG Employee Tank Capacity,model_estate_tank_capacity_master,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_tank_capacity,DG Manager Tank Capacity,model_estate_tank_capacity_master,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_tank_capacity,DG GM Tank Capacity,model_estate_tank_capacity_master,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_user_fuel_type,DG User Fuel Type,model_estate_fuel_type,estate_dg_management.group_dg_user,1,1,1,0
+access_dg_employee_fuel_type,DG Employee Fuel Type,model_estate_fuel_type,estate_dg_management.group_dg_employee,1,1,1,0
+access_dg_manager_fuel_type,DG Manager Fuel Type,model_estate_fuel_type,estate_dg_management.group_dg_manager,1,1,1,1
+access_dg_gm_fuel_type,DG GM Fuel Type,model_estate_fuel_type,estate_dg_management.group_dg_general_manager,1,1,1,1
+
+access_dg_admin_dg,dg.admin.dg,model_estate_dg,base.group_system,1,1,1,1
+access_dg_admin_purchase,dg.admin.purchase,model_estate_dg_purchase,base.group_system,1,1,1,1
+access_dg_admin_refill,dg.admin.refill,model_estate_dg_refill,base.group_system,1,1,1,1
+access_dg_admin_log,dg.admin.log,model_estate_dg_log,base.group_system,1,1,1,1
+access_dg_admin_stock_main,dg.admin.stock.main,model_estate_stock_main,base.group_system,1,1,1,1
+access_dg_admin_generator,dg.admin.generator,model_estate_generator_master,base.group_system,1,1,1,1
+access_dg_admin_tank,dg.admin.tank,model_estate_tank_capacity_master,base.group_system,1,1,1,1
+access_dg_admin_fuel_type,dg.admin.fuel.type,model_estate_fuel_type,base.group_system,1,1,1,1

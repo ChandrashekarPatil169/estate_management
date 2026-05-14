@@ -1,0 +1,14 @@
+<odoo>
+    <record id="ir_cron_update_ticket_sla" model="ir.cron">
+        <field name="name">Update Ticket SLA Daily</field>
+        <field name="model_id" ref="model_helpdesk_ticket"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_sla_status()</field>
+
+        <!-- Run once every 1 day -->
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+
+        <field name="active">True</field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="group_timesheet_user_custom" model="res.groups">
+        <field name="name">Timesheet User</field>
+    </record>
+
+    <record id="group_timesheet_approver_custom" model="res.groups">
+        <field name="name">Timesheet Approver</field>
+        <field name="implied_ids"
+               eval="[(4, ref('group_timesheet_user_custom'))]"/>
+    </record>
+
+</odoo>

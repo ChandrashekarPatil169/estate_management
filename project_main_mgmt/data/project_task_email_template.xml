@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="email_template_task_assignment" model="mail.template">
+            <field name="name">Task Assignment Notification</field>
+            <field name="model_id" ref="project.model_project_task"/>
+
+            <field name="subject">New Assignment: {{ object.name }}</field>
+            <field name="email_to">
+                {{ object.assignee_id.email_formatted or object.assignee_id.partner_id.email }}
+            </field>
+
+            <field name="body_html"><![CDATA[
+                <html>
+                    <body>
+                        <p>Hello <b><t t-esc="object.assignee_id.name"/></b>,</p>
+
+                        <p>You have been assigned to the following task:</p>
+
+                        <ul>
+                            <li><b>Task:</b> <t t-esc="object.name"/></li>
+                            <li><b>Project:</b> <t t-esc="object.project_id.name"/></li>
+                            <li><b>Epic:</b> <t t-esc="object.epic_id.name or 'N/A'"/></li>
+                            <li><b>User Story:</b> <t t-esc="object.story_id.name or 'N/A'"/></li>
+                            <li><b>Planned Start:</b> <t t-esc="object.planned_start_date or 'N/A'"/></li>
+                            <li><b>Planned End:</b> <t t-esc="object.planned_end_date or 'N/A'"/></li>
+                        </ul>
+
+                        <p>
+                            <a t-att-href="object.get_base_url() + '/web#id=%s&model=project.task&view_type=form' % object.id">
+                                Open Task
+                            </a>
+                        </p>
+                    </body>
+                </html>
+            ]]></field>
+        </record>
+        <record id="email_template_subtask_assignment" model="mail.template">
+            <field name="name">Project Subtask: New Assignment Notification</field>
+            <field name="model_id" ref="project_main_mgmt.model_project_subtask"/>
+
+            <field name="subject">New Subtask Assigned: {{ object.name }}</field>
+            <field name="email_to">
+                {{ object.assignee_id.email_formatted or object.assignee_id.partner_id.email }}
+            </field>
+
+            <field name="body_html"><![CDATA[
+                <html>
+                    <body>
+                        <p>Hello <b><t t-esc="object.assignee_id.name"/></b>,</p>
+
+                        <p>You have been assigned to a subtask:</p>
+
+                        <ul>
+                            <li><b>Subtask:</b> <t t-esc="object.name"/></li>
+                            <li><b>Parent Task:</b> <t t-esc="object.task_id.name or 'N/A'"/></li>
+                            <li><b>Project:</b> <t t-esc="object.project_id.name"/></li>
+                        </ul>
+
+                        <p>
+                            <a t-att-href="object.get_base_url() + '/web#id=%s&model=project.subtask&view_type=form' % object.id">
+                                Open Subtask
+                            </a>
+                        </p>
+                    </body>
+                </html>
+            ]]></field>
+        </record>
+        <record id="email_template_project_notification" model="mail.template">
+            <field name="name">Project Manager Notification</field>
+            <field name="model_id" ref="project.model_project_project"/>
+
+            <field name="subject">Project Assigned: {{ object.name }}</field>
+
+            <field name="email_to">{{ object.user_id.email }}</field>
+
+            <field name="body_html"><![CDATA[
+                <html>
+                    <body>
+                        <p>Hello <b><t t-esc="object.user_id.name"/></b>,</p>
+
+                        <p>You have been assigned as Project Manager for:</p>
+
+                        <ul>
+                            <li><b>Project:</b> <t t-esc="object.name"/></li>
+                        </ul>
+
+                        <p>
+                            <a t-att-href="object.get_base_url() + '/web#id=%s&model=project.project&view_type=form' % object.id">
+                                Open Project
+                            </a>
+                        </p>
+                    </body>
+                </html>
+            ]]></field>
+
+        </record>
+
+
+
+    </data>
+</odoo>
+
+
+        <!--<?xml version="1.0" encoding="utf-8"?>-->
+        <!--<odoo>-->
+        <!--    <data>-->
+        <!--        <record id="email_template_task_assignment" model="mail.template">-->
+        <!--            <field name="name">Task Assignment Notification</field>-->
+        <!--            <field name="model_id" ref="project.model_project_task"/>-->
+        <!--            <field name="subject">New Assignment: {{ object.name }}</field>-->
+        <!--            <field name="email_to">{{ object.assignee_id.email_formatted }}</field>-->
+        <!--            <field name="body_html" type="html">-->
+        <!--                <div style="font-family: Arial, sans-serif;">-->
+        <!--                    <p>Hello <b>${object.assignee_id.name}</b>,</p>-->
+        <!--                    <p>You have been assigned to the following task:</p>-->
+        <!--                    <ul>-->
+        <!--                        <li><b>Task:</b> ${object.name}</li>-->
+        <!--                        <li><b>Project:</b> ${object.project_id.name}</li>-->
+        <!--                        <li><b>Epic:</b> ${object.epic_id.name or 'N/A'}</li>-->
+        <!--                        <li><b>User Story:</b> ${object.story_id.name or 'N/A'}</li>-->
+        <!--                        <li><b>Planned Start:</b> ${object.planned_start_date or 'N/A'}</li>-->
+        <!--                        <li><b>Planned End:</b> ${object.planned_end_date or 'N/A'}</li>-->
+        <!--                    </ul>-->
+        <!--                </div>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!--        <record id="email_template_subtask_assignment" model="mail.template">-->
+        <!--            <field name="name">Project Subtask: New Assignment Notification</field>-->
+        <!--            &lt;!&ndash; Use your actual module name here &ndash;&gt;-->
+        <!--            <field name="model_id" ref="project_main_mgmt.model_project_subtask"/>-->
+        <!--            <field name="subject">New Subtask Assigned: ${object.name}</field>-->
+        <!--            <field name="email_to">${object.assignee_id.email}</field>-->
+
+        <!--            <field name="body_html" type="html">-->
+        <!--                <div>-->
+        <!--                    <p>Hello <b>${object.assignee_id.name}</b>,</p>-->
+        <!--                    <p>You have been assigned to a subtask:</p>-->
+        <!--                    <ul>-->
+        <!--                        <li><b>Subtask:</b> ${object.name}</li>-->
+        <!--                        <li><b>Parent Task:</b> ${object.task_id.name or 'N/A'}</li>-->
+        <!--                        <li><b>Project:</b> ${object.project_id.name}</li>-->
+        <!--                    </ul>-->
+        <!--                </div>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--    </data>-->
+        <!--</odoo>-->

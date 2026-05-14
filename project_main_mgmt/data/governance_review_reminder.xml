@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_task_review_reminder" model="mail.template">
+        <field name="name">Daily Task Governance review reminder</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="subject">Task Review Pending</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hi,</p>
+
+            <p>
+            Project: <b><t t-esc="object.project_id.name"/></b><br/>
+            Task: <b><t t-esc="object.name"/></b><br/>
+            Status: <b>Review</b>
+            </p>
+
+            <p>Please complete governance.</p>
+            ]]>
+        </field>
+    </record>
+    <record id="email_template_subtask_review_reminder" model="mail.template">
+        <field name="name">Daily Subtask Governance review reminder</field>
+        <field name="model_id" ref="project_main_mgmt.model_project_subtask"/>
+        <field name="subject">Subtask Review Pending</field>
+        <field name="body_html">
+            <![CDATA[
+            <p>Hi,</p>
+
+            <p>
+            Project: <b><t t-esc="object.project_id.name"/></b><br/>
+            Subtask: <b><t t-esc="object.name"/></b><br/>
+            Status: <b>Review</b>
+            </p>
+
+            <p>Please complete governance.</p>
+            ]]>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,14 @@
+<odoo>
+    <record id="view_material_purchase_requisition_pivot" model="ir.ui.view">
+        <field name="name">material.purchase.requisition.pivot</field>
+        <field name="model">material.purchase.requisition</field>
+        <field name="arch" type="xml">
+            <pivot string="PR Analysis">
+                <field name="total_amount" type="measure"/>
+                <field name="state" type="row"/>
+                <field name="department_id" type="col"/>
+            </pivot>
+        </field>
+    </record>
+</odoo>
+

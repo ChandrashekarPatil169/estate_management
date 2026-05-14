@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_estate_dg_refill_list" model="ir.ui.view">
+        <field name="name">estate.dg.refill.list</field>
+        <field name="model">estate.dg.refill</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="dg_id"/>
+                <field name="date"/>
+                <field name="liters"/>
+                <field name="purchase_invoice"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_dg_refill_form" model="ir.ui.view">
+        <field name="name">estate.dg.refill.form</field>
+        <field name="model">estate.dg.refill</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                            invisible="state != 'draft'"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="dg_id"/>
+                        <field name="fuel_type_id"/>
+                        <field name="date"/>
+                        <field name="liters"/>
+                        <field name="purchase_invoice"/>
+                        <field name="user_id"/>
+                        <field name="note"/>
+                    </group>
+
+                </sheet><chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_dg_refill_pivot" model="ir.ui.view">
+    <field name="name">estate.dg.refill.pivot</field>
+    <field name="model">estate.dg.refill</field>
+    <field name="arch" type="xml">
+        <pivot string="Refill Analysis">
+            <field name="dg_id" type="row"/>
+            <field name="fuel_type_id" type="row"/>
+            <field name="date" type="col"/>
+            <field name="liters" type="measure"/>
+        </pivot>
+    </field>
+</record>
+
+</odoo>

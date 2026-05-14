@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_estate_dg,access_estate_dg,model_estate_dg,,1,1,1,1
+access_estate_dg_purchase,access_estate_dg_purchase,model_estate_dg_purchase,,1,1,1,1
+access_estate_dg_refill,access_estate_dg_refill,model_estate_dg_refill,,1,1,1,1
+access_estate_dg_log,access_estate_dg_log,model_estate_dg_log,,1,1,1,1
+access_estate_stock_main,access_estate_stock_main,model_estate_stock_main,,1,1,1,1
+access_estate_generator_master,access_estate_generator_master,model_estate_generator_master,,1,1,1,1
+access_estate_tank_capacity_master,access_estate_tank_capacity_master,model_estate_tank_capacity_master,,1,1,1,1
+access_estate_fuel_type,access_estate_fuel_type,model_estate_fuel_type,,1,1,1,1

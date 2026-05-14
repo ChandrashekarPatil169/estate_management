@@ -1,0 +1,149 @@
+<odoo>
+    <!-- list view for all ingredients -->
+    <record id="view_coffee_ingredient_list" model="ir.ui.view">
+        <field name="name">coffee.ingredient.list</field>
+        <field name="model">estate.coffee.ingredient</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="quantity"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form view for a single ingredient -->
+    <record id="view_coffee_ingredient_form" model="ir.ui.view">
+        <field name="name">coffee.ingredient.form</field>
+        <field name="model">estate.coffee.ingredient</field>
+        <field name="arch" type="xml">
+
+            <form>
+
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_purchases"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <field name="purchase_count" widget="statinfo" string="Purchases"/>
+                        </button>
+
+                        <button name="action_view_transfers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-exchange">
+                            <field name="transfer_count" widget="statinfo" string="Transfers"/>
+                        </button>
+
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <!--                        <field name="quantity" string="Quantity"/>-->
+                        <field name="uom_id"/>
+                        <field name="quantity" readonly="1" string="Stock in Hand"/>
+                    </group>
+
+                    <!-- Notebook with tabs -->
+                    <notebook>
+
+                        <!-- Tab 1: Add Purchase -->
+                        <page string="Add Purchase" invisible="1">
+                            <field name="purchase_ids" context="{'default_ingredient_id': id}">
+                                <list editable="bottom">
+                                    <field name="quantity"/>
+
+                                    <field name="date"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="quantity"/>
+                                            <field name="date"/>
+                                        </group>
+                                    </sheet>
+                                    <chatter/>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- Tab 2: Transfer to Building -->
+                        <page string="Transfer to Building" invisible="1">
+                            <field name="building_transfer_ids" context="{'default_ingredient_id': id}">
+                                <list editable="bottom">
+                                    <field name="building_id"/>
+                                    <field name="amount"/>
+                                    <field name="date"/>
+                                    <field name="employee_id"/>
+                                </list>
+                                <form>
+                                    <sheet>
+                                        <group>
+                                            <field name="building_id"/>
+                                            <field name="amount"/>
+                                            <field name="employee_id"/>
+                                        </group>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+    <!-- Pivot View for Coffee Ingredient -->
+    <record id="view_coffee_ingredient_pivot" model="ir.ui.view">
+        <field name="name">coffee.ingredient.pivot</field>
+        <field name="model">estate.coffee.ingredient</field>
+        <field name="arch" type="xml">
+            <pivot string="Ingredient Analysis">
+                <field name="name" type="row"/>
+                <field name="uom_id" type="col"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_coffee_ingredient_master_list" model="ir.ui.view">
+        <field name="name">coffee.ingredient.master.list</field>
+        <field name="model">coffee.ingredient.master</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="uom_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_coffee_ingredient_master_form" model="ir.ui.view">
+        <field name="name">coffee.ingredient.master.form</field>
+        <field name="model">coffee.ingredient.master</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="uom_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- Pivot View for Ingredient Master -->
+    <record id="view_coffee_ingredient_master_pivot" model="ir.ui.view">
+        <field name="name">coffee.ingredient.master.pivot</field>
+        <field name="model">coffee.ingredient.master</field>
+        <field name="arch" type="xml">
+            <pivot string="Ingredient Master Analysis">
+                <field name="name" type="row"/>
+                <field name="uom_id" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+
+</odoo>

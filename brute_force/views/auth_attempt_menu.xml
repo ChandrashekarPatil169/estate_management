@@ -1,0 +1,10 @@
+<odoo>
+    <menuitem id="menu_auth_log_root"
+              name="Login Security"
+              parent="base.menu_administration"/>
+
+    <menuitem id="menu_auth_log"
+              name="Auth Attempts"
+              parent="menu_auth_log_root"
+              action="action_auth_attempts"/>
+</odoo>

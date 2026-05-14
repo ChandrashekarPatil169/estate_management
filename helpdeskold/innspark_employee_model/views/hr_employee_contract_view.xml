@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_form_inherit_contract_details" model="ir.ui.view">
+        <field name="name">hr.employee.form.contract.details</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Insert AFTER Social Media page -->
+            <xpath expr="//page[@name='social_media']" position="after">
+
+                <page string="Contract and Compliance" name="contract_compliance">
+
+                    <group>
+
+                        <!-- Employment Contract -->
+                        <group string="Employment Contract">
+
+                            <field name="employment_contract" filename="employment_contract_filename"/>
+                            <field name="employment_contract_filename" invisible="1"/>
+
+                            <field name="contract_valid_from"/>
+                            <field name="contract_valid_to"/>
+
+                        </group>
+
+                        <!-- NDA -->
+                        <group string="Non-Disclosure Agreement">
+                            <field name="nda_signed"/>
+
+                            <field name="nda_details"
+                                   filename="nda_details_filename"
+                                   invisible="not nda_signed"/>
+
+                            <field name="nda_details_filename" invisible="1"/>
+                        </group>
+
+
+                        <!-- Background Check -->
+                        <group string="Background Verification">
+                            <field name="background_check_done"/>
+                            <field name="background_check_notes"
+                                   invisible="not background_check_done"/>
+                        </group>
+
+                        <!-- Work Permit -->
+                        <group string="Work Permit / Visa">
+                            <field name="work_permit_details"/>
+                            <field name="work_permit_expiry"/>
+                        </group>
+
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

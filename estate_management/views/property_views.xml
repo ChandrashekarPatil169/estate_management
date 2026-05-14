@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- ================================================= -->
+    <!-- PROPERTY LIST VIEW -->
+    <!-- ================================================= -->
+    <record id="view_property_list" model="ir.ui.view">
+        <field name="name">estate.property.list</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <list string="Properties">
+
+                <!-- MAIN (VISIBLE) -->
+                <field name="name"/>
+                <field name="property_number"/>
+                <field name="property_type_id"/>
+                <field name="city"/>
+                <field name="state"/>
+                <field name="owner_id"/>
+                <field name="responsible_employee_id"/>
+
+                <!-- OPTIONAL -->
+                <field name="pincode" optional="hide"/>
+                <field name="address" optional="hide"/>
+
+                <field name="usage_id" optional="hide"/>
+                <field name="property_code" optional="hide"/>
+
+                <field name="electricity_meter" optional="hide"/>
+                <field name="water_meter" optional="hide"/>
+                <field name="gas_meter" optional="hide"/>
+
+                <field name="property_tax" optional="hide"/>
+                <field name="land_tax" optional="hide"/>
+                <field name="municipal_tax" optional="hide"/>
+
+                <field name="number_of_buildings" optional="show"/>
+                <field name="number_of_units" optional="show"/>
+                <field name="legal_document_count" optional="show"/>
+
+            </list>
+        </field>
+    </record>
+
+    <!-- ================================================= -->
+    <!-- PROPERTY FORM VIEW -->
+    <!-- ================================================= -->
+    <record id="view_property_form" model="ir.ui.view">
+        <field name="name">estate.property.form</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <form force_save="1">
+
+                <sheet>
+
+
+                    <!-- ================= SMART BUTTONS ================= -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_open_custom_location"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-map-marker">
+                            <span>Open In Map</span>
+                        </button>
+                        <button name="action_open_legal_documents"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-paperclip">
+                            <field name="legal_document_count"
+                                   widget="statinfo"
+                                   string="Documents"/>
+                        </button>
+                        <!--                        <button name="haction_open_location"-->
+                        <!--                                type="object"-->
+                        <!--                                class="oe_stat_button"-->
+                        <!--                                icon="fa-map-marker">-->
+                        <!--                            <field name="hcount_location" widget="statinfo"/>-->
+                        <!--                        </button>-->
+
+
+                    </div>
+
+                    <!-- ================= PROPERTY DETAILS ================= -->
+                    <group string="Property Details">
+                        <group>
+                            <field name="name"/>
+                            <field name="property_code"/>
+                            <field name="hup_location_id"/>
+                            <field name="property_type_id"/>
+                            <field name="usage_id"/>
+                            <field name="owner_id"/>
+                        </group>
+
+                    </group>
+                    <group string="Address Details">
+
+                        <!-- Full width address -->
+                        <group>
+                            <field name="address"/>
+                        </group>
+
+
+                        <!-- Location flow -->
+                        <group>
+                            <field name="city"/>
+                            <field name="state"/>
+                            <field name="pincode" placeholder="Enter 6-digit pincode"/>
+                        </group>
+
+                        <!-- Property-specific info -->
+                        <group>
+                            <field name="property_number"/>
+                            <field name="responsible_employee_id"/>
+                        </group>
+
+                    </group>
+
+                    <!-- ================= TAXES ================= -->
+                    <group string="Taxes">
+                        <group>
+                            <field name="property_tax"/>
+                            <field name="land_tax"/>
+                            <field name="municipal_tax"/>
+                        </group>
+                        <group>
+
+                            <field name="electricity_meter"/>
+                            <field name="water_meter"/>
+                            <field name="gas_meter"/>
+                        </group>
+                        <group>
+
+                        </group>
+
+                    </group>
+
+                    <!-- ================= STATISTICS ================= -->
+                    <group string="Statistics" invisible="1">
+                        <group>
+                            <field name="number_of_buildings" readonly="1"/>
+                            <field name="number_of_floors" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="number_of_units" readonly="1"/>
+                            <field name="number_of_rooms" readonly="1"/>
+                            <field name="employee_count" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- ================= LEGAL DOCUMENTS ================= -->
+                    <group string="Legal Documents">
+                        <field name="legal_document_ids"
+                               widget="many2many_binary"/>
+                    </group>
+
+                    <!-- ================= NOTEBOOK ================= -->
+                    <notebook>
+
+                        <page string="Buildings" invisible="1">
+                            <field name="building_ids" editable="bottom">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="usage"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Farms" invisible="1">
+                            <field name="farm_ids" editable="bottom">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="manager_id"/>
+                                </list>
+                            </field>
+                        </page>
+
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- ================= CHATTER (RIGHT SIDE) ================= -->
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_property_pivot" model="ir.ui.view">
+        <field name="name">estate.property.pivot</field>
+        <field name="model">estate.property</field>
+        <field name="arch" type="xml">
+            <pivot string="Property Analysis">
+
+                <!-- LOCATION -->
+                <field name="hup_location_id" type="row"/>
+
+                <!-- PROPERTY TYPE -->
+                <field name="property_type_id" type="row"/>
+
+                <!-- USAGE -->
+                <field name="usage_id" type="row"/>
+
+                <!-- OWNER -->
+                <field name="owner_id" type="row"/>
+
+                <!-- OPTIONAL COLUMN -->
+                <field name="property_code_locked" type="col"/>
+
+                <!-- MEASURE -->
+                <field name="employee_count" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="view_estate_property_form_hierarchy_full" model="ir.ui.view">
+        <field name="name">estate.property.form.hierarchy.full</field>
+        <field name="model">estate.property</field>
+        <field name="inherit_id" ref="estate_management.view_property_form"/>
+        <field name="arch" type="xml">
+
+            <!-- SMART BUTTONS -->
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+
+
+                <button name="haction_open_buildings" type="object"
+                        class="oe_stat_button" icon="fa-building"
+                >
+                    <field name="hcount_building" widget="statinfo"/>
+                </button>
+
+                <button name="haction_open_floors" type="object"
+                        class="oe_stat_button" icon="fa-home"
+                >
+                    <field name="hcount_floor" widget="statinfo"/>
+                </button>
+
+                <button name="haction_open_units" type="object"
+                        class="oe_stat_button" icon="fa-home"
+                >
+                    <field name="hcount_unit" widget="statinfo"/>
+                </button>
+
+                <button name="haction_open_rooms" type="object"
+                        class="oe_stat_button" icon="fa-home"
+                >
+                    <field name="hcount_room" widget="statinfo"/>
+                </button>
+
+                <button name="haction_open_tables" type="object"
+                        class="oe_stat_button" icon="fa-table"
+                >
+                    <field name="hcount_table" widget="statinfo"/>
+                </button>
+
+                <button name="haction_open_farms"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-leaf"
+                >
+                    <field name="hcount_farm" widget="statinfo"/>
+                </button>
+
+
+            </xpath>
+
+            <!-- HIERARCHY DOWNER (VISIBLE FOR VERIFICATION) -->
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Related Details">
+                    <group readonly="1">
+                        <field name="hdown_building_ids" widget="many2many_tags"/>
+                        <field name="hdown_farm_ids" widget="many2many_tags"/>
+
+                    </group>
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
+
+
+

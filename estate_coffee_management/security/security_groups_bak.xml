@@ -1,0 +1,13 @@
+<odoo>
+    <!-- Managers -->
+    <record id="group_coffee_manager" model="res.groups">
+        <field name="name">Coffee Manager</field>
+<!--        <field name="category_id" ref="base.module_category_hidden"/>-->
+    </record>
+
+    <!-- Users -->
+    <record id="group_coffee_user" model="res.groups">
+        <field name="name">Coffee User</field>
+<!--        <field name="category_id" ref="base.module_category_hidden"/>-->
+    </record>
+</odoo>

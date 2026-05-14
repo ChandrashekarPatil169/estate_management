@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="email_template_due_payment_reminder" model="mail.template">
+            <field name="name">Due Payment Reminder</field>
+            <field name="model_id" ref="model_estate_unit_payment"/>
+            <field name="subject">Payment Due Reminder for ${object.unit_id.name}</field>
+            <field name="email_from">${object.env.user.email or 'noreply@example.com'}</field>
+            <field name="email_to">${object.unit_id.manager_id.email if object.unit_id.manager_id else ''}</field>
+            <field name="body_html"><![CDATA[
+                <p>Dear ${object.unit_id.manager_id.name or 'Sir/Madam'},</p>
+                <p>This is a reminder that a payment of <strong>${object.amount}</strong> for <strong>${object.payment_for}</strong> 
+                is due on <strong>${object.due_date}</strong> for unit <strong>${object.unit_id.name}</strong>.</p>
+                <p>Please ensure it is completed on time.</p>
+                <p>Thank you,<br/>Estate Management Team</p>
+            ]]></field>
+        </record>
+    </data>
+</odoo>

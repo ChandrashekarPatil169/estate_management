@@ -1,0 +1,8 @@
+<odoo>
+    <record id="seq_ticket_number" model="ir.sequence">
+        <field name="name">Ticket Number</field>
+        <field name="code">ticket.ticket</field>
+        <field name="prefix">TICK-%(year)s-</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

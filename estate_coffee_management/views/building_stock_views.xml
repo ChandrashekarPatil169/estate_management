@@ -1,0 +1,242 @@
+<odoo>
+    <!-- list View -->
+    <record id="view_building_stock_list" model="ir.ui.view">
+        <field name="name">building.stock.list</field>
+        <field name="model">building.stock</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="building_id"/>
+                <field name="ingredient_id"/>
+                <field name="quantity"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_building_stock_form" model="ir.ui.view">
+        <field name="name">building.stock.form</field>
+        <field name="model">building.stock</field>
+        <field name="arch" type="xml">
+            <form>
+
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="action_view_refills"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-refresh">
+                            <field name="refill_count"
+                                   widget="statinfo"
+                                   string="Refills"/>
+                        </button>
+
+                        <button name="action_view_machine_refills"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-coffee">
+                            <field name="machine_refill_count"
+                                   widget="statinfo"
+                                   string="Machine Refills"/>
+                        </button>
+
+                    </div>
+                    <group>
+
+                        <field name="building_id"/>
+                        <field name="ingredient_id"/>
+                        <field name="quantity"/>
+                        <field name="allowed_machine_ids" widget="many2many_tags"/>
+                    </group>
+                    <notebook>
+                        <!-- Refills tab -->
+                        <page string="Refills" invisible="1">
+                            <field name="building_refill_ids" mode="list,form">
+                                <list editable="bottom">
+                                    <field name="amount"/>
+                                    <field name="date"/>
+                                    <field name="employee_id"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="building_id"/>
+                                        <field name="ingredient_id"/>
+                                        <field name="amount"/>
+                                        <field name="employee_id"/>
+                                        <field name="date"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <!-- Machine Refills tab -->
+                        <page string="Machine Refills" invisible="1">
+                            <field name="machine_refill_ids" mode="list,form">
+                                <list editable="bottom">
+                                    <field name="machine_id"/>
+                                    <field name="ingredient_id"/>
+                                    <field name="quantity"/>
+                                    <field name="refill_date"/>
+                                    <field name="employee_id"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <field name="machine_id"/>
+                                        <field name="ingredient_id"/>
+                                        <field name="quantity"/>
+                                        <field name="refill_date"/>
+                                        <field name="employee_id"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <!-- Keep chatter for building stock record only -->
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Pivot View -->
+    <record id="view_building_stock_pivot" model="ir.ui.view">
+        <field name="name">building.stock.pivot</field>
+        <field name="model">building.stock</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="building_id" type="row"/>
+                <field name="ingredient_id" type="col"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Graph View -->
+    <record id="view_building_stock_graph" model="ir.ui.view">
+        <field name="name">building.stock.graph</field>
+        <field name="model">building.stock</field>
+        <field name="arch" type="xml">
+            <graph string="Building Stock Analysis" type="bar">
+                <field name="building_id" type="row"/>
+                <field name="ingredient_id" type="row"/>
+                <field name="quantity" type="measure"/>
+            </graph>
+        </field>
+    </record>
+    <record id="view_coffee_building_transfer_list" model="ir.ui.view">
+        <field name="name">coffee.building.transfer.list</field>
+        <field name="model">coffee.building.transfer</field>
+        <field name="arch" type="xml">
+            <list string="Building Transfers">
+                <field name="building_id"/>
+                <field name="ingredient_id"/>
+                <field name="amount"/>
+                <field name="uom_id"/>
+                <field name="employee_id"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_coffee_building_transfer_form" model="ir.ui.view">
+        <field name="name">coffee.building.transfer.form</field>
+        <field name="model">coffee.building.transfer</field>
+        <field name="arch" type="xml">
+            <form string="Building Transfer">
+                <header>
+                    <button name="action_confirm"
+                            type="object"
+                            string="Confirm"
+                            class="btn-primary"
+                            invisible="state == 'confirmed'"/>
+
+                    <field name="state" widget="statusbar"/>
+                </header>
+
+
+                <sheet>
+
+                    <group>
+                        <field name="building_id"/>
+                        <field name="ingredient_id"/>
+                        <field name="amount"/>
+                        <field name="uom_id" class="oe_inline"/>
+                        <field name="employee_id"/>
+                        <field name="date"/>
+                    </group>
+                </sheet>
+
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+    <record id="view_building_stock_pivot" model="ir.ui.view">
+        <field name="name">building.stock.pivot</field>
+        <field name="model">building.stock</field>
+        <field name="arch" type="xml">
+            <pivot string="Building Stock Analysis">
+                <field name="building_id" type="row"/>
+                <field name="ingredient_id" type="col"/>
+                <field name="quantity" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_building_transfer_pivot" model="ir.ui.view">
+        <field name="name">coffee.building.transfer.pivot</field>
+        <field name="model">coffee.building.transfer</field>
+        <field name="arch" type="xml">
+            <pivot string="Transfer Analysis">
+                <field name="date" type="row" interval="month"/>
+                <field name="building_id" type="col"/>
+                <field name="ingredient_id" type="row"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="view_users_form_inherit_coffee_hierarchy" model="ir.ui.view">
+        <field name="name">res.users.form.coffee.hierarchy</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+
+                <page string="Coffee Hierarchy">
+
+                    <group>
+                        <field name="coffee_parent_id"/>
+                    </group>
+
+                    <group string="Coffee Subordinates">
+                        <field name="coffee_child_ids" readonly="1">
+                            <list>
+                                <field name="name"/>
+                                <field name="login"/>
+                            </list>
+                        </field>
+                    </group>
+
+                </page>
+
+            </xpath>
+
+        </field>
+    </record>
+
+
+    <!-- Pivot View -->
+
+
+    <!-- Action -->
+    <record id="action_building_stock" model="ir.actions.act_window">
+        <field name="name">Building Stock</field>
+        <field name="res_model">building.stock</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+</odoo>

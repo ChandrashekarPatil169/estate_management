@@ -1,0 +1,845 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Farm list View -->
+    <record id="view_farm_list" model="ir.ui.view">
+        <field name="name">estate.farm.list</field>
+        <field name="model">estate.farm</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hup_property_id"/>
+                <field name="hup_location_id"/>
+<!--                <field name="location"/>-->
+                <field name="total_area"/>
+                <field name="farm_type"/>
+                <field name="manager_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Farm Form View -->
+    <record id="view_farm_form" model="ir.ui.view">
+        <field name="name">estate.farm.form</field>
+        <field name="model">estate.farm</field>
+        <field name="arch" type="xml">
+            <form string="Farm">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="haction_open_subfarms"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="subfarm_count" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
+                    <group string="Basic Info">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="hup_property_id"/>
+                        <field name="hup_location_id"/>
+                        <field name="total_area"/>
+                        <field name="soil_type_id"/>
+                        <field name="climate_zone_id"/>
+                        <field name="farm_type"/>
+                        <field name="manager_id"/>
+                        <field name="owner_id"/>
+                    </group>
+
+                    <group string="Details">
+                        <field name="ownership_type"/>
+                        <field name="registration_number"/>
+                        <field name="start_date"/>
+                        <field name="notes"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Sub Farms">
+                            <group>
+                                <field name="subfarm_ids"
+                                       widget="many2many_tags"
+                                       context="{'default_farm_id':id,'default_property_id': hup_property_id,
+           'default_hup_location_id':hup_location_id}"/>
+                            </group>
+                        </page>
+
+                        <page string="Crops">
+                            <field name="crop_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="variety"/>
+                                    <field name="planting_date"/>
+                                    <field name="expected_harvest_date"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Livestock">
+                            <field name="livestock_ids">
+                                <list editable="bottom">
+                                    <field name="animal_type"/>
+                                    <field name="breed"/>
+                                    <field name="total_count"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Farm Tasks">
+                            <field name="farm_task_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="assigned_to"/>
+                                    <field name="status"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Employees">
+                            <field name="employee_ids" widget="many2many_tags"/>
+                        </page>
+
+                        <page string="Assets">
+                            <field name="asset_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="asset_type"/>
+                                    <field name="purchase_date"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- FARM PIVOT VIEW -->
+    <record id="view_estate_farm_pivot" model="ir.ui.view">
+        <field name="name">estate.farm.pivot</field>
+        <field name="model">estate.farm</field>
+        <field name="arch" type="xml">
+
+            <pivot string="Farm Analysis">
+
+                <!-- ROW GROUPS -->
+                <field name="hup_location_id" type="row"/>
+                <field name="hup_property_id" type="row"/>
+                <field name="farm_type" type="row"/>
+                <field name="soil_type" type="row"/>
+                <field name="climate_zone" type="row"/>
+                <field name="manager_id" type="row"/>
+                <field name="owner_id" type="row"/>
+
+                <!-- TIME ANALYSIS -->
+                <field name="start_date" interval="month" type="col"/>
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <field name="total_area" type="measure"/>
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+
+        </field>
+    </record>
+
+    <record id="view_sub_farm_list" model="ir.ui.view">
+        <field name="name">estate.sub.farm.list</field>
+        <field name="model">estate.sub.farm</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="subfarm_id"/>
+                <field name="crop_name_id"/>
+                <field name="hup_location_id"/>
+                <field name="property_id"/>
+                <field name="crop_variety_id"/>
+                <field name="planted_date"/>
+                <field name="expected_harvest_date"/>
+                <field name="harvested_date"/>
+                <field name="harvested_quantity"/>
+                <field name="cycle_type_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_sub_farm_form" model="ir.ui.view">
+        <field name="name">estate.sub.farm.form</field>
+        <field name="model">estate.sub.farm</field>
+        <field name="arch" type="xml">
+            <form>
+
+                <!-- SMART BUTTONS -->
+
+
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+
+                        <button name="haction_open_fertilizers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="hcount_fertilizer" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_chemicals"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-flask">
+                            <field name="hcount_chemical" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_workers"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-users">
+                            <field name="hcount_worker" widget="statinfo"/>
+                        </button>
+                        <button name="haction_open_harvests"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="harvest_count" widget="statinfo"/>
+                        </button>
+                        <button name="haction_open_livestock"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-paw">
+                            <field name="livestock_count" widget="statinfo" string="Livestock"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="subfarm_id"/>
+                            <field name="crop_name_id"/>
+                            <field name="farm_id"/>
+                            <field name="hup_location_id"/>
+                            <field name="property_id"/>
+                            <field name="building_id" domain="[('hup_property_id', '=', property_id)]"/>
+
+                            <field name="crop_variety_id"
+                                   domain="[('id', 'in', allowed_variety_ids)]"/>
+                            <field name="disease_id_main" widget="many2many_tags" domain="[('id','in',allowed_disease_ids)]"/>
+
+                            <field name="batch_id"/>
+                        </group>
+
+
+                    </group>
+
+                    <group>
+                        <group string="Size Information" col="6">
+                            <field name="subfarm_size" class="oe_inline"/>
+                            <field name="subfarm_uom_id" class="oe_inline"/>
+                        </group>
+
+
+                        <group>
+                            <field name="team_leader_id"/>
+                            <field name="cycle_type_id"/>
+                        </group>
+                    </group>
+
+                    <group>
+                        <field name="irrigation_required"/>
+                        <field name="well_id"
+                               invisible="not irrigation_required"/>
+                        <field name="motor_pump_id"
+                               invisible="not irrigation_required"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Related Details">
+                            <group>
+                                <field name="fertilizer_ids" widget="many2many_tags" domain="[('id','in',allowed_fertilizer_ids)]"/>
+                                <field name="chemical_ids" widget="many2many_tags" domain="[('id','in',allowed_chemical_ids)]"/>
+                                <field name="worker_ids" widget="many2many_tags"/>
+                                <field name="livestock_ids" widget="many2many_tags"/>
+
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sub_farm_pivot" model="ir.ui.view">
+        <field name="name">estate.sub.farm.pivot</field>
+        <field name="model">estate.sub.farm</field>
+        <field name="arch" type="xml">
+            <pivot string="Sub Farm Analysis">
+
+                <field name="farm_id" type="row"/>
+                <field name="crop_name_id" type="row"/>
+                <field name="crop_variety_id" type="row"/>
+                <field name="hup_location_id" type="row"/>
+
+                <field name="planted_date" interval="month" type="col"/>
+                <field name="harvested_date" interval="month" type="col"/>
+
+                <field name="subfarm_size" type="measure"/>
+                <field name="harvested_quantity" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="action_sub_farm" model="ir.actions.act_window">
+        <field name="name">Sub Farms</field>
+        <field name="res_model">estate.sub.farm</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <menuitem
+            id="menu_sub_farm"
+            name="Sub Farms Management"
+            parent="menu_farm_root"
+            action="action_sub_farm"
+            sequence="0"/>
+
+
+    <record id="view_motor_pump_list" model="ir.ui.view">
+        <field name="name">estate.motor.pump.list</field>
+        <field name="model">estate.motor.pump</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="pump_type"/>
+                <field name="power_rating"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_motor_pump_form" model="ir.ui.view">
+        <field name="name">estate.motor.pump.form</field>
+        <field name="model">estate.motor.pump</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                    <group>
+                        <field name="pump_type"/>
+                        <field name="power_rating"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- LIST VIEW -->
+    <record id="view_well_list" model="ir.ui.view">
+        <field name="name">estate.well.list</field>
+        <field name="model">estate.well</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+<!--                <field name="location"/>-->
+                <field name="capacity"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_well_form" model="ir.ui.view">
+        <field name="name">estate.well.form</field>
+        <field name="model">estate.well</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                    <group>
+<!--                        <field name="location"/>-->
+                        <field name="capacity"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="action_well" model="ir.actions.act_window">
+        <field name="name">Wells</field>
+        <field name="res_model">estate.well</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_motor_pump" model="ir.actions.act_window">
+        <field name="name">Motor Pumps</field>
+        <field name="res_model">estate.motor.pump</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+
+    <!-- DISEASE LIST -->
+    <record id="view_estate_disease_list" model="ir.ui.view">
+        <field name="name">estate.disease.list</field>
+        <field name="model">estate.disease</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="crop_name_id"/>
+
+                <field name="code"/>
+                <field name="severity"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- DISEASE FORM -->
+    <record id="view_estate_disease_form" model="ir.ui.view">
+        <field name="name">estate.disease.form</field>
+        <field name="model">estate.disease</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="crop_name_id"/>
+                    </group>
+                    <group>
+                        <field name="severity"/>
+                        <field name="active"/>
+                    </group>
+                    <field name="notes"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <!-- FERTILIZER LIST -->
+    <record id="view_estate_fertilizer_list" model="ir.ui.view">
+        <field name="name">estate.fertilizer.list</field>
+        <field name="model">estate.fertilizer</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="fertilizer_type"/>
+                <field name="fertilizer_type"/>
+                <field name="to_be_fertilized_date"/>
+                <field name="fertilized_date"/>
+                <field name="subfarm_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FERTILIZER FORM -->
+    <record id="view_estate_fertilizer_form" model="ir.ui.view">
+        <field name="name">estate.fertilizer.form</field>
+        <field name="model">estate.fertilizer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="subfarm_id"/>
+                    </group>
+                    <group>
+                        <field name="fertilizer_type"/>
+                        <field name="active"/>
+                        <field name="to_be_fertilized_date"/>
+                        <field name="fertilized_date"/>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_fertilizer_pivot" model="ir.ui.view">
+        <field name="name">estate.fertilizer.pivot</field>
+        <field name="model">estate.fertilizer</field>
+        <field name="arch" type="xml">
+            <pivot string="Fertilizer Analysis">
+
+                <field name="subfarm_id" type="row"/>
+                <field name="fertilizer_type" type="row"/>
+
+                <field name="to_be_fertilized_date" interval="month" type="col"/>
+
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+        </field>
+    </record>
+    <!-- CHEMICAL LIST -->
+    <record id="view_estate_chemical_list" model="ir.ui.view">
+        <field name="name">estate.chemical.list</field>
+        <field name="model">estate.chemical</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="subfarm_id"/>
+                <field name="chemical_type_id"/>
+                <field name="pest_id"/>
+                <field name="to_be_used_date"/>
+                <field name="used_date"/>
+                <field name="quantity"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- CHEMICAL FORM -->
+    <record id="view_estate_chemical_form" model="ir.ui.view">
+        <field name="name">estate.chemical.form</field>
+        <field name="model">estate.chemical</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="subfarm_id"/>
+                    </group>
+                    <group>
+                        <field name="chemical_type_id"/>
+                        <field name="pest_id"/>
+                        <field name="to_be_used_date"/>
+                        <field name="used_date"/>
+                        <field name="quantity"/>
+                        <field name="active"/>
+                        <field name="purpose"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_estate_chemical_pivot" model="ir.ui.view">
+        <field name="name">estate.chemical.pivot</field>
+        <field name="model">estate.chemical</field>
+        <field name="arch" type="xml">
+            <pivot string="Chemical Usage">
+
+                <field name="subfarm_id" type="row"/>
+                <field name="chemical_type_id" type="row"/>
+                <field name="pest_id" type="row"/>
+
+                <field name="to_be_used_date" interval="month" type="col"/>
+
+                <field name="quantity" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+    <record id="action_estate_disease" model="ir.actions.act_window">
+        <field name="name">Diseases</field>
+        <field name="res_model">estate.disease</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_estate_fertilizer" model="ir.actions.act_window">
+        <field name="name">Fertilizers</field>
+        <field name="res_model">estate.fertilizer</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="action_estate_chemical" model="ir.actions.act_window">
+        <field name="name">Chemicals</field>
+        <field name="res_model">estate.chemical</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="view_worker_form_inherit_subfarm" model="ir.ui.view">
+        <field name="name">res.partner.form.subfarm</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group" position="after">
+                <group string="Farm Assignment">
+                    <field name="subfarm_id"/>
+
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_estate_crop_variety_list" model="ir.ui.view">
+        <field name="name">estate.crop.variety.list</field>
+        <field name="model">estate.crop.variety</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="crop_name_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_crop_variety_form" model="ir.ui.view">
+        <field name="name">estate.crop.variety.form</field>
+        <field name="model">estate.crop.variety</field>
+        <field name="arch" type="xml">
+            <form string="Crop Variety">
+                <sheet>
+
+                    <group string="Variety Information">
+                        <field name="name"/>
+                        <field name="crop_name_id"/>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_pest_list" model="ir.ui.view">
+        <field name="name">estate.pest.list</field>
+        <field name="model">estate.pest</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category"/>
+                <field name="severity"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_estate_pest_form" model="ir.ui.view">
+        <field name="name">estate.pest.form</field>
+        <field name="model">estate.pest</field>
+        <field name="arch" type="xml">
+            <form string="Pest">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+
+                    <group>
+                        <field name="category"/>
+                        <field name="severity"/>
+                    </group>
+
+                    <group>
+                        <field name="notes"/>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_pest_pivot" model="ir.ui.view">
+        <field name="name">estate.pest.pivot</field>
+        <field name="model">estate.pest</field>
+        <field name="arch" type="xml">
+            <pivot string="Pest Analysis">
+
+                <field name="category" type="row"/>
+                <field name="severity" type="row"/>
+
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+        </field>
+    </record>
+    <record id="view_estate_livestock_sub_form" model="ir.ui.view">
+        <field name="name">estate.livestock.sub.form</field>
+        <field name="model">estate.livestock.sub</field>
+        <field name="arch" type="xml">
+            <form string="Livestock">
+                <sheet>
+
+                    <group>
+                        <field name="animal_type_id"/>
+                        <field name="breed_ids" widget="many2many_tags"
+                               context="{'default_animal_type_id': animal_type_id}"/>
+                        <!--                        <field name="gender"/>-->
+                    </group>
+
+                    <group string="Health">
+                        <field name="disease_ids" widget="many2many_tags"/>
+                        <field name="medical_treatment_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <group string="Production">
+                        <field name="harvest_product_ids" widget="many2many_tags"/>
+                        <field name="feed_ids" widget="many2many_tags"/>
+                    </group>
+
+                    <group>
+                        <field name="active"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_estate_livestock_sub_list" model="ir.ui.view">
+        <field name="name">estate.livestock.sub.list</field>
+        <field name="model">estate.livestock.sub</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="animal_type_id"/>
+                <field name="gender"/>
+                <field name="birth_date"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_estate_livestock_sub_pivot" model="ir.ui.view">
+        <field name="name">estate.livestock.sub.pivot</field>
+        <field name="model">estate.livestock.sub</field>
+        <field name="arch" type="xml">
+            <pivot string="Livestock Analysis">
+
+                <field name="animal_type_id" type="row"/>
+                <field name="gender" type="row"/>
+
+                <field name="birth_date" interval="year" type="col"/>
+
+                <!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_subfarm_harvest_form" model="ir.ui.view">
+        <field name="name">estate.subfarm.harvest.form</field>
+        <field name="model">estate.subfarm.harvest</field>
+        <field name="arch" type="xml">
+            <form string="Harvest">
+                <sheet>
+
+
+                    <group>
+                        <field name="subfarm_id"/>
+                        <field name="crop_name_id"/>
+                        <field name="harvest_product_id"/>
+                        <field name="planted_date"/>
+                        <field name="planted_quantity"/>
+                        <field name="expected_harvest_date"/>
+                        <field name="harvested_date"/>
+                        <field name="harvested_quantity"/>
+                        <field name="uom_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="view_subfarm_harvest_list" model="ir.ui.view">
+        <field name="name">estate.subfarm.harvest.list</field>
+        <field name="model">estate.subfarm.harvest</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="subfarm_id"/>
+                <field name="crop_name_id"/>
+                <field name="harvest_product_id"/>
+                <field name="planted_date"/>
+                <field name="planted_quantity"/>
+                <field name="expected_harvest_date"/>
+                <field name="harvested_date"/>
+                <field name="harvested_quantity"/>
+                <field name="uom_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_subfarm_harvest_pivot" model="ir.ui.view">
+        <field name="name">estate.subfarm.harvest.pivot</field>
+        <field name="model">estate.subfarm.harvest</field>
+        <field name="arch" type="xml">
+            <pivot string="Harvest Analysis">
+
+                <field name="crop_name_id" type="row"/>
+                <field name="harvest_product_id" type="row"/>
+
+                <field name="harvested_date" interval="month" type="col"/>
+
+                <field name="planted_quantity" type="measure"/>
+                <field name="harvested_quantity" type="measure"/>
+
+            </pivot>
+        </field>
+    </record>
+
+
+    <record id="action_estate_pest" model="ir.actions.act_window">
+        <field name="name">Pests</field>
+        <field name="res_model">estate.pest</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- FERTILIZER ACTION -->
+    <record id="action_estate_fertilizer_menu" model="ir.actions.act_window">
+        <field name="name">Fertilizers</field>
+        <field name="res_model">estate.fertilizer</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- CHEMICAL ACTION -->
+    <record id="action_estate_chemical_menu" model="ir.actions.act_window">
+        <field name="name">Chemicals</field>
+        <field name="res_model">estate.chemical</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+    <!-- Livestock Sub Action -->
+    <record id="action_estate_livestock_sub" model="ir.actions.act_window">
+        <field name="name">Livestock</field>
+        <field name="res_model">estate.livestock.sub</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!--    <menuitem id="menu_estate_inputs_root"-->
+    <!--              name="Farm Inputs"-->
+    <!--              parent="menu_farm_configuration_section"-->
+    <!--              sequence="50"/>-->
+    <menuitem id="menu_estate_fertilizer"
+              name="Fertilizers"
+              parent="menu_farm_configuration_section"
+              action="action_estate_fertilizer_menu"
+              sequence="10"/>
+
+    <menuitem id="menu_estate_chemical"
+              name="Chemicals"
+              parent="menu_farm_configuration_section"
+              action="action_estate_chemical_menu"
+              sequence="20"/>
+    <menuitem id="menu_estate_pest"
+              name="Pests"
+              parent="menu_farm_configuration_section"
+              action="action_estate_pest"
+              sequence="30"/>
+    <menuitem id="menu_well"
+              name="Wells"
+              parent="menu_farm_configuration_section"
+              action="action_well"/>
+
+    <menuitem id="menu_motor_pump"
+              name="Motor Pumps"
+              parent="menu_farm_configuration_section"
+              action="action_motor_pump"/>
+    <menuitem
+            id="menu_estate_livestock_sub"
+            name="Livestocks"
+            parent="menu_farm"
+            action="action_estate_livestock_sub"
+            sequence="20"/>
+
+
+</odoo>
+

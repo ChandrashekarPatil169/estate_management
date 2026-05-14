@@ -1,0 +1,323 @@
+<odoo>
+
+    <!-- ================= STAGE CONFIGURATION VIEW ================= -->
+
+    <record id="view_project_sprint_stage_tree" model="ir.ui.view">
+        <field name="name">project.sprint.stage.list</field>
+        <field name="model">project.sprint.stage</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="fold"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_project_sprint_stages" model="ir.actions.act_window">
+        <field name="name">Sprint Stages</field>
+        <field name="res_model">project.sprint.stage</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- ================= SPRINT ACTION ================= -->
+
+    <record id="action_project_sprint" model="ir.actions.act_window">
+        <field name="name">Sprints</field>
+        <field name="res_model">project.sprint</field>
+        <field name="view_mode">kanban,list,form,calendar,pivot,graph</field>
+        <field name="target">current</field>
+    </record>
+
+    <!-- ================= FORM VIEW ================= -->
+
+    <record id="view_project_sprint_form" model="ir.ui.view">
+        <field name="name">project.sprint.form</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <form string="Sprint">
+                <header>
+                    <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="project_id"/>
+                    </group>
+
+                    <group col="2">
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Sprint Scope">
+                            <field name="scope_line_ids">
+                                <list editable="bottom">
+                                    <field name="user_story_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="task_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="subtask_id" options="{'no_create': True, 'no_open': True}"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="description" placeholder="Add sprint notes..." nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- ================= KANBAN VIEW (FIXED) ================= -->
+
+    <record id="view_project_sprint_kanban" model="ir.ui.view">
+        <field name="name">project.sprint.kanban</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" on_create="quick_create">
+                <!-- Fields declared for the Owl parser -->
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="stage_id"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record">
+                            <strong>
+                                <field name="name"/>
+                            </strong>
+                            <div class="text-muted">
+                                <field name="start_date"/>
+                                →
+                                <field name="end_date"/>
+                            </div>
+                            <div>
+                                <field name="stage_id"/>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- ================= LIST VIEW ================= -->
+
+    <record id="view_project_sprint_tree" model="ir.ui.view">
+        <field name="name">project.sprint.tree</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="project_id"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="stage_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- ================= CALENDAR VIEW ================= -->
+
+    <record id="view_project_sprint_calendar" model="ir.ui.view">
+        <field name="name">project.sprint.calendar</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <calendar date_start="start_date" date_stop="end_date">
+                <field name="name"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- ================= PIVOT VIEW ================= -->
+
+    <record id="view_project_sprint_pivot" model="ir.ui.view">
+        <field name="name">project.sprint.pivot</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <pivot>
+                <field name="project_id" type="row"/>
+                <field name="stage_id" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- ================= GRAPH VIEW ================= -->
+
+    <record id="view_project_sprint_graph" model="ir.ui.view">
+        <field name="name">project.sprint.graph</field>
+        <field name="model">project.sprint</field>
+        <field name="arch" type="xml">
+            <graph type="bar">
+                <field name="project_id" type="row"/>
+                <field name="stage_id" type="col"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- ================= MENUS ================= -->
+
+    <!--    <menuitem id="menu_project_sprint_root" name="Sprints" sequence="10"/>-->
+    <!--    <menuitem id="menu_project_sprint_main" name="Sprints" parent="menu_project_sprint_root" action="action_project_sprint"/>-->
+    <!--    <menuitem id="menu_project_sprint_config" name="Configuration" parent="menu_project_sprint_root" sequence="100"/>-->
+    <!--    <menuitem id="menu_project_sprint_stage" name="Stages" parent="menu_project_sprint_config" action="action_project_sprint_stages"/>-->
+
+</odoo>
+
+
+        <!--<odoo>-->
+
+        <!--    &lt;!&ndash; ================= ACTION ================= &ndash;&gt;-->
+
+        <!--    <record id="action_project_sprint" model="ir.actions.act_window">-->
+        <!--        <field name="name">Sprints</field>-->
+        <!--        <field name="res_model">project.sprint</field>-->
+        <!--        <field name="view_mode">kanban,list,form,calendar,pivot,graph</field>-->
+        <!--        <field name="target">current</field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= FORM ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_form" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.form</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <form string="Sprint">-->
+        <!--                <sheet>-->
+        <!--                    <group>-->
+        <!--                        <field name="name"/>-->
+        <!--                        <field name="project_id" readonly="1"/>-->
+        <!--                    </group>-->
+
+        <!--                    <group col="2">-->
+        <!--                        <field name="start_date"/>-->
+        <!--                        <field name="end_date"/>-->
+        <!--                    </group>-->
+
+        <!--                    <separator string="Sprint Scope"/>-->
+
+        <!--                    <notebook>-->
+
+        <!--                        &lt;!&ndash; Sprint Scope Page &ndash;&gt;-->
+        <!--                        <page string="Sprint Scope">-->
+        <!--                            <group>-->
+        <!--                                <field name="scope_line_ids">-->
+        <!--                                    <list editable="bottom">-->
+        <!--                                        <field name="user_story_id"-->
+        <!--                                               options="{'no_create': True, 'no_open': True}"/>-->
+        <!--                                        <field name="task_id"-->
+        <!--                                               options="{'no_create': True, 'no_open': True}"/>-->
+        <!--                                        <field name="subtask_id"-->
+        <!--                                               options="{'no_create': True, 'no_open': True}"/>-->
+        <!--                                    </list>-->
+        <!--                                </field>-->
+        <!--                            </group>-->
+        <!--                        </page>-->
+
+        <!--                        &lt;!&ndash; Notes Page &ndash;&gt;-->
+        <!--                        <page string="Notes">-->
+        <!--                            <group>-->
+        <!--                                <field name="description"-->
+        <!--                                       placeholder="Add sprint notes, goals, risks, or decisions here..."-->
+        <!--                                       nolabel="1"/>-->
+        <!--                            </group>-->
+        <!--                        </page>-->
+
+        <!--                    </notebook>-->
+        <!--                </sheet>-->
+        <!--            </form>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= KANBAN ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_kanban" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.kanban</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <kanban default_group_by="stage_id" on_create="quick_create">-->
+        <!--                <field name="name"/>-->
+        <!--                <field name="start_date"/>-->
+        <!--                <field name="end_date"/>-->
+        <!--                <field name="stage_id"/>-->
+
+        <!--                <templates>-->
+        <!--                    <t t-name="card">-->
+        <!--                        <div class="o_kanban_record">-->
+        <!--                            <strong>-->
+        <!--                                <field name="name"/>-->
+        <!--                            </strong>-->
+        <!--                            <div class="text-muted">-->
+        <!--                                <field name="start_date"/>-->
+        <!--                                →-->
+        <!--                                <field name="end_date"/>-->
+        <!--                            </div>-->
+        <!--                            <div>-->
+        <!--                                <field name="state"/>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </t>-->
+        <!--                </templates>-->
+        <!--            </kanban>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= TREE ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_tree" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.tree</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <list>-->
+        <!--                <field name="name"/>-->
+        <!--                <field name="project_id"/>-->
+        <!--                <field name="start_date"/>-->
+        <!--                <field name="end_date"/>-->
+        <!--                <field name="state"/>-->
+        <!--            </list>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= CALENDAR ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_calendar" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.calendar</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <calendar date_start="start_date" date_stop="end_date">-->
+        <!--                <field name="name"/>-->
+        <!--            </calendar>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= PIVOT ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_pivot" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.pivot</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <pivot>-->
+        <!--                <field name="project_id" type="row"/>-->
+        <!--                <field name="state" type="col"/>-->
+        <!--            </pivot>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--    &lt;!&ndash; ================= GRAPH ================= &ndash;&gt;-->
+
+        <!--    <record id="view_project_sprint_graph" model="ir.ui.view">-->
+        <!--        <field name="name">project.sprint.graph</field>-->
+        <!--        <field name="model">project.sprint</field>-->
+        <!--        <field name="arch" type="xml">-->
+        <!--            <graph type="bar">-->
+        <!--                <field name="project_id" type="row"/>-->
+        <!--                <field name="state" type="col"/>-->
+        <!--            </graph>-->
+        <!--        </field>-->
+        <!--    </record>-->
+
+        <!--</odoo>-->

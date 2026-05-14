@@ -1,0 +1,44 @@
+<odoo>
+    <data>
+        <record id="mail_template_pr_pending_reminder" model="mail.template">
+            <field name="name">PR Pending Approval Reminder</field>
+
+            <!-- Dynamic Model Resolution for Odoo 19 -->
+            <field name="model_id"  ref="material_purchase_requisition.model_material_purchase_requisition"/>
+            <field name="subject">⏰ Reminder: Approval Pending - {{ object.name }}</field>
+
+            <field name="email_from">{{ (object.company_id.email or 'noreply@company.com') }}</field>
+
+            <!-- Usually sent to the current approver passed in context or assigned user -->
+            <field name="email_to">{{ ctx.get('approver_email') or '' }}</field>
+
+            <field name="auto_delete" eval="False"/>
+
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-family: Arial, Helvetica, sans-serif;">
+                    <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <p style="margin: 0px; padding: 0px;">
+                            Hello <t t-out="ctx.get('approver_name') or 'Approver'"/>,<br/><br/>
+                            This is a reminder that the following Purchase Requisition is still awaiting your action.
+                        </p>
+                        <ul style="margin-top: 16px; margin-bottom: 16px;">
+                            <li><b>PR:</b> <t t-out="object.name"/></li>
+                            <li><b>Employee:</b> <t t-out="object.employee_id.name"/></li>
+                            <li><b>Department:</b> <t t-out="object.department_id.name"/></li>
+                            <li><b>Total Amount:</b> <t t-out="object.total_amount"/></li>
+                        </ul>
+                        <p style="margin: 0px; padding: 0px;">
+                            Please <b>Approve</b> or <b>Reject</b> this request.<br/><br/>
+                            <span style="color: red;">
+                                ⚠ Reminder will continue until action is taken.
+                            </span>
+                            <br/><br/>
+                            Regards,<br/>
+                            <t t-out="object.company_id.name"/>
+                        </p>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

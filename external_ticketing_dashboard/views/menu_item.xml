@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Client action that triggers the OWL dashboard component -->
+    <record id="action_ext_ticketing_dashboard" model="ir.actions.client">
+        <field name="name">External Ticketing Dashboard</field>
+        <field name="tag">ext_ticketing_dashboard</field>
+    </record>
+
+    <!--
+        "Dashboard" menu item placed as the FIRST child of the
+        "External Ticketing" root menu (sequence=5, before Tickets=10).
+    -->
+    <menuitem id="menu_ext_ticketing_dashboard" name="Dashboard" parent="department_helpdesk.menu_external_ticketing_root" sequence="5" action="action_ext_ticketing_dashboard" groups="odoo_website_helpdesk_dashboard.group_helpdesk_dashboard_access,department_helpdesk.group_helpdesk_department_manager,department_helpdesk.group_helpdesk_admin_custom"/>
+
+</odoo>

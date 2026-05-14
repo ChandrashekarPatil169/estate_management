@@ -1,0 +1,15 @@
+<odoo>
+    <menuitem id="menu_pr_root" name="Purchase Requisition"/>
+
+    <menuitem id="menu_pr_config_root"
+              name="Configuration"
+              parent="menu_pr_root"
+              groups="base.group_system"
+              sequence="20"/>
+
+    <menuitem id="menu_pr_reminder_config"
+              name="Approval Reminder"
+              parent="menu_pr_config_root"
+              action="action_pr_reminder_config"
+              groups="base.group_system"/>
+</odoo>

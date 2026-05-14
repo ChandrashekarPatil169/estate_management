@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- ============================== -->
+    <!-- Crop Name list & Form Views -->
+    <!-- ============================== -->
+
+    <!-- list View -->
+    <record id="view_crop_name_list" model="ir.ui.view">
+        <field name="name">estate.crop.name.list</field>
+        <field name="model">estate.crop.name</field>
+        <field name="arch" type="xml">
+            <list string="Crop Names">
+                <field name="name"/>
+                <field name="variety"/>
+                <field name="cycle_type"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_crop_name_form" model="ir.ui.view">
+        <field name="name">estate.crop.name.form</field>
+        <field name="model">estate.crop.name</field>
+        <field name="arch" type="xml">
+            <form string="Crop Name">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+
+                        <button name="haction_open_varieties"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-leaf">
+                            <field name="variety_count" widget="statinfo"/>
+                        </button>
+
+                        <button name="haction_open_diseases"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-bug">
+                            <field name="disease_count" widget="statinfo"/>
+                        </button>
+
+                    </div>
+
+                    <group>
+                        <field name="name"/>
+                        <field name="variety"/>
+                        <field name="code"/>
+                        <field name="cycle_type"/>
+                        <field name="irrigation_required"/>
+                        <field name="well_id" invisible="not irrigation_required"/>
+                        <field name="motor_pump_id" invisible="not irrigation_required"/>
+
+                        <field name="expected_yield"/>
+                        <field name="actual_yield"/>
+                        <field name="quality_grade"/>
+                        <field name="storage_location_id"/>
+                        <field name="disease_history"/>
+                    </group>
+                    <notebook>
+                        <page string="Related Details">
+                            <group>
+                                <field name="variety_ids"
+                                       widget="many2many_tags"
+                                       context="{'default_crop_id': id}"/>
+                            </group>
+                            <group>
+
+                                <field name="disease_ids"
+                                       widget="many2many_tags"
+                                       context="{'default_crop_id': id}"/>
+                            </group>
+                        </page>
+
+
+                    </notebook>
+                </sheet>
+
+
+            </form>
+        </field>
+    </record>
+
+    <record id="view_crop_name_pivot" model="ir.ui.view">
+        <field name="name">estate.crop.name.pivot</field>
+        <field name="model">estate.crop.name</field>
+        <field name="arch" type="xml">
+            <pivot string="Crop Analysis">
+
+                <!-- ROW GROUPS -->
+                <field name="name" type="row"/>
+                <field name="variety" type="row"/>
+                <field name="cycle_type" type="row"/>
+                <field name="quality_grade" type="row"/>
+                <field name="storage_location_id" type="row"/>
+
+                <!-- TIME -->
+                <field name="create_date" interval="month" type="col"/>
+
+                <!-- MEASURES -->
+                <field name="expected_yield" type="measure"/>
+                <field name="actual_yield" type="measure"/>
+<!--                <field name="id" type="measure"/>-->
+
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_crop_name" model="ir.actions.act_window">
+        <field name="name">Crop Names</field>
+        <field name="res_model">estate.crop.name</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <!-- Menu Item -->
+    <menuitem id="menu_crop_name" name="Crop Names" parent="menu_farm_root" action="action_crop_name" sequence="11"/>
+</odoo>

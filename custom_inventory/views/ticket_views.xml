@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- list View -->
+    <record id="view_ticket_list" model="ir.ui.view">
+        <field name="name">ticket.ticket.list</field>
+        <field name="model">ticket.ticket</field>
+        <field name="arch" type="xml">
+            <list string="Tickets">
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="priority"/>
+                <field name="status"/>
+                <field name="inventory_id"/>
+                <field name="software_id"/>
+                <field name="assigned_to"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_ticket_form" model="ir.ui.view">
+        <field name="name">ticket.ticket.form</field>
+        <field name="model">ticket.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket">
+                <sheet>
+                    <group>
+                        <group string="Ticket Info">
+                            <field name="name" readonly="1"/>
+                            <field name="subject"/>
+                            <field name="description"/>
+                            <field name="priority"/>
+                            <field name="status"/>
+                        </group>
+
+                        <group string="Assets">
+                            <field name="inventory_id"/>
+                            <field name="software_id"/>
+                            
+                            <!-- Related fields from inventory -->
+                            <field name="asset_tag" readonly="1"/>
+                            <field name="asset_type_id" readonly="1"/>
+                            <field name="asset_category_id" readonly="1"/>
+                            <field name="product_name_id" readonly="1"/>
+                            <field name="brand_id" readonly="1"/>
+                            <field name="model_id" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <group string="Assignment">
+                        <field name="reported_by"/>
+                        <field name="assigned_to"/>
+                        <field name="assign_date" readonly="1"/>
+                        <field name="resolve_date" readonly="1"/>
+                        <field name="close_date" readonly="1"/>
+                    </group>
+
+                    <group string="Resolution">
+                        <field name="resolution_notes"/>
+                        <field name="cost"/>
+                    </group>
+
+                    <chatter/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_ticket" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">ticket.ticket</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+<!--    &lt;!&ndash; Menu &ndash;&gt;-->
+<!--    <menuitem id="menu_ticket"-->
+<!--              name="Tickets"-->
+<!--              parent="custom_inventory_menu_root"-->
+<!--              action="action_ticket"-->
+<!--              sequence="100"/>-->
+</odoo>
